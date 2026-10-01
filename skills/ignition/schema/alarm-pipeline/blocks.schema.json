@@ -1,0 +1,159 @@
+{
+  "_source": "Verified from decompiled alarm-notification-common-7.3.9 (…alarming.common.pipelines.*BlockProperties) and alarm-notification-gateway-7.3.9 (…alarming.pipelines.blocks.*Block, AlarmPipelineManagerImpl) in the decompiled jars. Registry = AlarmPipelineManagerImpl constructor registerBlockFactory(...) calls (9). Property keys, types, defaults and enums are the BasicProperty declarations in each *BlockProperties class; behaviour is each *Block.java. Cross-checked against a real data.bin round-tripped on a live 8.3.9 gateway. Nothing invented.",
+
+  "registry": {
+    "_cite": "AlarmPipelineManagerImpl() lines ~114-122: registerBlockFactory(ExpressionBlock.FACTORY), EventStreamBlock, DelayBlock, NotificationBlock, SplitterBlock, SwitchBlock, JumpBlock, PropertySetterBlock, ScriptableBlock",
+    "count": 9,
+    "factoryIds": [
+      "com.inductiveautomation.expressionBlockFactory",
+      "com.inductiveautomation.eventStreamBlockFactory",
+      "com.inductiveautomation.delayBlockFactory",
+      "com.inductiveautomation.notificationBlockFactory",
+      "com.inductiveautomation.splitterBlockFactory",
+      "com.inductiveautomation.switchBlockFactory",
+      "com.inductiveautomation.jumpBlockFactory",
+      "com.inductiveautomation.propertySetterBlockFactory",
+      "com.inductiveautomation.scriptableBlockFactory"
+    ],
+    "unknownFactoryBehaviour": "AlarmPipelineManagerImpl: a block whose factoryId is blank or not in the registry is replaced by a NoOpBlock and logged 'Unknown block type'."
+  },
+
+  "commonProperties": {
+    "_cite": "com.inductiveautomation.ignition.alarming.common.pipelines.CommonBlockProperties",
+    "factoryId": { "key": "factoryId", "type": "String", "required": true, "purpose": "one of registry.factoryIds; selects the block factory" },
+    "blockId":   { "key": "blockId",   "type": "UUID",   "required": true, "purpose": "unique within the pipeline; edge targets reference this. PipelineDescriptor.addBlock() assigns one if absent." },
+    "outputId":  { "key": "outputId",  "type": "UUID",   "required": false, "purpose": "successor blockId for linear blocks. Missing/unknown -> synthetic NoOp terminal (path ends)." },
+    "_injectedAtLoad": "The manager also sets dropoutConditions, fallbackPipeline and projectName onto every block config from the PipelineDescriptor before constructing the block."
+  },
+
+  "blocks": {
+
+    "delay": {
+      "factoryId": "com.inductiveautomation.delayBlockFactory",
+      "class": "DelayBlock",
+      "purpose": "Hold the event for a fixed time, then transition. The wait is cancelled if the pipeline stops (or the event drops out).",
+      "properties": {
+        "delay": { "key": "delay", "type": "Long", "default": 5000, "unit": "milliseconds", "_cite": "DelayBlockProperties.DELAY = new BasicProperty(\"delay\", Long.class, 5000L)" }
+      },
+      "outputs": ["outputId"]
+    },
+
+    "expression": {
+      "factoryId": "com.inductiveautomation.expressionBlockFactory",
+      "class": "ExpressionBlock",
+      "purpose": "Evaluate an alarm expression to a boolean and branch. On evaluation error the event is routed to the pipeline's fallbackPipeline (or dropped).",
+      "properties": {
+        "expression":  { "key": "expression",  "type": "String", "default": "", "purpose": "Ignition alarm expression; coerced to boolean (bad quality => false)", "_cite": "ExpressionBlockProperties.EXPRESSION" },
+        "trueOutput":  { "key": "trueOutput",  "type": "UUID", "purpose": "successor blockId when the expression is true",  "_cite": "ExpressionBlockProperties.TRUE_OUTPUT_ID = new BasicProperty(\"trueOutput\", UUID.class)" },
+        "falseOutput": { "key": "falseOutput", "type": "UUID", "purpose": "successor blockId when the expression is false", "_cite": "ExpressionBlockProperties.FALSE_OUTPUT_ID = new BasicProperty(\"falseOutput\", UUID.class)" }
+      },
+      "outputs": ["trueOutput", "falseOutput"]
+    },
+
+    "switch": {
+      "factoryId": "com.inductiveautomation.switchBlockFactory",
+      "class": "SwitchBlock",
+      "purpose": "Evaluate an expression and route to the output whose table value matches (type-coerced compare); non-match -> _default_. On evaluation error -> fallbackPipeline.",
+      "properties": {
+        "mode":        { "key": "mode", "type": "enum", "enum": ["Property", "Expression"], "default": "Property", "purpose": "Designer editor mode (property picker vs free expression). The gateway evaluates 'expression' either way.", "_cite": "SwitchBlockProperties.MODE, enum SwitchMode {Property, Expression}" },
+        "expression":  { "key": "expression", "type": "String", "default": "", "_cite": "SwitchBlockProperties.EXPRESSION" },
+        "outputTable": { "key": "outputTable", "type": "List", "default": null, "purpose": "ordered list of match values; entry i is paired with outputId{i}. Serialized as <arraylist><str>…</str></arraylist>.", "_cite": "SwitchBlockProperties.OUTPUT_TABLE; SwitchBlock.initialize() zips values.get(i) with BasicProperty(\"outputId\"+i)" },
+        "outputId0..N-1": { "key": "outputId<i>", "type": "UUID", "purpose": "successor for outputTable[i]" },
+        "_default_":   { "key": "_default_", "type": "UUID", "purpose": "catch-all successor when nothing matches", "_cite": "SwitchBlockProperties.DEFAULT_CONDITION = \"_default_\"; SwitchBlock.initialize() 'this.catchAll = getOutputBlock(blockMap, new BasicProperty(\"_default_\", UUID.class))'" }
+      },
+      "outputs": ["outputId0..N-1", "_default_"]
+    },
+
+    "splitter": {
+      "factoryId": "com.inductiveautomation.splitterBlockFactory",
+      "class": "SplitterBlock",
+      "purpose": "Fan the event out to N parallel branches. Each branch gets a branched copy of the AlarmEvent; CommonAlarmProperties.LiveBranchCount is incremented by N.",
+      "properties": {
+        "outputCount":    { "key": "outputCount", "type": "Integer", "default": 2, "_cite": "SplitterBlockProperties.OUTPUT_COUNT = new BasicProperty(\"outputCount\", Integer.class, 2)" },
+        "outputId0..N-1": { "key": "outputId<i>", "type": "UUID", "purpose": "successor for branch i", "_cite": "SplitterBlock.initialize(): for i in 0..outputCount, getOutputBlock(blockMap, new BasicProperty(\"outputId\"+i, UUID.class))" }
+      },
+      "outputs": ["outputId0..N-1"]
+    },
+
+    "notification": {
+      "factoryId": "com.inductiveautomation.notificationBlockFactory",
+      "class": "NotificationBlock",
+      "purpose": "Send the event to one or more notification profiles for each user on a roster, then transition. Honours user on-call schedules, optional throttling/consolidation, and a per-user pacing delay. Drops users mid-run per dropoutConditions.",
+      "properties": {
+        "blockVersion":            { "key": "blockVersion", "type": "Integer", "default": 1, "purpose": "1 => use single 'notificationProfile'; >=2 => use 'notificationProfiles' array", "_cite": "NotificationBlockProperties.BLOCK_VERSION; NotificationBlock.profiles() branches on it" },
+        "notificationProfile":     { "key": "notificationProfile", "type": "String", "deprecated": true, "purpose": "single profile name; blockVersion 1 only", "_cite": "NotificationBlockProperties.NOTIFICATION_PROFILE (@Deprecated)" },
+        "notificationProfiles":    { "key": "notificationProfiles", "type": "String[]", "default": [], "purpose": "profile names; blockVersion >=2. First profile that supports the user's contact type wins.", "_cite": "NotificationBlockProperties.NOTIFICATION_PROFILES" },
+        "rosterType":              { "key": "rosterType", "type": "String", "enum": ["roster", "calculated", "Direct"], "purpose": "'roster' = 'roster' is a roster name or an expression yielding one; 'calculated' = 'roster' is an indented Jython calculateRoster(event, builder) body; 'Direct' = evaluate the roster once and notify all its users together (compared case-insensitively for Direct/calculated).", "_cite": "NotificationBlockProperties.ROSTER_TYPE; NotificationBlock: rosterNameType checks 'Direct' / 'calculated'; CalculatedRoster.TYPE = \"calculated\"" },
+        "roster":                  { "key": "roster", "type": "String", "purpose": "roster name / roster-name expression / calculateRoster body per rosterType", "_cite": "NotificationBlockProperties.ON_CALL_ROSTER = new BasicProperty(\"roster\", String.class)" },
+        "ignoreSchedule":          { "key": "ignoreSchedule", "type": "Boolean", "default": false, "purpose": "notify all roster users regardless of their on-call schedule / schedule adjustments", "_cite": "NotificationBlockProperties.IGNORE_SCHEDULE" },
+        "throttlingEnabled":       { "key": "throttlingEnabled", "type": "Boolean", "default": false, "purpose": "aggregate/consolidate events (ThrottlingAggregator) before sending one notification for the batch", "_cite": "NotificationBlockProperties.THROTTLING_ENABLED" },
+        "throttlingDelay":         { "key": "throttlingDelay", "type": "Long", "default": 15000, "unit": "milliseconds", "_cite": "NotificationBlockProperties.THROTTLING_DELAY" },
+        "throttlingFrequency":     { "key": "throttlingFrequency", "type": "Long", "default": 60000, "unit": "milliseconds", "_cite": "NotificationBlockProperties.THROTTLING_FREQUENCY" },
+        "timeBetweenNotifications":{ "key": "timeBetweenNotifications", "type": "Long", "default": 0, "unit": "milliseconds", "purpose": "pause between successive users on the roster; applied only after a user notification succeeds (a failure moves on immediately)", "_cite": "NotificationBlockProperties.TIME_BETWEEN_NOTIFICATIONS; NotificationBlock.notifyNextUser()" },
+        "settingsFor_<profileName>": { "key": "settingsFor_<profileName>", "type": "PropertySet", "purpose": "per-profile property overrides for this block; the profile sees ExtendedPropertySet.extend(blockConfig, thisPropertySet)", "_cite": "NotificationBlockProperties.PROFILE_KEY_PREFIX = \"settingsFor_\"; NotificationBlock.propertySetForProfile()" }
+      },
+      "outputs": ["outputId"]
+    },
+
+    "jump": {
+      "factoryId": "com.inductiveautomation.jumpBlockFactory",
+      "class": "JumpBlock",
+      "purpose": "Transfer the event to another pipeline in the same project. Destroys the current tracking context; a fresh one starts in the target pipeline. Terminal — has no output.",
+      "properties": {
+        "pipelineName": { "key": "pipelineName", "type": "String", "purpose": "target pipeline name (resolved within the current project)", "_cite": "JumpBlockProperties.PIPELINE_NAME; JumpBlock.onEvaluate() 'QualifiedPath.of(\"project\", projectName, \"pipeline\", pipelineName)'" }
+      },
+      "outputs": []
+    },
+
+    "setProperty": {
+      "factoryId": "com.inductiveautomation.propertySetterBlockFactory",
+      "class": "PropertySetterBlock",
+      "uiName": "Set Property",
+      "purpose": "Evaluate an expression and set the result as a property on the alarm event, then transition. Good-quality results only.",
+      "properties": {
+        "propertyId": { "key": "propertyId", "type": "String", "default": "", "purpose": "name of the alarm-event property to set", "_cite": "PropertySetterBlockProperties.PROPERTY_ID" },
+        "expression": { "key": "expression", "type": "String", "default": "", "purpose": "value expression", "_cite": "PropertySetterBlockProperties.EXPRESSION" },
+        "scope":      { "key": "scope", "type": "enum", "enum": ["Local", "Global"], "default": "Local", "purpose": "Global uses AlarmEventInstance.setGlobal (visible across Splitter branches); Local sets it on this branch's event only", "_cite": "PropertySetterBlockProperties.SCOPE, enum PropertyScope {Local, Global}" }
+      },
+      "outputs": ["outputId"]
+    },
+
+    "script": {
+      "factoryId": "com.inductiveautomation.scriptableBlockFactory",
+      "class": "ScriptableBlock",
+      "uiName": "Script",
+      "purpose": "Run arbitrary Jython against the event, then transition. Runs in the pipeline's project script scope.",
+      "properties": {
+        "script": { "key": "script", "type": "String", "default": "", "purpose": "indented body of 'def handleAlarm(event):' — 'event' is a PyAlarmEvent with an added cancelNotification() method. Compiled once at block init.", "_cite": "ScriptableBlockProperties.SCRIPT, HANDLER_FUNCNAME=\"handleAlarm\", HANDLER_ARG_NAMES={\"event\"}; ScriptableBlock.buildSignature()" }
+      },
+      "outputs": ["outputId"],
+      "note": "If outputId is unset the tracking context is destroyed (path ends) rather than falling to NoOp."
+    },
+
+    "eventStream": {
+      "factoryId": "com.inductiveautomation.eventStreamBlockFactory",
+      "class": "EventStreamBlock",
+      "since": "Ignition 8.3 (new)",
+      "purpose": "Publish a JSON snapshot of the alarm event to an Event Stream resource in the project, then transition.",
+      "properties": {
+        "eventStreamName": { "key": "eventStreamName", "type": "String", "default": null, "purpose": "path/name of the target Event Stream resource in the project. null -> logs an error and destroys the context.", "_cite": "EventStreamBlockProperties.EVENT_STREAM_PATH = new BasicProperty(\"eventStreamName\", String.class, null)" },
+        "message":         { "key": "message", "type": "String", "default": null, "purpose": "declared property (EventStreamBlockProperties.MESSAGE); the gateway block publishes a fixed field set — eventId, source, displayPath, priority, priorityReadable, eventType, eventTypeReadable, eventFlags, eventTime.", "_cite": "EventStreamBlockProperties.MESSAGE; EventStreamBlock.EvaluationContext.onEvaluate()" }
+      },
+      "outputs": ["outputId"]
+    }
+  },
+
+  "syntheticTerminal": {
+    "name": "NoOpBlock",
+    "notInRegistry": true,
+    "purpose": "Not user-placeable. AlarmPipelineManagerImpl adds one to every pipeline under a fixed random UUID. Any output edge that doesn't resolve to a real block lands here; it marks the tracking context complete and destroys it after 15 s. It is what 'the pipeline ends' means.",
+    "_cite": "NoOpBlock; AbstractPipelineBlock.getOutputBlock() falls back to map.get(NoOpBlock.BLOCK_ID); AlarmPipelineManagerImpl: 'blocks.put(NoOpBlock.BLOCK_ID, new NoOpBlock(...))'"
+  },
+
+  "patterns": {
+    "escalation": "There is no Escalation block. Build one: Notification(roster A) -> Delay -> Expression('!{isAcked}') --true--> Notification(roster B) -> Delay -> … With the pipeline's dropoutConditions including OnAck, an acknowledgement anywhere pulls the event out of every downstream Delay/Notification automatically.",
+    "twoWayAck": "There is no Two-Way / ACK block. Two-way = (1) a notification profile that can receive an ACK back (EmailNotificationProfileType two-way / POP3, or an SMS module's reply-to-ack) so the notified user can acknowledge from the message, plus (2) dropoutConditions containing OnAck so that ack stops the running pipeline. EmailNotificationProfile only appends the ACK link when two-way is enabled, an ACK is configured, and the event is not already acked.",
+    "consolidation": "NotificationBlock.throttlingEnabled + throttlingDelay/throttlingFrequency (a debounce+max-rate window). Separately, OneWayNotificationProfile has its own consolidation settings at the profile level.",
+    "perPriorityRouting": "Switch block, mode=Expression, expression '{priority}', outputTable ['Critical','High',...] -> different notification chains; '_default_' for the rest."
+  }
+}

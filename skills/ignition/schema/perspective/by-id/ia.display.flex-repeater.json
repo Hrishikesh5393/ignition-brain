@@ -1,0 +1,206 @@
+{
+ "id": "ia.display.flex-repeater",
+ "name": "Flex Repeater",
+ "palette": {
+  "category": "embedding",
+  "variants": [
+   {
+    "label": "Flex Repeater",
+    "tooltip": "Creates multiple instances of views for display in another view."
+   },
+   {
+    "id": "flex-repeater-row",
+    "label": "Row",
+    "tooltip": "Creates multiple instances of views for display in another view.",
+    "props": {
+     "direction": "row"
+    }
+   },
+   {
+    "id": "flex-repeater-column",
+    "label": "Column",
+    "tooltip": "Creates multiple instances of views for display in another view.",
+    "props": {
+     "direction": "column"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "FlexRepeater",
+ "schema": {
+  "type": "object",
+  "definitions": {
+   "elementPosition": {
+    "properties": {
+     "grow": {
+      "type": "number"
+     },
+     "shrink": {
+      "type": "number"
+     },
+     "basis": {
+      "$ref": "urn:ignition-schema:schemas/css-length.schema.json"
+     },
+     "align": {
+      "type": "string",
+      "enum": [
+       "auto",
+       "flex-start",
+       "flex-end",
+       "center",
+       "baseline",
+       "stretch"
+      ]
+     }
+    },
+    "additionalProperties": false
+   }
+  },
+  "properties": {
+   "path": {
+    "type": "string",
+    "default": "",
+    "format": "view-path",
+    "description": "Path of the view to display"
+   },
+   "instances": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "instanceStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      },
+      "instancePosition": {
+       "$ref": "#/definitions/elementPosition",
+       "default": {}
+      }
+     },
+     "extension": {
+      "view-params": {
+       "path": "/path"
+      }
+     },
+     "additionalProperties": true
+    },
+    "default": [],
+    "description": "List of params for each rendered view. Each instance will contain an instanceStyle and instancePosition property. Changing these properties will override the styling and positioning applied by elementStyle and elementPosition."
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "row",
+     "row-reverse",
+     "column",
+     "column-reverse"
+    ],
+    "default": "row",
+    "description": "Direction of layout of repeated views."
+   },
+   "wrap": {
+    "type": "string",
+    "enum": [
+     "nowrap",
+     "wrap",
+     "wrap-reverse"
+    ],
+    "default": "nowrap",
+    "description": "Whether the container should allow repeated views to wrap to next line if space has run out."
+   },
+   "justify": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "space-between",
+     "space-around",
+     "space-evenly"
+    ],
+    "default": "flex-start",
+    "description": "Adjusts placement of repeated views along the main axis when there is extra space, which may be used to fill areas before, after or in-between."
+   },
+   "alignItems": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "baseline",
+     "stretch"
+    ],
+    "default": "stretch",
+    "description": "Adjusts placement of repeated views along the cross axis when there is extra space."
+   },
+   "alignContent": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "space-between",
+     "space-around",
+     "stretch"
+    ],
+    "default": "stretch",
+    "description": "Adjusts alignment of repeated views when there is free space in the cross axis."
+   },
+   "useDefaultViewWidth": {
+    "type": "boolean",
+    "description": "Use of view's default width instead of adjusting based on the content's width. This will override all flex position properties in the row and row-reverse direction.",
+    "default": true
+   },
+   "useDefaultViewHeight": {
+    "type": "boolean",
+    "description": "Use of view's default height instead of adjusting based on the content's height. This will override all flex position properties in the column and column-reverse direction.",
+    "default": true
+   },
+   "elementStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style properties that are applied to all repeated views."
+   },
+   "elementPosition": {
+    "$ref": "#/definitions/elementPosition",
+    "default": {
+     "grow": 1,
+     "shrink": 1,
+     "basis": 0
+    },
+    "description": "Flex position properties that are applied to all repeated views."
+   },
+   "loading": {
+    "type": "object",
+    "properties": {
+     "order": {
+      "type": "string",
+      "enum": [
+       "after-parent",
+       "with-parent"
+      ],
+      "description": "Controls when the embedded views load: after the parent is displayed or combined with the parent view loading",
+      "default": "after-parent"
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": "",
+     "overflow": "auto"
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

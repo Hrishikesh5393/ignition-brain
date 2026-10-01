@@ -1,0 +1,105 @@
+# TOC: references/ignition-8-3/scripting-platform.md
+
+881 lines, ~16.8k tokens. Line ranges are 1-based inclusive; `Read` with offset=start, limit=end-start+1.
+
+L5-8 (0.1k) ## system.alarm
+  L9-24 (0.3k) ### system.alarm.acknowledge
+  L25-33 (0.1k) ### system.alarm.cancel
+  L34-42 (0.1k) ### system.alarm.createRoster
+  L43-51 (0.1k) ### system.alarm.getRosters
+  L52-60 (0.1k) ### system.alarm.getShelvedPaths
+  L61-69 (0.1k) ### system.alarm.listPipelines
+  L70-78 (0.7k) ### system.alarm.queryJournal
+  L79-87 (0.5k) ### system.alarm.queryStatus
+  L88-96 (0.2k) ### system.alarm.shelve
+  L97-104 (0.1k) ### system.alarm.unshelve
+L105-108 (0.2k) ## system.user
+  L109-117 (0.2k) ### system.user.addCompositeSchedule
+  L118-126 (0.1k) ### system.user.addHoliday
+  L127-135 (0.2k) ### system.user.addRole
+  L136-144 (0.1k) ### system.user.addSchedule
+  L145-153 (0.1k) ### system.user.addUser
+  L154-162 (0.1k) ### system.user.createScheduleAdjustment
+  L163-171 (0.1k) ### system.user.editHoliday
+  L172-180 (0.2k) ### system.user.editRole
+  L181-189 (0.1k) ### system.user.editSchedule
+  L190-198 (0.1k) ### system.user.editUser
+  L199-207 (0.1k) ### system.user.getHoliday
+  L208-216 (0.1k) ### system.user.getHolidayNames
+  L217-225 (0.1k) ### system.user.getHolidays
+  L226-233 (0.1k) ### system.user.getNewUser
+  L234-242 (0.1k) ### system.user.getRoles
+  L243-251 (0.1k) ### system.user.getSchedule
+  L252-260 (0.1k) ### system.user.getScheduleNames
+  L261-269 (0.2k) ### system.user.getScheduledUsers
+  L270-278 (0.1k) ### system.user.getSchedules
+  L279-287 (0.1k) ### system.user.getUser
+  L288-296 (0.1k) ### system.user.getUserSources
+  L297-305 (0.1k) ### system.user.getUsers
+  L306-314 (0.1k) ### system.user.isUserScheduled
+  L315-323 (0.1k) ### system.user.removeHoliday
+  L324-332 (0.2k) ### system.user.removeRole
+  L333-341 (0.1k) ### system.user.removeSchedule
+  L342-349 (0.2k) ### system.user.removeUser
+L350-353 (0.1k) ## system.roster
+  L354-362 (0.1k) ### system.roster.addUsers
+  L363-371 (0.1k) ### system.roster.createRoster
+  L372-380 (0.1k) ### system.roster.deleteRoster
+  L381-389 (0.1k) ### system.roster.getRoster
+  L390-398 (0.1k) ### system.roster.getRosterNames
+  L399-407 (0.1k) ### system.roster.getRosters
+  L408-416 (0.1k) ### system.roster.getUsers
+  L417-425 (0.1k) ### system.roster.removeUsers
+L426-429 (0.2k) ## system.security
+  L430-445 (0.3k) ### system.security.getUserRoles
+  L446-461 (0.3k) ### system.security.validateUser
+L462-465 (0.1k) ## system.groups
+  L466-474 (0.1k) ### system.groups.loadFromFile
+  L475-483 (0.1k) ### system.groups.removeGroups
+L484-487 (0.1k) ## system.eam
+  L488-496 (0.1k) ### system.eam.getGroups
+  L497-505 (0.3k) ### system.eam.queryAgentHistory
+  L506-514 (0.2k) ### system.eam.queryAgentStatus
+  L515-522 (0.2k) ### system.eam.runTask
+L523-526 (0.1k) ## system.net
+  L527-535 (0.1k) ### system.net.getHostName
+  L536-544 (0.1k) ### system.net.getIpAddress
+  L545-553 (0.1k) ### system.net.getRemoteServers
+  L554-563 (0.5k) ### system.net.httpClient
+  L564-572 (0.6k) ### system.net.sendEmail
+L573-576 (0.2k) ## system.file
+  L577-585 (0.1k) ### system.file.fileExists
+  L586-594 (0.1k) ### system.file.getTempFile
+  L595-603 (0.1k) ### system.file.readFileAsBytes
+  L604-612 (0.2k) ### system.file.readFileAsString
+  L613-630 (0.4k) ### system.file.writeFile
+L631-634 (0.1k) ## system.report
+  L635-643 (0.2k) ### system.report.executeAndDistribute
+  L644-652 (0.2k) ### system.report.executeReport
+  L653-661 (0.2k) ### system.report.getReportNamesAsDataset
+  L662-669 (0.1k) ### system.report.getReportNamesAsList
+L670-673 (0.1k) ## system.twilio
+  L674-682 (0.1k) ### system.twilio.getAccounts
+  L683-691 (0.1k) ### system.twilio.getAccountsDataset
+  L692-700 (0.1k) ### system.twilio.getActiveCall
+  L701-709 (0.1k) ### system.twilio.getPhoneNumbers
+  L710-718 (0.1k) ### system.twilio.getPhoneNumbersDataset
+  L719-727 (0.2k) ### system.twilio.sendFreeformWhatsApp
+  L728-736 (0.2k) ### system.twilio.sendPhoneCall
+  L737-745 (0.1k) ### system.twilio.sendSms
+  L746-753 (0.2k) ### system.twilio.sendWhatsAppTemplate
+L754-757 (0.1k) ## system.sfc
+  L758-766 (0.1k) ### system.sfc.cancelChart
+  L767-775 (0.1k) ### system.sfc.getRunningCharts
+  L776-784 (0.1k) ### system.sfc.getVariables
+  L785-793 (0.1k) ### system.sfc.pauseChart
+  L794-802 (0.1k) ### system.sfc.redundantCheckpoint
+  L803-811 (0.1k) ### system.sfc.resumeChart
+  L812-820 (0.2k) ### system.sfc.setVariable
+  L821-829 (0.1k) ### system.sfc.setVariables
+  L830-838 (0.1k) ### system.sfc.startChart
+L839-842 (0.3k) ## system.eventstream
+  L843-851 (0.1k) ### system.eventstream.getDiagnostics
+  L852-860 (0.1k) ### system.eventstream.listEventStreams
+  L861-868 (0.2k) ### system.eventstream.publishEvent
+L869-881 (1.0k) ## Gotchas and 8.3 notes

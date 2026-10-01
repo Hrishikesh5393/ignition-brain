@@ -1,0 +1,182 @@
+{
+ "id": "ia.display.markdown",
+ "name": "Markdown",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Markdown",
+    "tooltip": "Enables you to format text with a lightweight formatting language that is easy to write and easy to read."
+   }
+  ]
+ },
+ "defaultMetaName": "Markdown",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "source": {
+    "type": "string",
+    "example": "Welcome to _Markdown_",
+    "description": "Text annotated with markdown syntax to display."
+   },
+   "sectionSpacing": {
+    "type": "number",
+    "default": 24,
+    "description": "Number of pixels of vertical space between each section or header"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "markdown": {
+    "type": "object",
+    "default": {
+     "sourcePos": false,
+     "escapeHtml": true,
+     "skipHtml": false,
+     "disallowedTypes": [],
+     "unwrapDisallowed": false,
+     "renderers": {}
+    },
+    "title": "Markdown rendering properties",
+    "allowAdditionalProperties": false,
+    "properties": {
+     "sourcePos": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, will keep track and log source positioning for debugging purposes."
+     },
+     "escapeHtml": {
+      "type": "boolean",
+      "default": true,
+      "description": "Setting to false will cause HTML to be rendered. Be aware that setting this to false might cause security issues if the input is user-generated. Use at your own risk."
+     },
+     "skipHtml": {
+      "type": "boolean",
+      "default": false,
+      "description": "Setting to true will skip inlined and blocks of HTML"
+     },
+     "allowedTypes": {
+      "type": "array",
+      "default": [
+       "root",
+       "text",
+       "break",
+       "paragraph",
+       "emphasis",
+       "strong",
+       "thematicBreak",
+       "blockquote",
+       "delete",
+       "link",
+       "image",
+       "linkReference",
+       "imageReference",
+       "table",
+       "tableHead",
+       "tableBody",
+       "tableRow",
+       "tableCell",
+       "list",
+       "listItem",
+       "definition",
+       "heading",
+       "inlineCode",
+       "code",
+       "html"
+      ],
+      "description": "Defines which types of nodes should be allowed (rendered).",
+      "items": {
+       "type": "string",
+       "enum": [
+        "root",
+        "text",
+        "break",
+        "paragraph",
+        "emphasis",
+        "strong",
+        "thematicBreak",
+        "blockquote",
+        "delete",
+        "link",
+        "image",
+        "linkReference",
+        "imageReference",
+        "table",
+        "tableHead",
+        "tableBody",
+        "tableRow",
+        "tableCell",
+        "list",
+        "listItem",
+        "definition",
+        "heading",
+        "inlineCode",
+        "code",
+        "html"
+       ]
+      }
+     },
+     "disallowedTypes": {
+      "type": "array",
+      "default": [],
+      "description": "Defines which types of nodes should be disallowed (not rendered).",
+      "items": {
+       "type": "string",
+       "enum": [
+        "root",
+        "text",
+        "break",
+        "paragraph",
+        "emphasis",
+        "strong",
+        "thematicBreak",
+        "blockquote",
+        "delete",
+        "link",
+        "image",
+        "linkReference",
+        "imageReference",
+        "table",
+        "tableHead",
+        "tableBody",
+        "tableRow",
+        "tableCell",
+        "list",
+        "listItem",
+        "definition",
+        "heading",
+        "inlineCode",
+        "code",
+        "html"
+       ]
+      }
+     },
+     "unwrapDisallowed": {
+      "type": "boolean",
+      "description": "Setting to true will try to extract/unwrap the children of disallowed nodes. For instance, if disallowing Strong, the default behaviour is to simply skip the text within the strong altogether, while the behaviour some might want is to simply have the text returned without the strong wrapping it.",
+      "default": false
+     }
+    },
+    "required": [
+     "sourcePos",
+     "escapeHtml",
+     "skipHtml",
+     "disallowedTypes",
+     "unwrapDisallowed"
+    ]
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

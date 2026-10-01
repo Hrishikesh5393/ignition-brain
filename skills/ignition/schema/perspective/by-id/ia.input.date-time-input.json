@@ -1,0 +1,231 @@
+{
+ "id": "ia.input.date-time-input",
+ "name": "DateTime Input",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "DateTime Input",
+    "tooltip": "Provides a way to select a date from a popup calendar."
+   },
+   {
+    "id": "date-time-input-datetime",
+    "label": "Date and Time",
+    "tooltip": "Provides a way to select a date from a popup calendar."
+   },
+   {
+    "id": "date-time-input-time",
+    "label": "Time",
+    "tooltip": "Provides a way to select a date from a popup calendar.",
+    "props": {
+     "pickerType": "time"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "DateTimeInput",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Current date/time as a Date object or timestamp in milliseconds",
+    "default": null
+   },
+   "formattedValue": {
+    "type": [
+     "string",
+     "null"
+    ],
+    "description": "Date and time in configured format",
+    "default": ""
+   },
+   "inputProps": {
+    "type": "object",
+    "default": {
+     "style": {}
+    },
+    "description": "Props to pass to the input group. disabled and value will be ignored in favor of the top-level props on this component.",
+    "properties": {
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/css-props.schema.json"
+     }
+    }
+   },
+   "modalStyle": {
+    "type": "object",
+    "description": "Style applied to the date picker modal.",
+    "visibleWhen": {
+     "property": "pickerType",
+     "equals": [
+      "datetime",
+      "date"
+     ]
+    },
+    "properties": {
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/css-props.schema.json"
+     },
+     "classes": {
+      "type": [
+       "array",
+       "string"
+      ],
+      "format": "style-list",
+      "title": "Style Class Names",
+      "description": "Styles defined in the project to be applied to this component",
+      "default": ""
+     }
+    },
+    "default": {
+     "classes": ""
+    }
+   },
+   "pickerType": {
+    "type": "string",
+    "enum": [
+     "datetime",
+     "date",
+     "time"
+    ],
+    "default": "datetime",
+    "description": "Whether to display and enable picker for date only, or both date and time"
+   },
+   "minDate": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Minimum date/time as a Date object or timestamp in milliseconds. If null, the minimum date is 10 years in the past from today.",
+    "default": null
+   },
+   "maxDate": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Maximum date/time as a Date object or timestamp in milliseconds. If null, the maximum date is 10 years in the future from today.",
+    "default": null
+   },
+   "format": {
+    "type": "string",
+    "default": "lll",
+    "description": "Template for formatting date display - must be valid moment.js format, e.g. 'MM/DD/YYYY h:mm a'"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "False will disable any interaction with calendar"
+   },
+   "placeholder": {
+    "type": "string",
+    "default": "Select date",
+    "description": "Text for input field to display when no date/time is selected"
+   },
+   "locale": {
+    "type": "string",
+    "default": "en",
+    "suggestions": [
+     "en",
+     "ar",
+     "be",
+     "bg",
+     "bn",
+     "ca",
+     "cs",
+     "cy",
+     "da",
+     "de-at",
+     "de-ch",
+     "de",
+     "el",
+     "en-au",
+     "en-ca",
+     "en-gb",
+     "en-ie",
+     "en-il",
+     "en-nz",
+     "es-do",
+     "es-us",
+     "es",
+     "et",
+     "eu",
+     "fi",
+     "fr-ca",
+     "fr-ch",
+     "fr",
+     "hi",
+     "hu",
+     "is",
+     "it",
+     "ja",
+     "ko",
+     "lt",
+     "lv",
+     "mk",
+     "ms-my",
+     "ms",
+     "mt",
+     "nb",
+     "nn",
+     "pl",
+     "pt-br",
+     "pt",
+     "ro",
+     "ru",
+     "sk",
+     "sl",
+     "sr-cyrl",
+     "sr",
+     "sv",
+     "sw",
+     "th",
+     "tr",
+     "uk",
+     "uz",
+     "vi",
+     "zh-cn",
+     "zh-hk",
+     "zh-tw"
+    ],
+    "description": "Code for localization of language and formatting"
+   },
+   "dismissOnSelect": {
+    "type": "boolean",
+    "default": true,
+    "description": "Determines if the date picker should be dismissed when a date is selected."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

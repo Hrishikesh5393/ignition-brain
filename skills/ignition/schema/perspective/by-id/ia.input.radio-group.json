@@ -1,0 +1,296 @@
+{
+ "id": "ia.input.radio-group",
+ "name": "Radio Group",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Radio Group",
+    "tooltip": "A radio button group that allows mutually exclusive selection between it and its siblings."
+   },
+   {
+    "id": "radio-group-right",
+    "label": "Text Right",
+    "tooltip": "A radio button group that allows mutually exclusive selection between it and its siblings."
+   },
+   {
+    "id": "radio-group-left",
+    "label": "Text Left",
+    "tooltip": "A radio button group that allows mutually exclusive selection between it and its siblings.",
+    "props": {
+     "textPosition": "left"
+    }
+   },
+   {
+    "id": "radio-group-multiple",
+    "label": "Multiple",
+    "tooltip": "A radio button group that allows mutually exclusive selection between it and its siblings.",
+    "props": {
+     "radios": [
+      {
+       "text": "Radio button",
+       "selected": true,
+       "value": "Radio button"
+      },
+      {
+       "text": "Radio button",
+       "selected": false,
+       "value": "Radio button"
+      },
+      {
+       "text": "Radio button",
+       "selected": false,
+       "value": "Radio button"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "RadioGroup",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "default": "Radio button",
+    "description": "The value of the selected radio."
+   },
+   "index": {
+    "type": "number",
+    "description": "The index of the selected radio.",
+    "default": 0
+   },
+   "radios": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "enabled": {
+       "type": "boolean",
+       "default": true,
+       "description": "If user should be allowed to select this radio."
+      },
+      "text": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "",
+       "description": "Text to pair with this radio."
+      },
+      "selected": {
+       "type": "boolean",
+       "default": false,
+       "description": "If true, this radio is selected."
+      },
+      "value": {
+       "default": "",
+       "description": "The value of the radio to be evaluated when selected."
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      }
+     },
+     "required": [
+      "value",
+      "text",
+      "selected"
+     ],
+     "default": {
+      "enabled": true,
+      "text": "Radio button",
+      "selected": false,
+      "value": "",
+      "style": {}
+     }
+    },
+    "default": [
+     {
+      "enabled": true,
+      "text": "Radio button",
+      "selected": true,
+      "value": "Radio button",
+      "style": {
+       "classes": ""
+      }
+     }
+    ],
+    "description": "List of radios that make up this group."
+   },
+   "orientation": {
+    "type": "string",
+    "description": "The orientation or flex direction of radios.",
+    "enum": [
+     "column",
+     "row"
+    ],
+    "default": "row"
+   },
+   "align": {
+    "type": "string",
+    "description": "Align radios along the cross axis. Vertical if orientation is set to row, horizontal if orientation is set to column.",
+    "suggestions": [
+     "start",
+     "center",
+     "end"
+    ],
+    "default": "center"
+   },
+   "justify": {
+    "type": "string",
+    "description": "Justify radios along the main axis. Horizontal if orientation is set to row, vertical if orientation is set to column.",
+    "suggestions": [
+     "start",
+     "center",
+     "end",
+     "space-around",
+     "space-between",
+     "space-evenly"
+    ],
+    "default": "start"
+   },
+   "textPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "right",
+     "bottom",
+     "left"
+    ],
+    "default": "right",
+    "description": "Where to place label text in relation to radio button"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "If user should be allowed to select a radio."
+   },
+   "selectedIcon": {
+    "$ref": "#/definitions/icon",
+    "default": {
+     "path": "material/radio_button_checked",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {
+      "classes": ""
+     }
+    },
+    "description": "Icon to show when selected."
+   },
+   "unselectedIcon": {
+    "$ref": "#/definitions/icon",
+    "default": {
+     "path": "material/radio_button_unchecked",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {
+      "classes": ""
+     }
+    },
+    "description": "Icon to show when unselected."
+   },
+   "radioStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "icon": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "default": "",
+      "description": "Shorthand path to icon source, in format: library/iconName"
+     },
+     "library": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of library where icon is located. Must also supply 'name'."
+     },
+     "name": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of icon. Must also supply 'library'."
+     },
+     "color": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of the icon when enabled. Can be a named color."
+       },
+       "disabled": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of the icon when disabled. Can be a named color."
+       }
+      }
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "style": {
+       "classes": ""
+      }
+     }
+    },
+    "oneOf": [
+     {
+      "required": [
+       "path"
+      ]
+     },
+     {
+      "required": [
+       "library",
+       "name"
+      ]
+     }
+    ],
+    "default": {
+     "path": "",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "radioStyle": {
+      "classes": ""
+     },
+     "style": {
+      "classes": ""
+     }
+    }
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

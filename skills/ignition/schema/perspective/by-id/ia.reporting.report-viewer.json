@@ -1,0 +1,112 @@
+{
+ "_source": "reporting-common-7.3.9.jar!/reporting-components.components.json (bundled component-definition resource; groupId=reporting-components library=ReportingComponents hash=5d2ef062c02c7ede2b17). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.reporting.report-viewer",
+ "name": "Report Viewer",
+ "palette": {
+  "category": "reporting",
+  "variants": [
+   {
+    "label": "Report Viewer",
+    "tooltip": "Enables reports to be embedded from the Reporting Module into a Perspective views."
+   }
+  ]
+ },
+ "defaultMetaName": "ReportViewer",
+ "schema": {
+  "type": "object",
+  "title": "Report Viewer",
+  "description": "A component that displays a PDF version of a report.",
+  "required": [
+   "source",
+   "page",
+   "pageCount",
+   "zoomLevel"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "source": {
+    "title": "Report Source",
+    "description": "The path to the report being displayed.",
+    "type": "string",
+    "default": "",
+    "extension": {
+     "suggestion-source": "report-paths"
+    }
+   },
+   "params": {
+    "title": "Report Params",
+    "description": "Any params that were created to accompany the report.",
+    "type": "object",
+    "default": {}
+   },
+   "page": {
+    "title": "Current Page",
+    "type": "number",
+    "description": "The current page being displayed.",
+    "example": 1
+   },
+   "pageCount": {
+    "title": "Page Count",
+    "description": "The number of pages the pdf contains (read-only).",
+    "type": "number",
+    "example": 1
+   },
+   "zoomLevel": {
+    "type": "number",
+    "description": "The desired zoom level of the report based off of a percentage of the report width.",
+    "suggestions": {
+     "Fit Panel": 1,
+     "200%": 200,
+     "175%": 175,
+     "150%": 150,
+     "125%": 125,
+     "100%": 100,
+     "75%": 75,
+     "50%": 50,
+     "25%": 25
+    },
+    "default": 1
+   },
+   "allowDownload": {
+    "type": "boolean",
+    "description": "Allow a \"download\" icon to be displayed that will trigger a download of the report when clicked. This prop is always treated as false in Perspective iOS and Android apps.",
+    "default": true
+   },
+   "downloadFilename": {
+    "type": "string",
+    "default": "",
+    "description": "A filename used for the report when downloaded. Filename will default to the name of the report if not used."
+   },
+   "allowOpenInTab": {
+    "type": "boolean",
+    "description": "Allow an \"open in tab\" icon to be displayed that will open the report in a new browser tab when clicked. This prop is always treated as false in Perspective Workstation, iOS, and Android apps.",
+    "default": true
+   },
+   "controlStyle": {
+    "description": "Style to apply to the control bar of the component.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "reporting-components-css",
+   "path": "/res/reporting/css/ReportingComponents.css",
+   "type": "css",
+   "dependencies": [
+    "perspective-components-css"
+   ]
+  },
+  {
+   "name": "reporting-components-js",
+   "path": "/res/reporting/js/ReportingComponents.js",
+   "type": "js",
+   "dependencies": [
+    "perspective-components-js"
+   ]
+  }
+ ]
+}

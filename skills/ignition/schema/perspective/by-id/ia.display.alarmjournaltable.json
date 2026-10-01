@@ -1,0 +1,745 @@
+{
+ "id": "ia.display.alarmjournaltable",
+ "name": "Alarm Journal Table",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Alarm Journal Table",
+    "tooltip": "Displays the history of the alarm system. Can be configured to show active, cleared, and acknowledged events."
+   }
+  ]
+ },
+ "defaultMetaName": "AlarmJournalTable",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "name": {
+    "type": "string",
+    "description": "The name of the alarm journal to query.",
+    "default": "Journal"
+   },
+   "refreshRate": {
+    "type": "number",
+    "description": "The rate at which the table will poll for updates in milliseconds.",
+    "default": 30000
+   },
+   "enableHeader": {
+    "type": "boolean",
+    "description": "Enable table header.",
+    "default": true
+   },
+   "enableDetails": {
+    "type": "boolean",
+    "description": "Enable details action.",
+    "default": true
+   },
+   "toolbar": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Enables the visibility of the table toolbar.",
+      "default": true
+     },
+     "enableDateRange": {
+      "type": "boolean",
+      "description": "Enables the visibility of the date range toggle.",
+      "default": true
+     },
+     "enableFilter": {
+      "type": "boolean",
+      "description": "Enables the visibility of the text filter toggle.",
+      "default": true
+     },
+     "toggleableFilter": {
+      "type": "boolean",
+      "description": "If false, the text filter will not require user interaction to open, and instead will remain open.",
+      "visibleWhen": {
+       "property": "enableFilter",
+       "equals": true
+      },
+      "default": true
+     },
+     "enableFilterResults": {
+      "type": "boolean",
+      "description": "Enables the visibility of the filters results count message.",
+      "default": true
+     },
+     "enablePreFilters": {
+      "type": "boolean",
+      "description": "Enables the visibility of the pre filter toggle.",
+      "default": true
+     },
+     "enableConfiguration": {
+      "type": "boolean",
+      "description": "Enables the visibility of the configuration toggle.",
+      "default": true
+     }
+    }
+   },
+   "dateFormat": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "description": "A date format string to be applied against dates.",
+    "suggestions": {
+     "none": "none",
+     "date [10/15/2018]": "MM/DD/YYYY",
+     "time [3:59:00 PM]": "h:mm:ss a",
+     "date time [10/15/2018 15:59:00]": "MM/DD/YYYY HH:mm:ss"
+    },
+    "default": "MM/DD/YYYY HH:mm:ss"
+   },
+   "responsive": {
+    "type": "object",
+    "description": "Responsive layout configuration.  Rows are converted to cards. While in responsive layout, disables or removes certain table features that are no longer applicable.",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Enables responsive layout.",
+      "default": false
+     },
+     "breakpoint": {
+      "type": "number",
+      "description": "Width, in pixels, that triggers change in responsive layout.",
+      "default": 500
+     }
+    }
+   },
+   "dateRange": {
+    "type": "object",
+    "description": "Date range state.",
+    "properties": {
+     "mode": {
+      "type": "string",
+      "description": "The current mode, realtime or historical.",
+      "enum": [
+       "realtime",
+       "historical"
+      ],
+      "default": "realtime"
+     },
+     "realtime": {
+      "type": "object",
+      "description": "Realtime mode state.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "realtime"
+       ]
+      },
+      "properties": {
+       "interval": {
+        "type": [
+         "number"
+        ],
+        "description": "The realtime interval as an integer.",
+        "default": 8
+       },
+       "unit": {
+        "type": [
+         "string"
+        ],
+        "description": "The realtime interval unit.",
+        "enum": [
+         "seconds",
+         "minutes",
+         "hours",
+         "days",
+         "weeks",
+         "months",
+         "years"
+        ],
+        "default": "hours"
+       }
+      }
+     },
+     "historical": {
+      "type": "object",
+      "description": "Historical mode state.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "properties": {
+       "startDate": {
+        "type": [
+         "number",
+         "null",
+         "date"
+        ],
+        "description": "Date or timestamp in milliseconds.",
+        "default": null
+       },
+       "endDate": {
+        "type": [
+         "number",
+         "null",
+         "date"
+        ],
+        "description": "Date or timestamp in milliseconds.",
+        "default": null
+       }
+      }
+     }
+    }
+   },
+   "filter": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "description": "The alarm events filter text.",
+      "default": ""
+     },
+     "events": {
+      "type": "object",
+      "description": "Alarm event types.",
+      "properties": {
+       "active": {
+        "type": "boolean",
+        "default": true
+       },
+       "acked": {
+        "type": "boolean",
+        "default": true
+       },
+       "cleared": {
+        "type": "boolean",
+        "default": true
+       },
+       "enabled": {
+        "type": "boolean",
+        "default": false
+       },
+       "disabled": {
+        "type": "boolean",
+        "default": false
+       },
+       "system": {
+        "type": "boolean",
+        "default": false
+       }
+      }
+     },
+     "priorities": {
+      "type": "object",
+      "description": "Alarm event priority pre-filters.",
+      "properties": {
+       "diagnostic": {
+        "type": "boolean",
+        "default": false
+       },
+       "low": {
+        "type": "boolean",
+        "default": true
+       },
+       "medium": {
+        "type": "boolean",
+        "default": true
+       },
+       "high": {
+        "type": "boolean",
+        "default": true
+       },
+       "critical": {
+        "type": "boolean",
+        "default": true
+       }
+      }
+     },
+     "conditions": {
+      "type": "object",
+      "description": "Gateway side alarm query conditions.",
+      "properties": {
+       "source": {
+        "type": "string",
+        "description": "Filter alarms by alarm source path. Specify multiple paths by separating them with commas. Supports the wildcard ✷",
+        "default": ""
+       },
+       "displayPath": {
+        "type": "string",
+        "description": "Filter alarms by alarm display path, falling back to the source path if a custom display path isn't set. Specify multiple paths by separating them with commas. Supports the wildcard ✷.",
+        "default": ""
+       },
+       "provider": {
+        "type": "string",
+        "description": "Filter alarms by alarm provider.",
+        "default": ""
+       }
+      }
+     },
+     "results": {
+      "type": "object",
+      "description": "Alarm event filtering results configuration and data.",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "description": "Enable filter results to be written back to props.  Warning, doing so may cause performance decline.",
+        "default": false
+       },
+       "data": {
+        "type": "array",
+        "description": "An array of objects representing the current filtered data. If enabled and active.",
+        "items": {
+         "type": "object",
+         "properties": {}
+        },
+        "default": []
+       }
+      }
+     }
+    }
+   },
+   "rowStyles": {
+    "type": "object",
+    "description": "Styles to apply to rows given their alarm event and designated priority.",
+    "properties": {
+     "active": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#FDAFAF",
+         "color": "#222222",
+         "fontWeight": "500",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     },
+     "acked": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#F3F6C6",
+         "color": "#222222",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     },
+     "cleared": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#BEDFFE",
+         "color": "#222222",
+         "fontWeight": "500",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     },
+     "enabled": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#FFFFFF",
+         "color": "#222222",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     },
+     "disabled": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#FFFFFF",
+         "color": "#222222",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     },
+     "system": {
+      "type": "object",
+      "properties": {
+       "base": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "default": {
+         "backgroundColor": "#FFFFFF",
+         "color": "#222222",
+         "classes": ""
+        }
+       },
+       "priorities": {
+        "$ref": "#/definitions/prioritiesStyles"
+       }
+      }
+     }
+    }
+   },
+   "sortOrder": {
+    "type": "array",
+    "description": "The default weighted order in which columns and their contents are sorted relative to other columns and their contents. Used when the component first loads. Columns need to have sort configured in order for this to work.",
+    "default": []
+   },
+   "dragOrderable": {
+    "type": "boolean",
+    "description": "Users may drag column headers to reorder columns of the table.",
+    "default": true
+   },
+   "columns": {
+    "type": "object",
+    "description": "Used only for determining what columns to show on load.",
+    "properties": {
+     "eventTime": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": true,
+       "sort": "none",
+       "width": 150,
+       "strictWidth": false,
+       "order": 0
+      }
+     },
+     "eventId": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": true,
+       "sort": "none",
+       "width": 200,
+       "strictWidth": false,
+       "order": 1
+      }
+     },
+     "name": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": 200,
+       "strictWidth": false,
+       "order": 2
+      }
+     },
+     "source": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": true,
+       "sort": "none",
+       "width": 150,
+       "strictWidth": false,
+       "order": 3
+      }
+     },
+     "eventState": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": true,
+       "sort": "descending",
+       "width": 110,
+       "strictWidth": false,
+       "order": 4
+      }
+     },
+     "priority": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": true,
+       "sort": "none",
+       "width": 100,
+       "strictWidth": false,
+       "order": 5
+      }
+     },
+     "state": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": 150,
+       "strictWidth": false,
+       "order": 6
+      }
+     },
+     "displayPath": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": 200,
+       "strictWidth": false,
+       "order": 7
+      }
+     },
+     "label": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": "",
+       "strictWidth": false,
+       "order": 8
+      }
+     },
+     "eventValue": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": 150,
+       "strictWidth": false,
+       "order": 9
+      }
+     },
+     "isSystemEvent": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": 200,
+       "strictWidth": false,
+       "order": 10
+      }
+     },
+     "ackUser": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": "",
+       "strictWidth": false,
+       "order": 11
+      }
+     },
+     "ackNotes": {
+      "$ref": "#/definitions/columnConfig",
+      "default": {
+       "enabled": false,
+       "sort": "none",
+       "width": "",
+       "strictWidth": false,
+       "order": 12
+      }
+     }
+    }
+   },
+   "columnsAssociated": {
+    "type": "array",
+    "description": "A list of columns and their configurations used in the retrieval and display of associated alarm data.",
+    "items": {
+     "type": "object",
+     "description": "Associated alarm data column configurations.",
+     "additionalProperties": false,
+     "properties": {
+      "field": {
+       "type": "string",
+       "description": "The name of the associated alarm data property.  It must not match any of the common properties listed in the 'columns' property.",
+       "default": "",
+       "not": {
+        "enum": [
+         "eventTime",
+         "eventId",
+         "name",
+         "source",
+         "eventState",
+         "priority",
+         "state",
+         "displayPath",
+         "label",
+         "eventValue",
+         "isSystemEvent",
+         "ackUser",
+         "ackNotes"
+        ]
+       }
+      },
+      "enabled": {
+       "type": "boolean",
+       "description": "Toggles the visibility of the column.",
+       "default": true
+      },
+      "width": {
+       "type": [
+        "number",
+        "string"
+       ],
+       "description": "The column's width which, when not strict, represents a proportion of the available space, i.e. flex grow. If strictWidth is enabled, will be fixed and static.",
+       "default": ""
+      },
+      "strictWidth": {
+       "type": "boolean",
+       "description": "If enabled, the width of the column becomes fixed.",
+       "default": false
+      },
+      "sort": {
+       "type": "string",
+       "description": "Default sort order of this column.",
+       "enum": [
+        "none",
+        "ascending",
+        "descending"
+       ],
+       "default": "none"
+      },
+      "order": {
+       "type": "number",
+       "description": "The index position of this column relative to other columns.",
+       "default": 0
+      }
+     }
+    }
+   },
+   "pager": {
+    "type": "object",
+    "description": "",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Enable pager.",
+      "default": true
+     },
+     "hide": {
+      "type": "boolean",
+      "description": "Visually hides the pager from view.  Useful when pager is manipulated in a controlled fashion via the activePage prop.",
+      "default": false
+     },
+     "options": {
+      "type": "array",
+      "description": "Rows to show per pager option.",
+      "items": {
+       "type": "number"
+      },
+      "default": [
+       5,
+       10,
+       25,
+       50,
+       100
+      ]
+     },
+     "initialOption": {
+      "type": "number",
+      "description": "The initial option to use when the table first loads. It must exist as an available option.",
+      "default": 25
+     },
+     "activePage": {
+      "type": "number",
+      "description": "Represents the current active page and corresponds to the value of the page jump input field.",
+      "default": 1
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "columnConfig": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Toggle visibility of column.",
+      "default": false
+     },
+     "width": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "The column's width which, when not strict, represents a proportion of the available space, i.e. flex grow. If strictWidth is enabled, will be fixed and static.",
+      "default": ""
+     },
+     "strictWidth": {
+      "type": "boolean",
+      "description": "If enabled, the width of the column becomes fixed.",
+      "default": false
+     },
+     "sort": {
+      "type": "string",
+      "description": "Default sort order of this column.",
+      "enum": [
+       "none",
+       "ascending",
+       "descending"
+      ],
+      "default": "none"
+     },
+     "order": {
+      "type": "number",
+      "description": "The index position of this column relative to other columns.",
+      "default": 0
+     }
+    }
+   },
+   "prioritiesStyles": {
+    "type": "object",
+    "properties": {
+     "diagnostic": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "low": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "medium": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "high": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "critical": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ],
+ "extensionFunctions": [
+  {
+   "name": "filterAlarm",
+   "description": "Called for each alarm event before it is displayed in the table. Return False to exclude the alarm from the table.",
+   "defaultImplementation": "\treturn True",
+   "arguments": [
+    {
+     "name": "alarmEvent",
+     "description": "The alarm event itself. Use <code>alarmEvent.get('propertyName')</code> to inspect. Common properties include 'name', 'source', and 'priority'.",
+     "type": "AlarmEvent"
+    }
+   ]
+  }
+ ]
+}

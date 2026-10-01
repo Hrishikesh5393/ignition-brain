@@ -1,0 +1,162 @@
+{
+ "id": "ia.input.toggle-switch",
+ "name": "Toggle Switch",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Toggle Switch",
+    "tooltip": "A switch component that represents a bit that can be toggled on (selected) or off (not selected)."
+   },
+   {
+    "id": "toggle-switch-no-text",
+    "label": "No Text",
+    "tooltip": "A switch component that represents a bit that can be toggled on (selected) or off (not selected)."
+   },
+   {
+    "id": "toggle-switch-text-right",
+    "label": "Text Right",
+    "tooltip": "A switch component that represents a bit that can be toggled on (selected) or off (not selected).",
+    "props": {
+     "label": {
+      "text": "text"
+     }
+    }
+   },
+   {
+    "id": "toggle-switch-text-left",
+    "label": "Text Left",
+    "tooltip": "A switch component that represents a bit that can be toggled on (selected) or off (not selected).",
+    "props": {
+     "label": {
+      "text": "text",
+      "position": "left"
+     }
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "ToggleSwitch",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "selected": {
+    "type": "boolean",
+    "default": false,
+    "description": "The selected state of the toggle switch."
+   },
+   "label": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "description": "Text for the toggle switch.",
+      "default": ""
+     },
+     "position": {
+      "type": "string",
+      "description": "Text position relative to the toggle switch.",
+      "enum": [
+       "left",
+       "right"
+      ],
+      "default": "right"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Inline style for the text element.",
+      "default": {}
+     }
+    },
+    "default": {
+     "text": "",
+     "position": "right",
+     "style": {}
+    }
+   },
+   "color": {
+    "type": "object",
+    "properties": {
+     "selected": {
+      "type": "string",
+      "description": "Color of the slider when the toggle switch is selected.",
+      "format": "color",
+      "default": ""
+     },
+     "unselected": {
+      "type": "string",
+      "description": "Color of the slider when the toggle switch is selected.",
+      "format": "color",
+      "default": ""
+     },
+     "disabled": {
+      "oneOf": [
+       {
+        "type": "string",
+        "format": "color",
+        "description": "Color of the slider when the toggle switch is disabled."
+       },
+       {
+        "type": "object",
+        "properties": {
+         "selected": {
+          "type": "string",
+          "format": "color",
+          "description": "Color of the slider when the toggle switch is selected and disabled."
+         },
+         "unselected": {
+          "type": "string",
+          "format": "color",
+          "description": "Color of the slider when the toggle switch is unselected and disabled."
+         }
+        },
+        "additionalProperties": false,
+        "description": "Color of the slider when the toggle switch is disabled, based on selected state.",
+        "required": []
+       }
+      ],
+      "description": "Color of the slider when the toggle switch is disabled."
+     }
+    },
+    "default": {
+     "selected": "",
+     "unselected": "",
+     "disabled": {
+      "selected": "",
+      "unselected": ""
+     }
+    }
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Whether the user should be allowed to alter the toggle switch's selected state."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

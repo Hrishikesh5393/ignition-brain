@@ -1,0 +1,91 @@
+{
+ "id": "ia.display.icon",
+ "name": "Icon",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Icon",
+    "tooltip": "An image path to an icon, commonly used to augment a label or text property of a component by placing the icon next to it."
+   }
+  ]
+ },
+ "defaultMetaName": "Icon",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "path": {
+    "type": "string",
+    "default": "",
+    "example": "material/insert_emoticon",
+    "description": "Shorthand path to icon source, in format: library/iconName",
+    "format": "icon-path"
+   },
+   "library": {
+    "type": "string",
+    "description": "Optional alternative to 'path', name of library where icon is located. Must also supply 'name'."
+   },
+   "name": {
+    "type": "string",
+    "description": "Optional alternative to 'path', name of icon. Must also supply 'library'."
+   },
+   "color": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of the icon. Here for convenience, may instead assign 'fill' in the styles prop."
+   },
+   "viewBox": {
+    "type": "object",
+    "description": "Properties to assign to the 'viewBox' portion of the SVG that displays the icon.",
+    "properties": {
+     "x": {
+      "type": "number",
+      "description": "The x value (amount to crop from the X axis) assigned to the 'viewBox' portion of the SVG that displays the icon."
+     },
+     "y": {
+      "type": "number",
+      "description": "The y value (amount to crop from the Y axis) assigned to the 'viewBox' portion of the SVG that displays the icon."
+     },
+     "width": {
+      "type": "number",
+      "description": "The width assigned to the 'viewBox' portion of the SVG that displays the icon."
+     },
+     "height": {
+      "type": "number",
+      "description": "The height assigned to the 'viewBox' portion of the SVG that displays the icon."
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {}
+   }
+  },
+  "oneOf": [
+   {
+    "required": [
+     "path"
+    ]
+   },
+   {
+    "required": [
+     "library",
+     "name"
+    ]
+   }
+  ]
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

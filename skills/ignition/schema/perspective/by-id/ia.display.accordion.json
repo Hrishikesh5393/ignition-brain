@@ -1,0 +1,307 @@
+{
+ "id": "ia.display.accordion",
+ "name": "Accordion",
+ "palette": {
+  "category": "embedding",
+  "variants": [
+   {
+    "label": "Accordion",
+    "tooltip": "Enables the embedding of expandable/collapsible views that can be toggled with a click or a tap of their headers."
+   }
+  ]
+ },
+ "defaultMetaName": "Accordion",
+ "schema": {
+  "type": "object",
+  "required": [
+   "expansionMode",
+   "items"
+  ],
+  "properties": {
+   "expansionMode": {
+    "type": "string",
+    "enum": [
+     "single",
+     "multiple"
+    ],
+    "default": "multiple"
+   },
+   "items": {
+    "type": "array",
+    "description": "Accordion items.",
+    "items": {
+     "type": "object",
+     "required": [
+      "expanded",
+      "header",
+      "body"
+     ],
+     "properties": {
+      "expanded": {
+       "type": "boolean",
+       "description": "Is the accordion body expanded.  This property is both read and written to.",
+       "default": false
+      },
+      "header": {
+       "type": "object",
+       "description": "Accordion header configuration.",
+       "required": [
+        "toggle",
+        "content"
+       ],
+       "properties": {
+        "toggle": {
+         "type": "object",
+         "required": [
+          "enabled"
+         ],
+         "description": "Toggle configuration",
+         "properties": {
+          "enabled": {
+           "type": "boolean",
+           "description": "Enables the collapse and expand toggle."
+          },
+          "expandedIcon": {
+           "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+          },
+          "collapsedIcon": {
+           "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+          }
+         }
+        },
+        "content": {
+         "type": "object",
+         "required": [
+          "viewPath"
+         ],
+         "additionalProperties": false,
+         "properties": {
+          "type": {
+           "type": "string",
+           "description": "Whether text or a view will be rendered in this accordion header",
+           "enum": [
+            "text",
+            "view"
+           ],
+           "default": "view"
+          },
+          "text": {
+           "type": [
+            "string",
+            "number"
+           ],
+           "description": "Text to display for this accordion header",
+           "visibleWhen": {
+            "property": "type",
+            "equals": "text"
+           }
+          },
+          "useDefaultViewWidth": {
+           "type": "boolean",
+           "description": "Use of view's default width instead of adjusting based on the content's width.",
+           "visibleWhen": {
+            "property": "type",
+            "equals": "view"
+           }
+          },
+          "useDefaultViewHeight": {
+           "type": "boolean",
+           "description": "Use of view's default height instead of adjusting based on the content's height.",
+           "visibleWhen": {
+            "property": "type",
+            "equals": "view"
+           }
+          },
+          "viewPath": {
+           "type": "string",
+           "format": "view-path",
+           "description": "Path to view to render in this accordion header",
+           "visibleWhen": {
+            "property": "type",
+            "equals": "view"
+           }
+          },
+          "viewParams": {
+           "type": "object",
+           "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+           "visibleWhen": {
+            "property": "type",
+            "equals": "view"
+           },
+           "extension": {
+            "view-params": {
+             "path": "../viewPath"
+            }
+           }
+          },
+          "style": {
+           "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+          }
+         }
+        },
+        "height": {
+         "oneOf": [
+          {
+           "type": "string",
+           "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$"
+          },
+          {
+           "type": "number"
+          }
+         ],
+         "description": "The height of the header."
+        },
+        "reverse": {
+         "type": "boolean",
+         "description": "Reverses the order of the toggle and header content."
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       },
+       "default": {
+        "toggle": {
+         "enabled": true,
+         "expandedIcon": {
+          "path": "material/expand_less",
+          "color": "",
+          "style": {
+           "classes": ""
+          }
+         },
+         "collapsedIcon": {
+          "path": "material/expand_more",
+          "color": "",
+          "style": {
+           "classes": ""
+          }
+         }
+        },
+        "content": {
+         "type": "text",
+         "text": "",
+         "useDefaultViewWidth": false,
+         "useDefaultViewHeight": false,
+         "viewPath": "",
+         "viewParams": {},
+         "style": {
+          "classes": ""
+         }
+        },
+        "height": "40px",
+        "reverse": false,
+        "style": {
+         "classes": ""
+        }
+       }
+      },
+      "body": {
+       "type": "object",
+       "required": [
+        "viewPath"
+       ],
+       "properties": {
+        "viewPath": {
+         "type": "string",
+         "format": "view-path",
+         "description": "Path of view to display"
+        },
+        "viewParams": {
+         "type": "object",
+         "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+         "extension": {
+          "view-params": {
+           "path": "../viewPath"
+          }
+         }
+        },
+        "useDefaultViewWidth": {
+         "type": "boolean",
+         "description": "Use of view's default width instead of adjusting based on the content's width."
+        },
+        "useDefaultViewHeight": {
+         "type": "boolean",
+         "description": "Use of view's default height instead of adjusting based on the content's height."
+        },
+        "height": {
+         "oneOf": [
+          {
+           "type": "string",
+           "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$"
+          },
+          {
+           "type": "number"
+          }
+         ],
+         "description": "The height of the body."
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       },
+       "default": {
+        "viewPath": "",
+        "viewParams": {},
+        "useDefaultViewWidth": false,
+        "useDefaultViewHeight": false,
+        "height": "auto",
+        "style": {
+         "classes": "",
+         "margin": "16px"
+        }
+       }
+      }
+     }
+    }
+   },
+   "unusedSpaceStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onItemExpanded",
+   "description": "This event is fired when an item is expanded.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-accordion-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "index": {
+      "type": "number",
+      "description": "The index of the item that was expanded."
+     }
+    }
+   }
+  },
+  {
+   "name": "onItemCollapsed",
+   "description": "This event is fired when an item is collapsed.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-accordion-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "index": {
+      "type": "number",
+      "description": "The index of the item that was expanded."
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

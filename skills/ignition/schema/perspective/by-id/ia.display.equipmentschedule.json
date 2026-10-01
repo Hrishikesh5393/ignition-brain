@@ -1,0 +1,681 @@
+{
+ "id": "ia.display.equipmentschedule",
+ "name": "Equipment Schedule",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Equipment Schedule",
+    "tooltip": "A component that provides a visualization that conveys equipment scheduling information in a concise and easily digestible format."
+   }
+  ]
+ },
+ "defaultMetaName": "EquipmentSchedule",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "addEnabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables or disables the UI interaction and event handling of adding events."
+   },
+   "resizeEnabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables or disables the UI interaction and event handling of resizing events."
+   },
+   "moveEnabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables or disables the UI interaction and event handling of moving events."
+   },
+   "deleteEnabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables or disables the UI interaction and event handling of deleting events."
+   },
+   "clickEnabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables or disables the UI interaction and event handling of clicking events."
+   },
+   "items": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "items": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "",
+       "description": "Item identifier that is used to map scheduled events and downtime. If no id is specified, then no row is created in the schedule."
+      },
+      "label": {
+       "type": "string",
+       "default": "New Item",
+       "description": "The label to be used as the title of the row. Uses the ID if empty."
+      },
+      "iconConfig": {
+       "$ref": "urn:ignition-schema:schemas/icon-schema.json",
+       "description": "Icon to be displayed in the item next to the label."
+      },
+      "headerBackgroundColor": {
+       "type": "string",
+       "description": "The background color of the label used for the item.",
+       "format": "color"
+      },
+      "headerFontColor": {
+       "type": "string",
+       "format": "color",
+       "description": "The font color of the label used for the item."
+      },
+      "headerFontSize": {
+       "type": "number",
+       "description": "The font size of the label used for the item."
+      },
+      "headerStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the label header."
+      },
+      "rowBackgroundColor": {
+       "type": "string",
+       "description": "The background color for the item.",
+       "format": "color"
+      },
+      "rowBottomBorderColor": {
+       "type": "string",
+       "description": "The border bottom color for the item.",
+       "format": "color"
+      },
+      "rowBottomBorderWidth": {
+       "type": "string",
+       "description": "The border bottom width for the item."
+      },
+      "rowBottomBorderStyle": {
+       "type": "string",
+       "description": "The border bottom style for the item."
+      },
+      "rowStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the item."
+      }
+     }
+    }
+   },
+   "dateRange": {
+    "type": "object",
+    "properties": {
+     "startDate": {
+      "type": [
+       "date",
+       "number",
+       "null"
+      ],
+      "default": null
+     },
+     "endDate": {
+      "type": [
+       "date",
+       "number",
+       "null"
+      ],
+      "default": null
+     }
+    },
+    "description": "The visible date range of the equipment schedule. If a non-valid range is provided, will default a week from today."
+   },
+   "defaultZoom": {
+    "enum": [
+     "month",
+     "day",
+     "12-hr",
+     "8-hr",
+     "6-hr",
+     "3-hr",
+     "hours",
+     "minutes"
+    ],
+    "default": "hours",
+    "description": "Defines the default zoom level on load. Will be restricted to the maximum possible zoom level."
+   },
+   "rowHeight": {
+    "type": "number",
+    "default": 46,
+    "description": "Defined the row item height, as well as the grid size."
+   },
+   "scheduledEvents": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "items": {
+     "type": "object",
+     "properties": {
+      "itemId": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "",
+       "description": "The item identifier that is this event associates with."
+      },
+      "eventId": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "",
+       "description": "The identifier that used to distinguish this event. Should be unique among other events."
+      },
+      "startDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "The start date of this event."
+      },
+      "endDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "The end date of this event."
+      },
+      "label": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "Scheduled Event",
+       "description": "The label to be used as the title of the event. Uses the ID if empty."
+      },
+      "leadTime": {
+       "type": "number",
+       "default": 0,
+       "description": "The lead time of this event defined in seconds."
+      },
+      "leadBackgroundColor": {
+       "type": "string",
+       "format": "color",
+       "description": "The background color of the lead time. Will be overwritten by the lead style."
+      },
+      "leadStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the lead time"
+      },
+      "percentDone": {
+       "type": "number",
+       "default": 0,
+       "description": "The percent completion of the event."
+      },
+      "backgroundColor": {
+       "type": "string",
+       "description": "The background color for the scheduled event.",
+       "format": "color"
+      },
+      "fontColor": {
+       "type": "string",
+       "description": "The font color for the label in the scheduled event.",
+       "format": "color"
+      },
+      "fontWeight": {
+       "type": [
+        "number",
+        "string"
+       ],
+       "description": "The font weight for the label in the scheduled event."
+      },
+      "borderWidth": {
+       "type": "number",
+       "description": "The border width for the scheduled event."
+      },
+      "borderColor": {
+       "type": "string",
+       "description": "The border color for the scheduled event.",
+       "format": "color"
+      },
+      "borderStyle": {
+       "type": "string",
+       "description": "The border color for the scheduled event."
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the scheduled event."
+      }
+     }
+    },
+    "default": [],
+    "description": "List of scheduled events."
+   },
+   "downtimeEvents": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "items": {
+     "type": "object",
+     "properties": {
+      "itemId": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "default": "",
+       "description": "The item identifier that is associated with this downtime event."
+      },
+      "startDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "The start date of the downtime event."
+      },
+      "endDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "The end date of the downtime event."
+      },
+      "underlay": {
+       "type": "boolean",
+       "default": false,
+       "descriptions": "Defines whether this downtime even should display above or below other events."
+      },
+      "color": {
+       "type": "string",
+       "description": "Defines the color of the downtime event.",
+       "default": "",
+       "format": "color"
+      },
+      "opacity": {
+       "type": "number",
+       "default": 1,
+       "description": "Defines the opacity of the downtime event."
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the downtime event."
+      }
+     }
+    },
+    "default": []
+   },
+   "breakEvents": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "items": {
+     "type": "object",
+     "properties": {
+      "startDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "Defines the start date of the break event."
+      },
+      "endDate": {
+       "type": [
+        "date",
+        "number",
+        "null"
+       ],
+       "default": null,
+       "description": "Defines the end date of the break event."
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style applied to the break event."
+      }
+     }
+    },
+    "default": [],
+    "description": "List of break events. These are scheduled breaks that are applied to all events."
+   },
+   "selectedEvent": {
+    "type": "object",
+    "properties": {
+     "itemId": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": ""
+     },
+     "eventId": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": ""
+     }
+    },
+    "description": "The last selected scheduled event."
+   },
+   "progressBar": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if progress bars should display on scheduled events."
+     },
+     "bar": {
+      "type": "object",
+      "properties": {
+       "color": {
+        "type": "string",
+        "default": "#323232",
+        "format": "color"
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "track": {
+      "type": "object",
+      "properties": {
+       "color": {
+        "type": "string",
+        "default": "#FFFFFF",
+        "format": "color"
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "valueDisplay": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "default": false,
+        "description": "Determines whether or not to show the value along the progress bar."
+       },
+       "format": {
+        "type": "string",
+        "suggestions": {
+         "none": "none",
+         "integer [1,200]": "0,0",
+         "percent [10.12%]": "0.##%",
+         "currency [$1,000.12]": "$0,0.00",
+         "duration [24:01:00]": "00:00:00"
+        },
+        "default": "0,0.##",
+        "description": "Determines the format of the displayed value."
+       },
+       "justify": {
+        "type": "string",
+        "enum": [
+         "left",
+         "center",
+         "right"
+        ],
+        "default": "center",
+        "description": "Determines the location of the value display."
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "description": "Style applied to the value display."
+       }
+      }
+     }
+    },
+    "description": "Style to be applied to all progress bars of scheduled events."
+   },
+   "currentTimeIndicator": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "default": "#0C7BB3",
+      "description": "The color of the time indicator.",
+      "format": "color"
+     },
+     "opacity": {
+      "type": "number",
+      "default": 1,
+      "description": "The opacity of the time indicator."
+     },
+     "width": {
+      "type": "number",
+      "default": 2,
+      "description": "The width of the time indicator."
+     }
+    }
+   },
+   "headerStyles": {
+    "type": "object",
+    "properties": {
+     "primaryHeaderStyle": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style applied to the primary, top-level header."
+     },
+     "secondaryHeaderStyle": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style applied to the secondary, grouping header. This will only style the backdrop."
+     },
+     "tertiaryHeaderStyle": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style applied to the tertiary, unit header. This will only style the backdrop."
+     }
+    }
+   },
+   "rowStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Base style that is applied to all items."
+   },
+   "selectedEventStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style that is applied on the selected event. This will override any styling applied to the scheduled event."
+   },
+   "scheduledEventStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Base style that is applied to all scheduled events."
+   },
+   "downtimeEventStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Base style that is applied to all downtime events."
+   },
+   "breakEventStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Base style that is applied to all break events."
+   },
+   "bodyStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style that is applied to the body of the grid space. This will only affect the back drop."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style that is applied to the equipment schedule."
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onAddEvent",
+   "description": "Fired after the event has been added.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-equipment-schedule-component-events",
+   "schema": {
+    "type": "object",
+    "description": "",
+    "properties": {
+     "itemId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The item identifier where this event was created in."
+     },
+     "start": {
+      "type": [
+       "number"
+      ],
+      "description": "The start date of the created event."
+     },
+     "end": {
+      "type": [
+       "number"
+      ],
+      "description": "The end date of the created event."
+     }
+    }
+   }
+  },
+  {
+   "name": "onMoveEvent",
+   "description": "Fired after the event has been moved.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-equipment-schedule-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "itemId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The item identifier where this event was moved."
+     },
+     "eventId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The event identifier of the event that was moved."
+     },
+     "start": {
+      "type": [
+       "number"
+      ],
+      "description": "The new start date of the moved event."
+     },
+     "end": {
+      "type": [
+       "number"
+      ],
+      "description": "The new end date of the moved event."
+     }
+    }
+   }
+  },
+  {
+   "name": "onResizeEvent",
+   "description": "Fired after the event has been resized",
+   "documentationUrl": "https://links.inductiveautomation.com/83-equipment-schedule-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "itemId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The item identifier where this event was resized."
+     },
+     "eventId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The event identifier of the event that was resized."
+     },
+     "start": {
+      "type": "number",
+      "description": "The new start date of the resized event."
+     },
+     "end": {
+      "type": "number",
+      "description": "The new end date of the resized event."
+     }
+    }
+   }
+  },
+  {
+   "name": "onDeleteEvent",
+   "description": "Fired after the event has been deleted",
+   "documentationUrl": "https://links.inductiveautomation.com/83-equipment-schedule-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "itemId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The item identifier where this event was deleted."
+     },
+     "eventId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The event identifier of the event that was deleted."
+     },
+     "start": {
+      "type": "number",
+      "description": "The start date of the deleted event."
+     },
+     "end": {
+      "type": "number",
+      "description": "The end date of the deleted event."
+     }
+    }
+   }
+  },
+  {
+   "name": "onClickEvent",
+   "description": "Fired after the event has been clicked",
+   "documentationUrl": "https://links.inductiveautomation.com/83-equipment-schedule-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "itemId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The item identifier where this event was clicked."
+     },
+     "eventId": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The event identifier of the event that was clicked."
+     },
+     "start": {
+      "type": [
+       "number"
+      ],
+      "description": "The start date of the clicked event."
+     },
+     "end": {
+      "type": [
+       "number"
+      ],
+      "description": "The end date of the clicked event."
+     }
+    }
+   }
+  }
+ ]
+}

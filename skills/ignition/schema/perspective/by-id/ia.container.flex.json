@@ -1,0 +1,164 @@
+{
+ "id": "ia.container.flex",
+ "name": "Flex Container",
+ "palette": {
+  "category": "container",
+  "variants": [
+   {
+    "label": "Flex",
+    "tooltip": "A flexible container providing an efficient way to align and distribute space among components, particularly when their size is unknown or dynamic."
+   },
+   {
+    "id": "flex-row",
+    "label": "Row",
+    "tooltip": "A flexible container providing an efficient way to align and distribute space among components, particularly when their size is unknown or dynamic.",
+    "props": {
+     "direction": "row"
+    }
+   },
+   {
+    "id": "flex-column",
+    "label": "Column",
+    "tooltip": "A flexible container providing an efficient way to align and distribute space among components, particularly when their size is unknown or dynamic.",
+    "props": {
+     "direction": "column"
+    }
+   }
+  ]
+ },
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "direction",
+   "wrap",
+   "justify",
+   "alignItems",
+   "alignContent",
+   "style"
+  ],
+  "properties": {
+   "direction": {
+    "type": "string",
+    "enum": [
+     "row",
+     "row-reverse",
+     "column",
+     "column-reverse"
+    ],
+    "default": "row",
+    "description": "Direction of child layout."
+   },
+   "wrap": {
+    "type": "string",
+    "enum": [
+     "nowrap",
+     "wrap",
+     "wrap-reverse"
+    ],
+    "default": "nowrap",
+    "description": "Whether the container should allow children to wrap to next line if space has run out."
+   },
+   "justify": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "space-between",
+     "space-around",
+     "space-evenly"
+    ],
+    "default": "flex-start",
+    "description": "Adjusts placement of children along the main axis when there is extra space, which may be used to fill areas before, after or in-between."
+   },
+   "alignItems": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "baseline",
+     "stretch"
+    ],
+    "default": "stretch",
+    "description": "Adjusts placement of children along the cross axis when there is extra space."
+   },
+   "alignContent": {
+    "type": "string",
+    "enum": [
+     "flex-start",
+     "flex-end",
+     "center",
+     "space-between",
+     "space-around",
+     "stretch"
+    ],
+    "default": "stretch",
+    "description": "Adjusts alignment of wrapped content when there is free space in the cross axis."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": "",
+     "overflow": "auto"
+    }
+   }
+  }
+ },
+ "childPositionSchema": {
+  "type": "object",
+  "properties": {
+   "grow": {
+    "type": "number",
+    "default": 0,
+    "description": "Ability to grow in 'direction' dimension as needed, relative to siblings. If space is available and grow is not zero, it may stretch, depending on sibling rules."
+   },
+   "shrink": {
+    "type": "number",
+    "default": 1,
+    "description": "Ability to shrink in 'direction' dimension as needed, relative to siblings. If space is available and shrink is not zero, it may be compressed, depending on sibling rules."
+   },
+   "basis": {
+    "type": "string",
+    "default": "auto",
+    "description": "Space filled by component by default, before 'grow', 'shrink' and sibling considerations are evaluated. It's the component's base width, if 'direction' is 'row', or 'height' if 'column'."
+   },
+   "align": {
+    "type": "string",
+    "enum": [
+     "auto",
+     "flex-start",
+     "flex-end",
+     "center",
+     "baseline",
+     "stretch"
+    ],
+    "description": "Allow a single flex child to position itself along the cross-axis (Ex: If layout direction is 'row', this adjusts 'y' relatively)."
+   },
+   "display": {
+    "type": "boolean",
+    "default": true,
+    "description": "If false, this child will be excluded from flex container layout"
+   }
+  },
+  "require": [
+   "grow",
+   "shrink",
+   "basis"
+  ],
+  "additionalProperties": false
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

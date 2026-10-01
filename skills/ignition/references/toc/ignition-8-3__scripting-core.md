@@ -1,0 +1,163 @@
+# TOC: references/ignition-8-3/scripting-core.md
+
+1084 lines, ~22.8k tokens. Line ranges are 1-based inclusive; `Read` with offset=start, limit=end-start+1.
+
+L5-7 (0.1k) ## system.config
+  L8-14 (0.3k) ### system.config.copy
+  L15-21 (0.4k) ### system.config.create
+  L22-28 (0.2k) ### system.config.delete
+  L29-35 (0.1k) ### system.config.getActiveMode
+  L36-42 (0.1k) ### system.config.getModes
+  L43-49 (0.2k) ### system.config.getResource
+  L50-56 (0.1k) ### system.config.getResources
+  L57-63 (0.1k) ### system.config.getResourceTypes
+  L64-70 (0.2k) ### system.config.move
+  L71-77 (0.2k) ### system.config.rename
+  L78-84 (0.4k) ### system.config.replace
+L85-87 (0.1k) ## system.dataset
+  L88-94 (0.2k) ### system.dataset.addColumn
+  L95-101 (0.2k) ### system.dataset.addRow
+  L102-108 (0.2k) ### system.dataset.addRows
+  L109-115 (0.1k) ### system.dataset.appendDataset
+  L116-122 (0.1k) ### system.dataset.clearDataset
+  L123-129 (0.1k) ### system.dataset.dataSetToHTML
+  L130-136 (0.1k) ### system.dataset.deleteRow
+  L137-143 (0.1k) ### system.dataset.deleteRows
+  L144-150 (0.2k) ### system.dataset.filterColumns
+  L151-157 (0.2k) ### system.dataset.formatDates
+  L158-164 (0.1k) ### system.dataset.fromCSV
+  L165-171 (0.1k) ### system.dataset.getColumnHeaders
+  L172-178 (0.2k) ### system.dataset.setValue
+  L179-185 (0.2k) ### system.dataset.sort
+  L186-192 (0.2k) ### system.dataset.toCSV
+  L193-199 (0.1k) ### system.dataset.toDataset
+  L200-206 (0.2k) ### system.dataset.toExcel
+  L207-213 (0.2k) ### system.dataset.updateRow
+L214-216 (0.1k) ## system.date
+  L217-223 (0.1k) ### system.date.add*  (family)
+  L224-230 (0.1k) ### system.date.get*  (family)
+  L231-237 (0.2k) ### system.date.*Between  (family)
+  L238-244 (0.1k) ### system.date.format
+  L245-251 (0.1k) ### system.date.fromMillis
+  L252-258 (0.1k) ### system.date.getDate
+  L259-265 (0.1k) ### system.date.getTimezone
+  L266-272 (0.1k) ### system.date.getTimezoneOffset
+  L273-279 (0.1k) ### system.date.getTimezoneRawOffset
+  L280-286 (0.1k) ### system.date.isAfter
+  L287-293 (0.1k) ### system.date.isBefore
+  L294-300 (0.1k) ### system.date.isBetween
+  L301-307 (0.1k) ### system.date.isDaylightTime
+  L308-314 (0.1k) ### system.date.midnight
+  L315-321 (0.1k) ### system.date.now
+  L322-328 (0.1k) ### system.date.parse
+  L329-335 (0.1k) ### system.date.setTime
+  L336-342 (0.1k) ### system.date.toMillis
+L343-345 (0.2k) ## system.db
+  L346-352 (0.2k) ### system.db.addDatasource
+  L353-359 (0.2k) ### system.db.beginNamedQueryTransaction
+  L360-366 (0.2k) ### system.db.beginTransaction
+  L367-373 (0.1k) ### system.db.clearQueryCache
+  L374-380 (0.1k) ### system.db.closeTransaction
+  L381-387 (0.1k) ### system.db.commitTransaction
+  L388-394 (0.2k) ### system.db.createSProcCall
+  L395-401 (0.2k) ### system.db.execQuery
+  L402-408 (0.2k) ### system.db.execScalar
+  L409-415 (0.1k) ### system.db.execSProcCall
+  L416-422 (0.2k) ### system.db.execUpdate
+  L423-429 (0.1k) ### system.db.execUpdateAsync
+  L430-436 (0.2k) ### system.db.getConnectionInfo
+  L437-443 (0.1k) ### system.db.getConnections
+  L444-450 (0.1k) ### system.db.removeDatasource
+  L451-457 (0.1k) ### system.db.rollbackTransaction
+  L458-464 (0.2k) ### system.db.runPrepQuery
+  L465-471 (0.3k) ### system.db.runPrepUpdate
+  L472-478 (0.2k) ### system.db.runSFPrepUpdate
+  L479-485 (0.2k) ### system.db.runScalarPrepQuery
+  L486-492 (0.1k) ### system.db.setDatasourceConnectURL
+  L493-499 (0.1k) ### system.db.setDatasourceEnabled
+  L500-506 (0.1k) ### system.db.setDatasourceMaxConnections
+L507-509 (0.2k) ## system.historian
+  L510-517 (0.3k) ### system.historian.browse
+  L518-524 (0.1k) ### system.historian.deleteAnnotations
+  L525-532 (0.3k) ### system.historian.queryAggregatedPoints
+  L533-539 (0.2k) ### system.historian.queryAnnotations
+  L540-546 (0.1k) ### system.historian.queryMetadata
+  L547-554 (0.3k) ### system.historian.queryRawPoints
+  L555-561 (0.2k) ### system.historian.storeAnnotations
+  L562-568 (0.2k) ### system.historian.storeDataPoints
+  L569-575 (0.2k) ### system.historian.storeMetadata
+  L576-582 (0.2k) ### system.historian.updateRegisteredNodePath
+  L583-585 (0.1k) ### system.historian.types (data type helpers)
+L586-588 (0.1k) ## system.math
+  L589-595 (0.1k) ### system.math.geometricMean
+  L596-602 (0.1k) ### system.math.kurtosis
+  L603-609 (0.1k) ### system.math.max
+  L610-616 (0.1k) ### system.math.mean
+  L617-623 (0.1k) ### system.math.meanDifference
+  L624-630 (0.1k) ### system.math.median
+  L631-637 (0.1k) ### system.math.min
+  L638-644 (0.1k) ### system.math.mode
+  L645-651 (0.1k) ### system.math.normalize
+  L652-658 (0.1k) ### system.math.percentile
+  L659-665 (0.1k) ### system.math.populationVariance
+  L666-672 (0.1k) ### system.math.product
+  L673-679 (0.1k) ### system.math.skewness
+  L680-686 (0.1k) ### system.math.standardDeviation
+  L687-693 (0.1k) ### system.math.sum
+  L694-700 (0.1k) ### system.math.sumDifference
+  L701-707 (0.1k) ### system.math.sumLog
+  L708-714 (0.1k) ### system.math.sumSquares
+  L715-721 (0.1k) ### system.math.variance
+L722-724 (0.0k) ## system.project
+  L725-731 (0.1k) ### system.project.getProjectName
+  L732-738 (0.1k) ### system.project.getProjectNames
+  L739-745 (0.1k) ### system.project.requestScan
+L746-748 (0.2k) ## system.secrets
+  L749-755 (0.1k) ### system.secrets.createEmbeddedSecretConfig
+  L756-762 (0.1k) ### system.secrets.createReferencedSecretConfig
+  L763-769 (0.1k) ### system.secrets.decrypt
+  L770-776 (0.2k) ### system.secrets.encrypt
+  L777-783 (0.1k) ### system.secrets.getProviders
+  L784-790 (0.1k) ### system.secrets.getSecrets
+  L791-797 (0.1k) ### system.secrets.readConfiguredSecretValue
+  L798-804 (0.1k) ### system.secrets.readSecretValue
+L805-807 (0.2k) ## system.tag
+  L808-814 (0.1k) ### system.tag.browse
+  L815-821 (0.1k) ### system.tag.configure
+  L822-828 (0.1k) ### system.tag.copy
+  L829-835 (0.1k) ### system.tag.deleteTags
+  L836-842 (0.1k) ### system.tag.exists
+  L843-849 (0.2k) ### system.tag.exportTags
+  L850-856 (0.1k) ### system.tag.getConfiguration
+  L857-863 (0.1k) ### system.tag.importTags
+  L864-870 (0.1k) ### system.tag.move
+  L871-877 (0.2k) ### system.tag.query
+  L878-884 (0.1k) ### system.tag.readAsync
+  L885-891 (0.1k) ### system.tag.readBlocking
+  L892-898 (0.1k) ### system.tag.rename
+  L899-905 (0.1k) ### system.tag.requestGroupExecution
+  L906-912 (0.1k) ### system.tag.writeAsync
+  L913-919 (0.1k) ### system.tag.writeBlocking
+L920-922 (0.1k) ## system.util
+  L923-929 (0.3k) ### system.util.audit
+  L930-936 (0.1k) ### system.util.execute
+  L937-943 (0.2k) ### system.util.getGatewayStatus
+  L944-950 (0.1k) ### system.util.getGlobals
+  L951-957 (0.1k) ### system.util.getLogger
+  L958-964 (0.1k) ### system.util.getModules
+  L965-971 (0.1k) ### system.util.getProjectName
+  L972-978 (0.1k) ### system.util.getProperty
+  L979-985 (0.1k) ### system.util.getSessionInfo
+  L986-992 (0.1k) ### system.util.getVersion
+  L993-999 (0.2k) ### system.util.invokeAsynchronous
+  L1000-1006 (0.1k) ### system.util.jsonDecode
+  L1007-1013 (0.1k) ### system.util.jsonEncode
+  L1014-1020 (0.1k) ### system.util.modifyTranslation
+  L1021-1027 (0.3k) ### system.util.queryAuditLog
+  L1028-1034 (0.3k) ### system.util.sendMessage
+  L1035-1041 (0.2k) ### system.util.sendRequest
+  L1042-1048 (0.3k) ### system.util.sendRequestAsync
+  L1049-1055 (0.1k) ### system.util.setLoggingLevel
+  L1056-1062 (0.1k) ### system.util.threadDump
+  L1063-1069 (0.1k) ### system.util.translate
+L1070-1084 (1.1k) ## Gotchas and 8.3 notes

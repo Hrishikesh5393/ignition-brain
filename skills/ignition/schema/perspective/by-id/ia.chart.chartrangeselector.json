@@ -1,0 +1,540 @@
+{
+ "_source": "perspective-common-3.3.9.jar!/perspective-timeseries.components.json (bundled component-definition resource; groupId=perspective-timeseries library=PerspectiveTimeseriesCharts hash=b6cb9f73dbcdc115f2bb). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.chart.chartrangeselector",
+ "name": "Chart Range Selector",
+ "palette": {
+  "category": "chart",
+  "variants": [
+   {
+    "label": "Chart Range Selector",
+    "tooltip": "A small chart used to select a time range of data. Complements the Time Series Chart."
+   }
+  ]
+ },
+ "defaultMetaName": "ChartRangeSelector",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+   "enablePanZoom": {
+    "type": "boolean",
+    "description": "Allow the chart to be panned and zoomed.",
+    "default": true
+   },
+   "data": {
+    "description": "The raw data used to build the chart.",
+    "oneOf": [
+     {
+      "type": "array",
+      "description": "Data are an object containing a 'time' entry and value entries. Each value entry must be labeled with the column name that it corresponds to.",
+      "items": {
+       "type": "object",
+       "required": [
+        "time"
+       ],
+       "properties": {
+        "time": {
+         "type": [
+          "string",
+          "number"
+         ],
+         "description": "The timestamp when the data values were captured."
+        }
+       }
+      }
+     },
+     {
+      "type": "array",
+      "description": "Data are an array containing value entries. Each value entry consists of a timestamp (which must be the FIRST value) and one or more values that were captured at that time.",
+      "items": {
+       "type": "array",
+       "description": "The first entry corresponds to the first column (timestamp), and each successive entry corresponds to the remaining column labels.",
+       "items": {
+        "type": [
+         "number",
+         "string"
+        ]
+       }
+      }
+     },
+     {
+      "type": "object",
+      "description": "Data are in the form of a dataset where the timestamp is the FIRST value per entry in the dataset.",
+      "properties": {
+       "columns": {
+        "type": "array"
+       },
+       "rowCount": {
+        "type": "number"
+       }
+      }
+     }
+    ],
+    "default": [],
+    "example": [
+     {
+      "time": 1560469431423,
+      "Temperature": 52
+     },
+     {
+      "time": 1560469432423,
+      "Temperature": 18
+     },
+     {
+      "time": 1560469433423,
+      "Temperature": 26
+     },
+     {
+      "time": 1560469434423,
+      "Temperature": 63
+     },
+     {
+      "time": 1560469435423,
+      "Temperature": 65
+     },
+     {
+      "time": 1560469436423,
+      "Temperature": 12
+     },
+     {
+      "time": 1560469437423,
+      "Temperature": 61
+     },
+     {
+      "time": 1560469438423,
+      "Temperature": 60
+     },
+     {
+      "time": 1560469439423,
+      "Temperature": 58
+     },
+     {
+      "time": 1560469440423,
+      "Temperature": 1
+     }
+    ]
+   },
+   "selectedRange": {
+    "type": "object",
+    "description": "The start and end points of the range selection.",
+    "additionalProperties": false,
+    "required": [
+     "start",
+     "end"
+    ],
+    "properties": {
+     "start": {
+      "type": [
+       "date",
+       "number"
+      ],
+      "description": "A Date or timestamp in milliseconds.",
+      "default": -1
+     },
+     "end": {
+      "type": [
+       "date",
+       "number"
+      ],
+      "description": "A Date or timestamp in milliseconds.",
+      "default": -1
+     }
+    }
+   },
+   "brushRange": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "visible",
+     "dateFormat",
+     "timeFormat"
+    ],
+    "description": "Properties to govern the display of the date/time range below the chart.",
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "Show the brush data range below the chart.",
+      "default": true
+     },
+     "dateFormat": {
+      "type": "string",
+      "description": "The date format of the range using a MomentJS date string (https://momentjs.com/).",
+      "suggestions": {
+       "[7-18-2019]": "M-D-YYYY",
+       "[2019-7-18]": "YYYY-M-D",
+       "[07-18-2019]": "MM-DD-YYYY",
+       "[2019-07-18]": "YYYY-MM-DD",
+       "[Jul 18th 19]": "MMM Do YY",
+       "[July 18th 2019]": "MMMM Do YYYY",
+       "none": "None"
+      },
+      "default": "M-D-YYYY"
+     },
+     "timeFormat": {
+      "type": "string",
+      "description": "The time format of the range using a MomentJS time string (https://momentjs.com/).",
+      "suggestions": {
+       "12 hour [8:41:06]": "h:mm:ss",
+       "12 hour w/ period [8:41:06 AM]": "h:mm:ss A",
+       "24 hour [08:41:06]": "HH:mm:ss",
+       "24 hour w/ milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+       "Unix Millisecond Timestamp [1563464737269]": "x",
+       "Unix Timestamp [1563464737]": "X",
+       "none": "None"
+      },
+      "default": "h:mm:ss"
+     }
+    }
+   },
+   "timeAxis": {
+    "type": "object",
+    "description": "Configuration for the time axis (X axis) of the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "The visible state of the time axis.",
+      "default": true
+     },
+     "tickCount": {
+      "type": "number",
+      "description": "The number of ticks.",
+      "default": 5
+     },
+     "height": {
+      "type": "number",
+      "description": "The height of the time axis.",
+      "default": 35
+     },
+     "color": {
+      "type": "string",
+      "description": "The color of the axis.",
+      "format": "color",
+      "default": ""
+     },
+     "tick": {
+      "type": "object",
+      "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "The color of the ticks.",
+        "format": "color",
+        "default": ""
+       },
+       "label": {
+        "type": "object",
+        "description": "Tick label configuration.",
+        "properties": {
+         "angled": {
+          "type": "boolean",
+          "description": "A flag to toggle the angled state of the tick labels.",
+          "default": false
+         },
+         "format": {
+          "type": "string",
+          "description": "The date/time format displayed by each tick using a MomentJS date string (https://momentjs.com/).",
+          "suggestions": {
+           "Auto": "Auto",
+           "Millisecond [638]": "SSS",
+           "Second [:35]": ":ss",
+           "Hour Minute [8:15]": "h:mm",
+           "Hour with Meridiem [8 AM]": "h A",
+           "Day of Week, Month, and Hour [Monday 2nd, 08 AM]": "dddd Do, hh A",
+           "Abbreviated Day of Week and Month [Mon 2nd]": "ddd Do",
+           "Abbreviated Month and Day of Month [Jan 2nd]": "MMM Do",
+           "Full Month [January]": "MMMM",
+           "Abbreviated Month and Year [Jan 20]": "MMM YY",
+           "Full Year [2020]": "YYYY",
+           "[3-2-2020 8:15:35]": "M-D-YYYY h:mm:ss",
+           "[2020-3-2 8:15:35]": "YYYY-M-D h:mm:ss",
+           "Unix Millisecond Timestamp [1563464737269]": "x",
+           "Unix Timestamp [1563464737]": "X"
+          },
+          "default": "Auto"
+         },
+         "font": {
+          "type": "object",
+          "description": "Tick label font configuration.",
+          "properties": {
+           "color": {
+            "type": "string",
+            "description": "The color of the tick label text.",
+            "format": "color",
+            "default": ""
+           },
+           "size": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "The size of the tick label text.",
+            "default": 10
+           }
+          }
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the tick labels. Any style that applies to an SVG text element can be used.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used.",
+        "default": {
+         "classes": ""
+        }
+       }
+      }
+     },
+     "grid": {
+      "$ref": "#/definitions/grid"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the axis. Any style that applies to an SVG line element can be used.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   },
+   "yAxis": {
+    "type": "object",
+    "description": "Configuration for the Y axis of the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "The visible state of the Y axis.",
+      "default": true
+     },
+     "width": {
+      "type": "number",
+      "description": "The width of the Y axis.",
+      "default": 60
+     },
+     "label": {
+      "type": "object",
+      "description": "Y axis label configuration.",
+      "properties": {
+       "visible": {
+        "type": "boolean",
+        "description": "The visible state of the Y axis label.",
+        "default": true
+       },
+       "text": {
+        "type": "string",
+        "description": "The text of the Y axis label.",
+        "default": ""
+       },
+       "offset": {
+        "type": "number",
+        "description": "Offset the Y axis label from its default position. This allows you to fine tune the label location, which may be necessary depending on the scale and how much room the tick labels take up. Maybe positive or negative.",
+        "default": 0
+       },
+       "font": {
+        "type": "object",
+        "description": "Y axis label font configuration.",
+        "properties": {
+         "color": {
+          "type": "string",
+          "description": "The color of the Y axis label text.",
+          "format": "color",
+          "default": ""
+         },
+         "size": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The size of the Y axis label text.",
+          "default": 10
+         }
+        }
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "description": "Style properties to be applied to the axis label. Any style that applies to an SVG text element can be used.",
+        "default": {
+         "classes": ""
+        }
+       }
+      }
+     },
+     "tick": {
+      "type": "object",
+      "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "The color of the ticks.",
+        "format": "color",
+        "default": ""
+       },
+       "count": {
+        "type": [
+         "number",
+         "string"
+        ],
+        "description": "The number of ticks. If \"Auto\" is used, the ticks will be determined by available space in the interface.",
+        "default": "Auto",
+        "suggestions": {
+         "2": 2,
+         "4": 4,
+         "6": 6,
+         "8": 8,
+         "10": 10,
+         "Auto": "Auto"
+        }
+       },
+       "label": {
+        "type": "object",
+        "description": "Tick label configuration.",
+        "properties": {
+         "format": {
+          "type": "string",
+          "description": "Data format displayed by each tick using a D3 format string (https://github.com/d3/d3-format).",
+          "suggestions": {
+           "Auto": "Auto",
+           "Integer [1234]": "d",
+           "2 Decimal Points [1234.00]": ".2f",
+           "4 Decimal Points [1234.0000]": ".4f",
+           "Comma-Separated Integer [1,234]": ",.0f",
+           "Comma-Separated w/ 2 Decimal Points [1,234.00]": ",.2f",
+           "Percentage [123400%]": ".0%",
+           "Currency [$1,234.00]": "$,.2f",
+           "Hexadecimal (lowercase) [4d2]": "x",
+           "Hexadecimal (uppercase) [4D2]": "X",
+           "Binary [10011010010]": "b",
+           "Octal [2322]": "o",
+           "Exponential [1.234000e+3]": "e"
+          },
+          "default": "Auto"
+         },
+         "font": {
+          "type": "object",
+          "description": "Label font configuration.",
+          "properties": {
+           "color": {
+            "type": "string",
+            "description": "The color of the label text.",
+            "format": "color",
+            "default": ""
+           },
+           "size": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "The size of the label text.",
+            "default": 10
+           }
+          }
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the tick labels. Any style that applies to an SVG text element can be used.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used.",
+        "default": {
+         "classes": ""
+        }
+       }
+      }
+     },
+     "grid": {
+      "$ref": "#/definitions/grid"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the axis. Any style that applies to an SVG line element can be used.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   },
+   "areaStyles": {
+    "$ref": "urn:ignition-schema:schemas/trend-style.schema.json",
+    "description": "The default styles to apply to the chart.",
+    "default": {
+     "colorScheme": "RdBu",
+     "colors": []
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style properties to be applied to the base component.",
+    "default": {
+     "classes": ""
+    }
+   }
+  },
+  "definitions": {
+   "grid": {
+    "type": "object",
+    "description": "Configuration for gridlines to display on this axis.",
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "Visible state of the gridlines. Gridlines are shown only for axes that connect directly to the chart. Any satellite axes will display their tick configurations instead of gridlines.",
+      "default": false
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "description": "Color of the gridlines.",
+      "default": ""
+     },
+     "opacity": {
+      "type": "number",
+      "description": "Opacity of the gridlines.",
+      "default": 0.9
+     },
+     "dashArray": {
+      "type": "number",
+      "description": "Dashed appearance of the gridlines.",
+      "default": 0
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the axis gridlines.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-react-timeseries-js",
+   "path": "/res/perspective/js/PerspectiveTimeseriesCharts.js",
+   "type": "js",
+   "dependencies": [
+    "perspective-components-js"
+   ]
+  },
+  {
+   "name": "perspective-react-timeseries-css",
+   "path": "/res/perspective/css/PerspectiveTimeseriesCharts.css",
+   "type": "css",
+   "dependencies": [
+    "perspective-components-css"
+   ]
+  }
+ ]
+}

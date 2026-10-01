@@ -1,0 +1,368 @@
+{
+ "id": "ia.navigation.menutree",
+ "name": "Menu Tree",
+ "palette": {
+  "category": "navigation",
+  "variants": [
+   {
+    "tooltip": "Provides a hierarchical view of information that can be configured to expand submenu branches and menu items.",
+    "defaultName": "MenuTree"
+   }
+  ]
+ },
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+   "items": {
+    "type": "array",
+    "description": "Config items representing nodes in a subtree from this option. If defined, a submenu will branch from here with these options.",
+    "items": {
+     "$ref": "#/definitions/ConfigItem"
+    },
+    "default": []
+   },
+   "layoutAlignment": {
+    "type": "string",
+    "description": "Which side root menu is aligned to. Submenu slides in from other side.",
+    "enum": [
+     "left",
+     "right"
+    ],
+    "default": "left"
+   },
+   "enabled": {
+    "type": "boolean",
+    "description": "Whether this option is currently enabled to perform its action or render its submenu",
+    "default": true
+   },
+   "itemStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "headerStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "backActionStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "backActionText": {
+    "type": "string",
+    "description": "Text to display in prompt to go back to the previous menu",
+    "default": ""
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "example": {
+   "items": [
+    {
+     "target": "",
+     "items": [
+      {
+       "target": "",
+       "items": [],
+       "navIcon": {
+        "path": ""
+       },
+       "label": {
+        "text": "Submenu item 1",
+        "icon": {
+         "path": ""
+        }
+       },
+       "visible": true,
+       "enabled": true,
+       "showHeader": true,
+       "resetOnClick": false,
+       "backActionText": "",
+       "style": {
+        "classes": ""
+       }
+      },
+      {
+       "target": "",
+       "items": [],
+       "navIcon": {
+        "path": ""
+       },
+       "label": {
+        "text": "Submenu item 2",
+        "icon": {
+         "path": ""
+        }
+       },
+       "visible": true,
+       "enabled": true,
+       "showHeader": true,
+       "resetOnClick": false,
+       "backActionText": "",
+       "style": {
+        "classes": ""
+       }
+      }
+     ],
+     "navIcon": {
+      "path": "material/chevron_right",
+      "color": ""
+     },
+     "label": {
+      "text": "Menu Item 1",
+      "icon": {
+       "path": "material/list"
+      }
+     },
+     "visible": true,
+     "enabled": true,
+     "showHeader": true,
+     "resetOnClick": false,
+     "backActionText": "",
+     "style": {
+      "classes": ""
+     }
+    },
+    {
+     "target": "",
+     "items": [
+      {
+       "target": "",
+       "items": [],
+       "navIcon": {
+        "path": ""
+       },
+       "label": {
+        "text": "Submenu item 1",
+        "icon": {
+         "path": ""
+        }
+       },
+       "visible": true,
+       "enabled": true,
+       "showHeader": true,
+       "resetOnClick": false,
+       "backActionText": "",
+       "style": {
+        "classes": ""
+       }
+      },
+      {
+       "target": "",
+       "items": [],
+       "navIcon": {
+        "path": ""
+       },
+       "label": {
+        "text": "Submenu item 2",
+        "icon": {
+         "path": ""
+        }
+       },
+       "visible": true,
+       "enabled": true,
+       "showHeader": true,
+       "resetOnClick": false,
+       "backActionText": "",
+       "style": {
+        "classes": ""
+       }
+      }
+     ],
+     "navIcon": {
+      "path": "material/chevron_right",
+      "color": ""
+     },
+     "label": {
+      "text": "Menu Item 2",
+      "icon": {
+       "path": "material/list"
+      }
+     },
+     "visible": true,
+     "enabled": true,
+     "showHeader": true,
+     "resetOnClick": false,
+     "backActionText": "",
+     "style": {
+      "classes": ""
+     }
+    }
+   ],
+   "layoutAlignment": "left",
+   "itemStyle": {
+    "classes": ""
+   },
+   "headerStyle": {
+    "classes": ""
+   },
+   "backActionStyle": {
+    "classes": ""
+   },
+   "backActionText": "",
+   "style": {
+    "classes": ""
+   }
+  },
+  "definitions": {
+   "ConfigItem": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+     "target": {
+      "type": "string",
+      "default": "",
+      "description": "A url (external) or a mounted path to a page. If 'items' is empty (no subtree for this option) this will navigate to that location"
+     },
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "$ref": "#/definitions/ConfigItem",
+       "default": {
+        "target": "",
+        "items": [],
+        "navIcon": {
+         "path": ""
+        },
+        "label": {
+         "text": "",
+         "icon": {
+          "path": ""
+         }
+        },
+        "visible": true,
+        "enabled": true,
+        "showHeader": true,
+        "resetOnClick": false,
+        "backActionText": "",
+        "style": {
+         "classes": ""
+        }
+       }
+      },
+      "default": [],
+      "description": "Config items representing nodes in a subtree from this option. If defined, a submenu will branch from here with these options."
+     },
+     "navIcon": {
+      "$ref": "urn:ignition-schema:schemas/icon-schema.json",
+      "default": {
+       "path": "material/chevron_right",
+       "color": ""
+      },
+      "description": "Icon to convey action associated with this option"
+     },
+     "label": {
+      "type": "object",
+      "properties": {
+       "text": {
+        "type": "string",
+        "default": "",
+        "description": "Text to display for this option"
+       },
+       "icon": {
+        "$ref": "urn:ignition-schema:schemas/icon-schema.json",
+        "default": {
+         "path": ""
+        },
+        "description": "Icon to accompany text in this option's label"
+       }
+      }
+     },
+     "visible": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this option should be displayed in menu tree"
+     },
+     "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this option is currently enabled to perform its action or render its submenu"
+     },
+     "showHeader": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to display this option's text as a header/title for its submenu"
+     },
+     "resetOnClick": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to navigate back to the root of the menu tree when selected"
+     },
+     "backActionText": {
+      "type": "string",
+      "description": "Text to display in prompt to go back to the previous menu",
+      "default": ""
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style to apply just to this menu item.",
+      "default": {
+       "classes": ""
+      }
+     }
+    },
+    "default": {
+     "target": "",
+     "items": [],
+     "navIcon": {
+      "path": "material/chevron_right",
+      "color": ""
+     },
+     "label": {
+      "text": "",
+      "icon": {
+       "path": ""
+      }
+     },
+     "visible": true,
+     "enabled": true,
+     "showHeader": true,
+     "resetOnClick": false,
+     "backActionText": "",
+     "style": {
+      "classes": ""
+     }
+    }
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onItemClicked",
+   "description": "Fired whenever an item is clicked on this menu.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-menu-tree-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "label": {
+      "type": "string",
+      "description": "Text to display for this option."
+     },
+     "enabled": {
+      "type": "boolean",
+      "description": "Whether the item interacted with is enabled."
+     },
+     "target": {
+      "type": "string",
+      "description": "A url (external) or a mounted path to a page."
+     },
+     "path": {
+      "type": "array",
+      "description": "A list containing the item indexes leading to the item that was clicked."
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

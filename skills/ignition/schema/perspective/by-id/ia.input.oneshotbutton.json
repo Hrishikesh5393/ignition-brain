@@ -1,0 +1,169 @@
+{
+ "id": "ia.input.oneshotbutton",
+ "name": "One-Shot Button",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "One Shot Button",
+    "tooltip": "A control button that sets a value and waits for it to be reset by some external mechanism."
+   },
+   {
+    "id": "oneshotbutton-primary",
+    "label": "Primary",
+    "tooltip": "A control button that sets a value and waits for it to be reset by some external mechanism."
+   },
+   {
+    "id": "oneshotbutton-secondary",
+    "label": "Secondary",
+    "tooltip": "A control button that sets a value and waits for it to be reset by some external mechanism.",
+    "props": {
+     "primary": false
+    }
+   },
+   {
+    "id": "oneshotbutton-require-confirm",
+    "label": "Require Confirm",
+    "tooltip": "A control button that sets a value and waits for it to be reset by some external mechanism.",
+    "props": {
+     "confirm": {
+      "enabled": true
+     }
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "OneShotButton",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "boolean",
+     "null",
+     "number",
+     "string"
+    ],
+    "default": 0
+   },
+   "setValue": {
+    "type": [
+     "boolean",
+     "null",
+     "number",
+     "string"
+    ],
+    "default": 1
+   },
+   "primary": {
+    "type": "boolean",
+    "default": true,
+    "description": "Toggle between the default primary and secondary button style."
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Whether user can currently interact with the One-Shot Button"
+   },
+   "readyState": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "description": "The text of the button while it's value is not being written."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "icon": {
+      "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+     }
+    },
+    "example": {
+     "text": "One-Shot Button",
+     "style": {
+      "classes": ""
+     },
+     "icon": {
+      "path": "",
+      "style": {
+       "width": "2rem",
+       "height": "24px"
+      }
+     }
+    }
+   },
+   "writingState": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "description": "The text of the button while it's value is being written."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "icon": {
+      "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+     }
+    },
+    "example": {
+     "text": "Writing...",
+     "style": {
+      "classes": ""
+     },
+     "icon": {
+      "path": "material/hourglass_empty",
+      "style": {
+       "width": "2rem",
+       "height": "24px"
+      }
+     }
+    }
+   },
+   "confirm": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, a confirmation box will be shown."
+     },
+     "text": {
+      "type": "string",
+      "default": "Are you sure?",
+      "description": "Message to show user if confirmation is enabled."
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "disabledStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

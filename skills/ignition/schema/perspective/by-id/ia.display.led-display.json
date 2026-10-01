@@ -1,0 +1,103 @@
+{
+ "id": "ia.display.led-display",
+ "name": "LED Display",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "LED Display",
+    "tooltip": "A stylized numeric and/or alphanumeric label styled like a segmented LED and capable of 7-segments or 14-segments."
+   },
+   {
+    "id": "led-display-14",
+    "label": "14 Segment",
+    "tooltip": "A stylized numeric and/or alphanumeric label styled like a segmented LED and capable of 7-segments or 14-segments."
+   },
+   {
+    "id": "led-display-7",
+    "label": "7 Segment",
+    "tooltip": "A stylized numeric and/or alphanumeric label styled like a segmented LED and capable of 7-segments or 14-segments.",
+    "props": {
+     "segmentFormat": "7 segment"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "LedDisplay",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": 0,
+    "description": "Value to be displayed"
+   },
+   "segmentFormat": {
+    "type": "string",
+    "enum": [
+     "7 segment",
+     "14 segment"
+    ],
+    "default": "14 segment",
+    "description": "Style of each character/digit - number of segments that compose the character"
+   },
+   "numberFormat": {
+    "type": "string",
+    "enum": [
+     "#,##0",
+     "#,##0.0",
+     "#,##0.00",
+     "0",
+     "0.0",
+     "0.00",
+     "#,##0.00;(#,##0.00)",
+     "#,##0%",
+     "0.###E0"
+    ],
+    "default": "#,##0.00",
+    "description": "Format of display for numeric values, including commas, decimal places etc."
+   },
+   "backgroundColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of display surface"
+   },
+   "diodeOnColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of segments when switched on"
+   },
+   "diodeOffColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of segments when switched off - generally different from display background color to preserve analogue look"
+   },
+   "locale": {
+    "type": "string",
+    "default": "en-US",
+    "description": "Localization code that determines rules for commas, decimals, etc."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

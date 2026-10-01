@@ -1,0 +1,111 @@
+{
+ "id": "ia.input.slider",
+ "name": "Slider",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Slider",
+    "tooltip": "Enables a user to drag an indicator along a scale to choose a value in a range."
+   }
+  ]
+ },
+ "defaultMetaName": "Slider",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": "number",
+    "default": 0,
+    "description": "Value represented by slider handle"
+   },
+   "min": {
+    "type": "number",
+    "default": 0,
+    "description": "Minimum value for slider scale"
+   },
+   "max": {
+    "type": "number",
+    "default": 100,
+    "description": "Maximum value for slider scale"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "vertical"
+    ],
+    "default": "horizontal",
+    "description": "Whether slider track is aligned vertically or horizontally"
+   },
+   "step": {
+    "type": "number",
+    "default": 1,
+    "description": "Intervals along track at which value may be set"
+   },
+   "labels": {
+    "type": "object",
+    "properties": {
+     "show": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display labels at periodic values along track"
+     },
+     "interval": {
+      "type": "number",
+      "default": 20,
+      "description": "Interval at which to display periodic labels along track"
+     }
+    }
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Whether slider interaction is currently active"
+   },
+   "handleColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of slider handle"
+   },
+   "railColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of slider rail"
+   },
+   "trackColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of slider track"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,2250 @@
+{
+ "_source": "perspective-common-3.3.9.jar!/perspective-map.components.json (bundled component-definition resource; groupId=perspective-map library=PerspectiveMap hash=a243ec3323f900947cd2). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.display.map",
+ "name": "Map",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Map",
+    "tooltip": "Provides a interactive and mobile-friendly map that is customizable in view, zoom level, and user interaction."
+   }
+  ]
+ },
+ "defaultMetaName": "Map",
+ "schema": {
+  "type": "object",
+  "title": "Map",
+  "description": "A Map component.",
+  "properties": {
+   "init": {
+    "type": "object",
+    "description": "Maps initial state on load.",
+    "properties": {
+     "center": {
+      "type": "object",
+      "description": "Initial geographic center of the map",
+      "properties": {
+       "lat": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Latitudinal coordinate.",
+        "default": null
+       },
+       "lng": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Latitudinal coordinate.",
+        "default": null
+       }
+      }
+     },
+     "zoom": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "Initial map zoom level.",
+      "default": null
+     }
+    },
+    "example": {
+     "center": {
+      "lat": 38.660867,
+      "lng": -121.159728
+     },
+     "zoom": 13
+    }
+   },
+   "location": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Use geolocation.",
+      "default": false
+     },
+     "showHeadingIndicator": {
+      "type": "boolean",
+      "description": "Show heading indicator.",
+      "default": true
+     }
+    }
+   },
+   "zoom": {
+    "type": "object",
+    "description": "Zoom related configurations.",
+    "properties": {
+     "controls": {
+      "type": "boolean",
+      "description": "Whether a zoom control is added to the map.",
+      "default": true
+     },
+     "delta": {
+      "type": "number",
+      "description": "Controls how much the map's zoom level will change after a zoomIn(), zoomOut(), pressing + or - on the keyboard, or using the zoom controls. Values smaller than 1 (e.g. 0.5) allow for greater granularity. Be aware that some combinations of fractional delta and snap values (e.g. delta less than/equal to 0.5 and snap set to 1) may cause unresponsive zoom controls due to rounding.",
+      "default": 1
+     },
+     "onBoxZoom": {
+      "type": "boolean",
+      "description": "Whether the map can be zoomed to a rectangular area specified by dragging the mouse while pressing the shift key.",
+      "default": true
+     },
+     "onDoubleClick": {
+      "type": "boolean",
+      "description": "Whether the map can be zoomed in by double clicking on it and zoomed out by double clicking while holding shift.",
+      "default": true
+     },
+     "onScrollWheel": {
+      "type": "boolean",
+      "description": "Whether the map can be zoomed in and out using the scroll wheel.",
+      "default": true
+     },
+     "snap": {
+      "type": "number",
+      "description": "Forces the map's zoom level to always be a multiple of this, particularly right after a fitBounds() or a pinch-zoom. Be aware that some combinations of fractional delta and snap values (e.g. delta less than/equal to 0.5 and snap set to 1) may cause unresponsive zoom controls due to rounding.",
+      "default": 1
+     },
+     "max": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "Maximum zoom level of the map.",
+      "default": null
+     },
+     "min": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "Minimum zoom level of the map.",
+      "default": null
+     },
+     "animation": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "description": "Whether the map zoom animation is enabled",
+        "default": true
+       },
+       "threshold": {
+        "type": "number",
+        "description": "Won't animate zoom if the zoom difference exceeds this value.",
+        "default": 4
+       }
+      }
+     }
+    }
+   },
+   "customControls": {
+    "type": "array",
+    "description": "Custom map controls displaying views that are shown in a corner of the map.",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "path"
+     ],
+     "properties": {
+      "path": {
+       "type": "string",
+       "format": "view-path",
+       "description": "Path to the view that will be used as the display for the control.",
+       "default": ""
+      },
+      "params": {
+       "type": "object",
+       "description": "Parameters to be passed to the view within the control. Names in this object must match input parameters defined on the view.",
+       "extension": {
+        "view-params": {
+         "path": "/path"
+        }
+       },
+       "default": {}
+      },
+      "position": {
+       "type": "string",
+       "enum": [
+        "top-right",
+        "bottom-right",
+        "bottom-left"
+       ],
+       "description": "Corner to which the control should be anchored.",
+       "default": "top-right"
+      },
+      "enabled": {
+       "type": "boolean",
+       "description": "Enabled state of the control.",
+       "default": true
+      }
+     }
+    },
+    "default": []
+   },
+   "attribution": {
+    "type": "boolean",
+    "description": "Whether an attribution control is added to the map.",
+    "default": true
+   },
+   "closePopupsOnClick": {
+    "type": "boolean",
+    "description": "Set it to false if you don't want popups to close when user clicks the map.",
+    "default": true
+   },
+   "trackResize": {
+    "type": "boolean",
+    "description": "Whether the map automatically handles browser window resize to update itself.",
+    "default": false
+   },
+   "keyboardNav": {
+    "type": "boolean",
+    "description": "Makes the map focusable and allows users to navigate the map with keyboard arrows and +/- keys.",
+    "default": true
+   },
+   "keyboardPanDelta": {
+    "type": "number",
+    "description": "Amount of pixels to pan when pressing an arrow key.",
+    "default": 80
+   },
+   "dragging": {
+    "type": "boolean",
+    "description": "Whether the map is draggable with mouse/touch or not.",
+    "default": true
+   },
+   "maxBounds": {
+    "type": "object",
+    "description": "When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the user tries to pan outside the view.",
+    "properties": {
+     "corner1": {
+      "type": "object",
+      "properties": {
+       "lat": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Latitudinal coordinate.",
+        "default": null
+       },
+       "lng": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Longitudinal coordinate.",
+        "default": null
+       }
+      }
+     },
+     "corner2": {
+      "type": "object",
+      "properties": {
+       "lat": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Latitudinal coordinate.",
+        "default": null
+       },
+       "lng": {
+        "type": [
+         "number",
+         "null"
+        ],
+        "description": "Longitudinal coordinate.",
+        "default": null
+       }
+      }
+     }
+    }
+   },
+   "fadeAnimation": {
+    "type": "boolean",
+    "description": "Whether the tile fade animation is enabled.",
+    "default": true
+   },
+   "layers": {
+    "type": "object",
+    "description": "Map ui, vector, and raster layers.",
+    "properties": {
+     "raster": {
+      "type": "object",
+      "description": "Map raster layers.",
+      "properties": {
+       "tile": {
+        "type": "array",
+        "description": "Map tile layers.",
+        "items": {
+         "type": "object",
+         "description": "A tile service layer configuration object",
+         "properties": {
+          "url": {
+           "type": "string",
+           "description": "This can be a either a URL template if using standard tile service (i.e. form of http://{s}.somedomain.com/blabla/{z}/{x}/{y}{r}.png), or a Web Map Services url.  For url templates you can include your api key directly (i.e. http://{s}.somedomain.com/blabla/{z}/{x}/{y}{r}.png?apiKey=12345) or include it in the url template params (i.e. http://{s}.somedomain.com/blabla/{z}/{x}/{y}{r}.png?apiKey={apiKeyParam}).  If you'd like to dynamically change the tile feature layer in the url template, include this in the template params as well so that you may make this change via binding or script.",
+           "default": "",
+           "example": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          },
+          "urlTemplateParams": {
+           "type": "object",
+           "description": "An object of params to use with URL template string, if the url prop is a template string (i.e. contains {z}/{x}/{y}).",
+           "additionalProperties": {
+            "type": "string"
+           },
+           "default": {}
+          },
+          "WMS": {
+           "type": "object",
+           "description": "Web Map Service tile layer provider configurations.  Used only if the url is not a template string.  See: https://en.wikipedia.org/wiki/Web_Map_Service",
+           "properties": {
+            "layers": {
+             "type": "string",
+             "description": "(Required) Comma-separated list of WMS layers to show.",
+             "default": ""
+            },
+            "styles": {
+             "type": "string",
+             "description": "Comma-separated list of WMS styles.",
+             "default": ""
+            },
+            "format": {
+             "type": "string",
+             "description": "WMS image format (use 'image/png' for layers with transparency).",
+             "default": "image/jpeg"
+            },
+            "transparent": {
+             "type": "boolean",
+             "description": "If true, the WMS service will return images with transparency.",
+             "default": false
+            },
+            "version": {
+             "type": [
+              "string",
+              "number"
+             ],
+             "description": "Version of the WMS service to use.",
+             "default": "1.1.1"
+            },
+            "uppercase": {
+             "type": "boolean",
+             "description": "If true, WMS request parameters keys will be uppercase.",
+             "default": false
+            }
+           }
+          },
+          "options": {
+           "type": "object",
+           "description": "Options for standard tile layer creation.",
+           "properties": {
+            "attribution": {
+             "type": "string",
+             "description": "This tile layers attribution.",
+             "default": ""
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Opacity of tiles.",
+             "default": 1
+            },
+            "zIndex": {
+             "type": "number",
+             "description": "The z-index of tiles in the grid.",
+             "default": 1
+            },
+            "tileSize": {
+             "type": "object",
+             "description": "Width and height of tiles in the grid.",
+             "properties": {
+              "width": {
+               "type": "number",
+               "description": "The width of tiles in the grid.",
+               "default": 256
+              },
+              "height": {
+               "type": "number",
+               "description": "The height of tiles in the grid.",
+               "default": 256
+              }
+             }
+            },
+            "update": {
+             "type": "object",
+             "description": "Tile update options.",
+             "properties": {
+              "whenZooming": {
+               "type": "boolean",
+               "description": "By default, a smooth animation will update grid layers every integer zoom level. Setting this to false will update the grid layer only when the smooth animation ends.",
+               "default": true
+              },
+              "whenIdle": {
+               "type": "boolean",
+               "description": "Load new tiles only when panning ends. True by default on mobile browsers, in order to avoid too many requests and keep smooth navigation. False otherwise in order to display new tiles during panning.",
+               "default": false
+              },
+              "interval": {
+               "type": "number",
+               "description": "Tiles will not update more than once every update interval milliseconds when panning.",
+               "default": 200
+              }
+             }
+            },
+            "zoom": {
+             "type": "object",
+             "properties": {
+              "max": {
+               "type": "number",
+               "description": "The maximum zoom level up to which this layer will be displayed (inclusive).",
+               "default": 18
+              },
+              "min": {
+               "type": "number",
+               "description": "The minimum zoom level down to which this layer will be displayed (inclusive).",
+               "default": 0
+              },
+              "offset": {
+               "type": "number",
+               "description": "The zoom number used in tile URLs will be offset with this value.",
+               "default": 0
+              },
+              "reverse": {
+               "type": "boolean",
+               "description": "If set to true, the zoom number used in tile URLs will be reversed (maxZoom - zoom instead of zoom).",
+               "default": false
+              },
+              "native": {
+               "type": "object",
+               "description": "Native zoom levels.",
+               "properties": {
+                "max": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Maximum zoom number the tile source has available. If it is specified, the tiles on all zoom levels higher than maxNativeZoom will be loaded from maxNativeZoom level and auto-scaled.",
+                 "default": null
+                },
+                "min": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Minimum zoom number the tile source has available. If it is specified, the tiles on all zoom levels lower than minNativeZoom will be loaded from minNativeZoom level and auto-scaled.",
+                 "default": null
+                }
+               }
+              }
+             }
+            },
+            "subdomains": {
+             "type": "array",
+             "description": "Subdomains of the tile service. Passed in the form of an array of strings (where each string is a subdomain name). For example, ['a', 'b', 'c']",
+             "default": [
+              "a",
+              "b",
+              "c"
+             ]
+            },
+            "errorTileUrl": {
+             "type": "string",
+             "description": "URL to the tile image to show in place of the tile that failed to load.",
+             "default": ""
+            },
+            "tms": {
+             "type": "boolean",
+             "description": "If true, inverses Y axis numbering for tiles (turn this on for Tile Map Service services).",
+             "default": false
+            },
+            "detectRetina": {
+             "type": "boolean",
+             "description": "If true and user is on a retina display, it will request four tiles of half the specified size and a bigger zoom level in place of one to utilize the high resolution.",
+             "default": false
+            },
+            "crossOrigin": {
+             "type": [
+              "boolean",
+              "string"
+             ],
+             "description": "Whether the crossOrigin attribute will be added to the tiles. If a String is provided, all tiles will have their crossOrigin attribute set to the String provided. This is needed if you want to access tile pixel data. Refer to CORS Settings (https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) for valid String values.",
+             "default": false
+            }
+           }
+          }
+         }
+        },
+        "default": []
+       },
+       "image": {
+        "type": "array",
+        "description": "",
+        "items": {
+         "type": "object",
+         "description": "An image layer configuration object",
+         "properties": {
+          "source": {
+           "type": "string",
+           "description": "Image url.",
+           "default": ""
+          },
+          "bounds": {
+           "type": "object",
+           "description": "Rectangle bounds.",
+           "properties": {
+            "corner1": {
+             "type": "object",
+             "properties": {
+              "lat": {
+               "type": [
+                "number",
+                "null"
+               ],
+               "description": "Latitudinal coordinate.",
+               "default": null
+              },
+              "lng": {
+               "type": [
+                "number",
+                "null"
+               ],
+               "description": "Longitudinal coordinate.",
+               "default": null
+              }
+             }
+            },
+            "corner2": {
+             "type": "object",
+             "properties": {
+              "lat": {
+               "type": [
+                "number",
+                "null"
+               ],
+               "description": "Latitudinal coordinate.",
+               "default": null
+              },
+              "lng": {
+               "type": [
+                "number",
+                "null"
+               ],
+               "description": "Longitudinal coordinate.",
+               "default": null
+              }
+             }
+            }
+           },
+           "default": {
+            "corner1": {
+             "lat": null,
+             "lng": null
+            },
+            "corner2": {
+             "lat": null,
+             "lng": null
+            }
+           }
+          },
+          "options": {
+           "type": "object",
+           "description": "Options for the image overlay",
+           "properties": {
+            "opacity": {
+             "type": "number",
+             "description": "The opacity of the image overlay.",
+             "default": 1
+            },
+            "alt": {
+             "type": "string",
+             "description": "Text for the alt attribute of the image (useful for accessibility).",
+             "default": ""
+            },
+            "crossOrigin": {
+             "type": [
+              "boolean",
+              "string"
+             ],
+             "description": "Whether the crossOrigin attribute will be added to the image. If a String is provided, the image will have its crossOrigin attribute set to the String provided. This is needed if you want to access image pixel data. Refer to CORS Settings for valid String values.",
+             "default": false
+            },
+            "errorOverlayUrl": {
+             "type": "string",
+             "description": "URL to the overlay image to show in place of the overlay that failed to load.",
+             "default": ""
+            },
+            "zIndex": {
+             "type": "number",
+             "description": "The explicit zIndex of the image layer.",
+             "default": 1
+            }
+           }
+          }
+         }
+        },
+        "default": []
+       }
+      },
+      "default": {
+       "tile": [],
+       "image": []
+      }
+     },
+     "vector": {
+      "type": "object",
+      "description": "Map vector layers.",
+      "properties": {
+       "polygon": {
+        "type": "array",
+        "description": "An array of polygons layers.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "polygons": {
+           "type": "array",
+           "description": "An array of polygons each consisting of an array of points that create a single polygon.",
+           "items": {
+            "oneOf": [
+             {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": [
+                 "null",
+                 "boolean",
+                 "object",
+                 "array",
+                 "number",
+                 "string",
+                 "date",
+                 "dataset"
+                ],
+                "description": "A unique name which is used to distinguish this element from others.  This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "default": ""
+               },
+               "properties": {
+                "type": "object",
+                "description": "Properties of this element.  These are provided to any applicable interaction event handlers, such as click handlers.",
+                "default": {}
+               },
+               "points": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "lat": {
+                   "type": [
+                    "number",
+                    "null"
+                   ],
+                   "description": "Latitudinal coordinate.",
+                   "default": null
+                  },
+                  "lng": {
+                   "type": [
+                    "number",
+                    "null"
+                   ],
+                   "description": "Longitudinal coordinate.",
+                   "default": null
+                  }
+                 }
+                },
+                "default": []
+               }
+              }
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "lat": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Latitudinal coordinate.",
+                 "default": null
+                },
+                "lng": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Longitudinal coordinate.",
+                 "default": null
+                }
+               }
+              },
+              "default": []
+             }
+            ],
+            "default": {
+             "name": "",
+             "properties": {},
+             "points": []
+            }
+           },
+           "default": []
+          },
+          "smoothFactor": {
+           "type": "number",
+           "description": "How much to simplify the polyline on each zoom level. More means better performance and smoother look, and less means more accurate representation.",
+           "default": 1
+          },
+          "noClip": {
+           "type": "boolean",
+           "description": "Disable polyline clipping.",
+           "default": false
+          },
+          "event": {
+           "type": "object",
+           "properties": {
+            "stopPropagation": {
+             "type": "boolean",
+             "description": "When enabled, this prevents other mouse event interactions from happening outside of polygon events",
+             "default": false
+            }
+           }
+          },
+          "stroke": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Stroke color.",
+             "default": ""
+            },
+            "weight": {
+             "type": "number",
+             "description": "Stroke width in pixels",
+             "default": 3
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Stroke opacity. (0-1)",
+             "default": 1
+            },
+            "dashArray": {
+             "type": "string",
+             "description": "Stroke dash array.",
+             "default": ""
+            },
+            "dashOffset": {
+             "type": "string",
+             "description": "Defines the distance into the dash patter to start the dash.",
+             "default": ""
+            },
+            "lineCap": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the end of the stroke.",
+             "enum": [
+              "round",
+              "butt",
+              "square"
+             ],
+             "default": "round"
+            },
+            "lineJoin": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the corners of the stroke.",
+             "enum": [
+              "round",
+              "arcs",
+              "bevel",
+              "miter",
+              "miter-clip"
+             ],
+             "default": "round"
+            }
+           }
+          },
+          "fill": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to fill the path with color. Set it to false to disable filling.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Fill color.",
+             "default": ""
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Fill opacity. (0-1)",
+             "default": 1
+            },
+            "rule": {
+             "type": "string",
+             "description": "Presentation attribute defining the algorithm to use to determine the inside part of a shape. See: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule",
+             "enum": [
+              "nonzero",
+              "evenodd"
+             ],
+             "default": "nonzero"
+            }
+           }
+          }
+         }
+        }
+       },
+       "polyline": {
+        "type": "array",
+        "description": "An array of polyline layers.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "polylines": {
+           "type": "array",
+           "description": "An array of polylines each consisting of an array of points that create a single polyline.",
+           "items": {
+            "oneOf": [
+             {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": [
+                 "null",
+                 "boolean",
+                 "object",
+                 "array",
+                 "number",
+                 "string",
+                 "date",
+                 "dataset"
+                ],
+                "description": "A unique name which is used to distinguish this element from others.  This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "default": ""
+               },
+               "properties": {
+                "type": "object",
+                "description": "Properties of this element.  These are provided to any applicable interaction event handlers, such as click handlers.",
+                "default": {}
+               },
+               "points": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "lat": {
+                   "type": [
+                    "number",
+                    "null"
+                   ],
+                   "description": "Latitudinal coordinate.",
+                   "default": null
+                  },
+                  "lng": {
+                   "type": [
+                    "number",
+                    "null"
+                   ],
+                   "description": "Longitudinal coordinate.",
+                   "default": null
+                  }
+                 }
+                },
+                "default": []
+               }
+              }
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "lat": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Latitudinal coordinate.",
+                 "default": null
+                },
+                "lng": {
+                 "type": [
+                  "number",
+                  "null"
+                 ],
+                 "description": "Longitudinal coordinate.",
+                 "default": null
+                }
+               }
+              },
+              "default": []
+             }
+            ],
+            "default": {
+             "name": "",
+             "properties": {},
+             "points": []
+            }
+           },
+           "default": []
+          },
+          "smoothFactor": {
+           "type": "number",
+           "description": "How much to simplify the polyline on each zoom level. More means better performance and smoother look, and less means more accurate representation.",
+           "default": 1
+          },
+          "noClip": {
+           "type": "boolean",
+           "description": "Disable polyline clipping.",
+           "default": false
+          },
+          "event": {
+           "type": "object",
+           "properties": {
+            "stopPropagation": {
+             "type": "boolean",
+             "description": "When enabled, this prevents other mouse event interactions from happening outside of polyline events",
+             "default": false
+            }
+           }
+          },
+          "stroke": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Stroke color.",
+             "default": ""
+            },
+            "weight": {
+             "type": "number",
+             "description": "Stroke width in pixels",
+             "default": 3
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Stroke opacity. (0-1)",
+             "default": 1
+            },
+            "dashArray": {
+             "type": "string",
+             "description": "Stroke dash array.",
+             "default": ""
+            },
+            "dashOffset": {
+             "type": "string",
+             "description": "Defines the distance into the dash patter to start the dash.",
+             "default": ""
+            },
+            "lineCap": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the end of the stroke.",
+             "enum": [
+              "round",
+              "butt",
+              "square"
+             ],
+             "default": "round"
+            },
+            "lineJoin": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the corners of the stroke.",
+             "enum": [
+              "round",
+              "arcs",
+              "bevel",
+              "miter",
+              "miter-clip"
+             ],
+             "default": "round"
+            }
+           }
+          },
+          "fill": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to fill the path with color. Set it to false to disable filling.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Fill color.",
+             "default": ""
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Fill opacity. (0-1)",
+             "default": 1
+            },
+            "rule": {
+             "type": "string",
+             "description": "Presentation attribute defining the algorithm to use to determine the inside part of a shape. See: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule",
+             "enum": [
+              "nonzero",
+              "evenodd"
+             ],
+             "default": "nonzero"
+            }
+           }
+          }
+         }
+        }
+       },
+       "rectangle": {
+        "type": "array",
+        "description": "An array of rectangle layers.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "rectangles": {
+           "type": "array",
+           "description": "An array of rectangle bounds each consisting of two corners that create a single rectangle.",
+           "items": {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": [
+               "null",
+               "boolean",
+               "object",
+               "array",
+               "number",
+               "string",
+               "date",
+               "dataset"
+              ],
+              "description": "A unique name which is used to distinguish this element from others.  This name is provided to any applicable interaction event handlers, such as click handlers.",
+              "default": ""
+             },
+             "properties": {
+              "type": "object",
+              "description": "Properties of this element.  These are provided to any applicable interaction event handlers, such as click handlers.",
+              "default": {}
+             },
+             "corner1": {
+              "type": "object",
+              "properties": {
+               "lat": {
+                "type": [
+                 "number",
+                 "null"
+                ],
+                "description": "Latitudinal coordinate.",
+                "default": null
+               },
+               "lng": {
+                "type": [
+                 "number",
+                 "null"
+                ],
+                "description": "Longitudinal coordinate.",
+                "default": null
+               }
+              }
+             },
+             "corner2": {
+              "type": "object",
+              "properties": {
+               "lat": {
+                "type": [
+                 "number",
+                 "null"
+                ],
+                "description": "Latitudinal coordinate.",
+                "default": null
+               },
+               "lng": {
+                "type": [
+                 "number",
+                 "null"
+                ],
+                "description": "Longitudinal coordinate.",
+                "default": null
+               }
+              }
+             }
+            }
+           }
+          },
+          "smoothFactor": {
+           "type": "number",
+           "description": "How much to simplify the polyline on each zoom level. More means better performance and smoother look, and less means more accurate representation.",
+           "default": 1
+          },
+          "noClip": {
+           "type": "boolean",
+           "description": "Disable polyline clipping.",
+           "default": false
+          },
+          "event": {
+           "type": "object",
+           "properties": {
+            "stopPropagation": {
+             "type": "boolean",
+             "description": "When enabled, this prevents other mouse event interactions from happening outside of rectangle events",
+             "default": false
+            }
+           }
+          },
+          "stroke": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Stroke color.",
+             "default": ""
+            },
+            "weight": {
+             "type": "number",
+             "description": "Stroke width in pixels",
+             "default": 3
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Stroke opacity. (0-1)",
+             "default": 1
+            },
+            "dashArray": {
+             "type": "string",
+             "description": "Stroke dash array.",
+             "default": ""
+            },
+            "dashOffset": {
+             "type": "string",
+             "description": "Defines the distance into the dash patter to start the dash.",
+             "default": ""
+            },
+            "lineCap": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the end of the stroke.",
+             "enum": [
+              "round",
+              "butt",
+              "square"
+             ],
+             "default": "round"
+            },
+            "lineJoin": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the corners of the stroke.",
+             "enum": [
+              "round",
+              "arcs",
+              "bevel",
+              "miter",
+              "miter-clip"
+             ],
+             "default": "round"
+            }
+           }
+          },
+          "fill": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to fill the path with color. Set it to false to disable filling.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Fill color.",
+             "default": ""
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Fill opacity. (0-1)",
+             "default": 1
+            },
+            "rule": {
+             "type": "string",
+             "description": "Presentation attribute defining the algorithm to use to determine the inside part of a shape. See: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule",
+             "enum": [
+              "nonzero",
+              "evenodd"
+             ],
+             "default": "nonzero"
+            }
+           }
+          }
+         }
+        }
+       },
+       "circle": {
+        "type": "array",
+        "description": "An array of circle layers.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "circles": {
+           "type": "array",
+           "description": "An array of circles each consisting of a center point that creates a single circle.",
+           "items": {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": [
+               "null",
+               "boolean",
+               "object",
+               "array",
+               "number",
+               "string",
+               "date",
+               "dataset"
+              ],
+              "description": "A unique name which is used to distinguish this element from others.  This name is provided to any applicable interaction event handlers, such as click handlers.",
+              "default": ""
+             },
+             "properties": {
+              "type": "object",
+              "description": "Properties of this element.  These are provided to any applicable interaction event handlers, such as click handlers.",
+              "default": {}
+             },
+             "lat": {
+              "type": [
+               "number",
+               "null"
+              ],
+              "description": "Latitudinal coordinate.",
+              "default": null
+             },
+             "lng": {
+              "type": [
+               "number",
+               "null"
+              ],
+              "description": "Longitudinal coordinate.",
+              "default": null
+             }
+            }
+           },
+           "default": []
+          },
+          "radius": {
+           "type": "number",
+           "description": "Radius of the circle marker, in pixels",
+           "default": 10
+          },
+          "event": {
+           "type": "object",
+           "properties": {
+            "stopPropagation": {
+             "type": "boolean",
+             "description": "When enabled, this prevents other mouse event interactions from happening outside of circle events",
+             "default": false
+            }
+           }
+          },
+          "stroke": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Stroke color.",
+             "default": ""
+            },
+            "weight": {
+             "type": "number",
+             "description": "Stroke width in pixels",
+             "default": 3
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Stroke opacity. (0-1)",
+             "default": 1
+            },
+            "dashArray": {
+             "type": "string",
+             "description": "Stroke dash array.",
+             "default": ""
+            },
+            "dashOffset": {
+             "type": "string",
+             "description": "Defines the distance into the dash patter to start the dash.",
+             "default": ""
+            },
+            "lineCap": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the end of the stroke.",
+             "enum": [
+              "round",
+              "butt",
+              "square"
+             ],
+             "default": "round"
+            },
+            "lineJoin": {
+             "type": "string",
+             "description": "A string that defines shape to be used at the corners of the stroke.",
+             "enum": [
+              "round",
+              "arcs",
+              "bevel",
+              "miter",
+              "miter-clip"
+             ],
+             "default": "round"
+            }
+           }
+          },
+          "fill": {
+           "type": "object",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Whether to fill the path with color. Set it to false to disable filling.",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Fill color.",
+             "default": ""
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Fill opacity. (0-1)",
+             "default": 1
+            },
+            "rule": {
+             "type": "string",
+             "description": "Presentation attribute defining the algorithm to use to determine the inside part of a shape. See: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule",
+             "enum": [
+              "nonzero",
+              "evenodd"
+             ],
+             "default": "nonzero"
+            }
+           }
+          }
+         }
+        }
+       }
+      },
+      "default": {
+       "polygon": [],
+       "polyline": [],
+       "rectangle": [],
+       "circle": []
+      }
+     },
+     "ui": {
+      "type": "object",
+      "description": "Map ui layers.",
+      "properties": {
+       "marker": {
+        "description": "Map marker layers.",
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "name": {
+           "type": [
+            "null",
+            "boolean",
+            "object",
+            "array",
+            "number",
+            "string",
+            "date",
+            "dataset"
+           ],
+           "description": "A unique name which is used to distinguish this element from others.  This name is provided to any applicable interaction event handlers, such as click handlers.",
+           "default": ""
+          },
+          "properties": {
+           "type": "object",
+           "description": "Properties of this element.  These are provided to any applicable interaction event handlers, such as click handlers.",
+           "default": {}
+          },
+          "enabled": {
+           "type": "boolean",
+           "description": "Determines if marker is shown on map",
+           "default": true
+          },
+          "lat": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Latitudinal coordinate.",
+           "default": null
+          },
+          "lng": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Longitudinal coordinate.",
+           "default": null
+          },
+          "opacity": {
+           "type": "number",
+           "description": "Marker opacity.",
+           "default": 1
+          },
+          "icon": {
+           "type": "object",
+           "description": "Marker icon configuration.",
+           "properties": {
+            "path": {
+             "type": "string",
+             "description": "Icon path, otherwise uses default marker icon.",
+             "default": "material/location_on",
+             "format": "icon-path"
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "description": "Fill color.",
+             "default": "#4190F7"
+            },
+            "rotate": {
+             "type": "number",
+             "description": "Rotation degree.",
+             "default": 0
+            },
+            "size": {
+             "type": "object",
+             "properties": {
+              "width": {
+               "type": "number",
+               "description": "Marker width.",
+               "default": 36
+              },
+              "height": {
+               "type": "number",
+               "description": "Marker height.",
+               "default": 36
+              }
+             }
+            },
+            "style": {
+             "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+            }
+           }
+          },
+          "event": {
+           "type": "object",
+           "properties": {
+            "stopPropagation": {
+             "type": "boolean",
+             "description": "When enabled, this prevents other mouse event interactions from happening outside of marker events",
+             "default": false
+            }
+           }
+          },
+          "tooltip": {
+           "type": "object",
+           "description": "This markers tooltip configuration. If tooltip is enabled.",
+           "properties": {
+            "content": {
+             "type": "object",
+             "description": "The tooltip content to display.",
+             "properties": {
+              "text": {
+               "type": "string",
+               "description": "Text to display.",
+               "default": ""
+              },
+              "view": {
+               "type": "object",
+               "description": "A view to display as tooltip content.  If configured, overrides the text property.",
+               "properties": {
+                "path": {
+                 "type": "string",
+                 "default": "",
+                 "format": "view-path",
+                 "description": "Path of view to display"
+                },
+                "params": {
+                 "type": "object",
+                 "default": {},
+                 "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                 "extension": {
+                  "view-params": {
+                   "path": "../path"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "direction": {
+             "type": "string",
+             "description": "Direction where to open the tooltip. Possible values are: right, left, top, bottom, center, auto. auto will dynamically switch between right and left according to the tooltip position on the map.",
+             "enum": [
+              "auto",
+              "right",
+              "left",
+              "top",
+              "bottom",
+              "center"
+             ],
+             "default": "auto"
+            },
+            "permanent": {
+             "type": "boolean",
+             "description": "Whether to open the tooltip permanently or only on mouseover.",
+             "default": false
+            },
+            "sticky": {
+             "type": "boolean",
+             "description": "If true, the tooltip will follow the mouse instead of being fixed at the feature center.",
+             "default": false
+            },
+            "opacity": {
+             "type": "number",
+             "description": "Tooltip opacity.",
+             "default": 1
+            }
+           }
+          },
+          "popup": {
+           "type": "object",
+           "description": "Popup configuration for this marker.",
+           "properties": {
+            "enabled": {
+             "type": "boolean",
+             "description": "Enable marker popup.",
+             "default": false
+            },
+            "content": {
+             "type": "object",
+             "description": "The popup content to display.",
+             "properties": {
+              "text": {
+               "type": "string",
+               "description": "Text to display.",
+               "default": ""
+              },
+              "view": {
+               "type": "object",
+               "description": "A view to display as popup content.  If configured, overrides the text property.",
+               "properties": {
+                "path": {
+                 "type": "string",
+                 "default": "",
+                 "format": "view-path",
+                 "description": "Path of view to display"
+                },
+                "params": {
+                 "type": "object",
+                 "default": {},
+                 "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                 "extension": {
+                  "view-params": {
+                   "path": "../path"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "width": {
+             "type": "object",
+             "properties": {
+              "max": {
+               "type": "number",
+               "description": "Max popup width in pixels.",
+               "default": 300
+              },
+              "min": {
+               "type": "number",
+               "description": "Min popup width in pixels.",
+               "default": 50
+              }
+             }
+            },
+            "height": {
+             "type": "object",
+             "properties": {
+              "max": {
+               "type": [
+                "number",
+                "null"
+               ],
+               "description": "Max popup height in pixels.",
+               "default": null
+              }
+             }
+            },
+            "pan": {
+             "type": "object",
+             "description": "Popup pan configuration.",
+             "properties": {
+              "auto": {
+               "type": "boolean",
+               "description": "Set it to false if you don't want the map to do panning animation to fit the opened popup.",
+               "default": true
+              }
+             }
+            },
+            "closeButton": {
+             "type": "boolean",
+             "description": "Controls the presence of a close button in the popup.",
+             "default": true
+            },
+            "autoClose": {
+             "type": "boolean",
+             "description": "Set it to false if you want to override the default behavior of the popup closing when another popup is opened.",
+             "default": true
+            },
+            "closeOnEscapeKey": {
+             "type": "boolean",
+             "description": "Set it to false if you want to override the default behavior of the ESC key for closing of the popup.",
+             "default": true
+            },
+            "closeOnClick": {
+             "type": [
+              "boolean",
+              "null"
+             ],
+             "description": "Set it if you want to override the default behavior of the popup closing when user clicks on the map.",
+             "default": null
+            }
+           }
+          }
+         }
+        },
+        "default": []
+       },
+       "popup": {
+        "type": "array",
+        "description": "Array of popup layer configurations for this map.",
+        "items": {
+         "type": "object",
+         "description": "Popup configuration",
+         "properties": {
+          "enabled": {
+           "type": "boolean",
+           "description": "Show popup.",
+           "default": false
+          },
+          "lat": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Latitudinal coordinate.",
+           "default": null
+          },
+          "lng": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Latitudinal coordinate.",
+           "default": null
+          },
+          "content": {
+           "type": "object",
+           "description": "The popup content to display.",
+           "properties": {
+            "text": {
+             "type": "string",
+             "description": "Text to display.",
+             "default": ""
+            },
+            "view": {
+             "type": "object",
+             "description": "A view to display as popup content.  If configured, overrides the text property.",
+             "properties": {
+              "path": {
+               "type": "string",
+               "default": "",
+               "format": "view-path",
+               "description": "Path of view to display"
+              },
+              "params": {
+               "type": "object",
+               "default": {},
+               "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+               "extension": {
+                "view-params": {
+                 "path": "../path"
+                }
+               }
+              }
+             }
+            }
+           }
+          },
+          "width": {
+           "type": "object",
+           "properties": {
+            "max": {
+             "type": "number",
+             "description": "Max popup width in pixels.",
+             "default": 300
+            },
+            "min": {
+             "type": "number",
+             "description": "Min popup width in pixels.",
+             "default": 50
+            }
+           }
+          },
+          "height": {
+           "type": "object",
+           "properties": {
+            "max": {
+             "type": [
+              "number",
+              "null"
+             ],
+             "description": "Max popup height in pixels.",
+             "default": null
+            }
+           }
+          },
+          "pan": {
+           "type": "object",
+           "description": "Popup pan configuration.",
+           "properties": {
+            "auto": {
+             "type": "boolean",
+             "description": "Set it to false if you don't want the map to do panning animation to fit the opened popup.",
+             "default": true
+            }
+           }
+          },
+          "closeButton": {
+           "type": "boolean",
+           "description": "Controls the presence of a close button in the popup.",
+           "default": true
+          },
+          "autoClose": {
+           "type": "boolean",
+           "description": "Set it to false if you want to override the default behavior of the popup closing when another popup is opened.",
+           "default": true
+          },
+          "closeOnEscapeKey": {
+           "type": "boolean",
+           "description": "Set it to false if you want to override the default behavior of the ESC key for closing of the popup.",
+           "default": true
+          },
+          "closeOnClick": {
+           "type": [
+            "boolean",
+            "null"
+           ],
+           "description": "Set it if you want to override the default behavior of the popup closing when user clicks on the map.",
+           "default": null
+          }
+         }
+        },
+        "default": []
+       },
+       "view": {
+        "type": "array",
+        "description": "Array of view layer configurations for this map.",
+        "items": {
+         "type": "object",
+         "description": "View configuration.",
+         "properties": {
+          "path": {
+           "type": "string",
+           "description": "Path to the view.",
+           "format": "view-path",
+           "default": ""
+          },
+          "params": {
+           "type": "object",
+           "description": "Params to pass to the view.",
+           "default": {},
+           "extension": {
+            "view-params": {
+             "path": "../path"
+            }
+           }
+          },
+          "lat": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Latitudinal coordinate.",
+           "default": null
+          },
+          "lng": {
+           "type": [
+            "number",
+            "null"
+           ],
+           "description": "Latitudinal coordinate.",
+           "default": null
+          },
+          "transparentBackground": {
+           "type": "boolean",
+           "description": "If enabled, disables the default background color.",
+           "default": false
+          },
+          "shadow": {
+           "type": "boolean",
+           "description": "If enabled, apply a box shadow around the view.",
+           "default": true
+          }
+         }
+        },
+        "default": []
+       }
+      },
+      "default": {
+       "marker": [],
+       "popup": [],
+       "view": []
+      }
+     },
+     "other": {
+      "type": "object",
+      "description": "Other map layers.",
+      "properties": {
+       "geoJSON": {
+        "type": "array",
+        "description": "Array of GeoJSON objects to include as a feature layer. Hint: Try a HTTP binding. See: http://geojson.org/",
+        "items": {
+         "type": "object",
+         "properties": {
+          "styleOptions": {
+           "description": "Shared style options that are applied to all features of this layer.",
+           "type": "object",
+           "properties": {
+            "stroke": {
+             "type": "boolean",
+             "default": true
+            },
+            "color": {
+             "type": "string",
+             "format": "color",
+             "default": ""
+            },
+            "weight": {
+             "type": "number",
+             "default": 1
+            },
+            "opacity": {
+             "type": "number",
+             "default": 1
+            },
+            "lineCap": {
+             "type": "string",
+             "enum": [
+              "butt",
+              "round",
+              "square",
+              "inherit"
+             ],
+             "default": "inherit"
+            },
+            "lineJoin": {
+             "type": "string",
+             "enum": [
+              "miter",
+              "round",
+              "bevel",
+              "inherit"
+             ],
+             "default": "inherit"
+            },
+            "dashArray": {
+             "type": [
+              "string",
+              "array"
+             ],
+             "default": ""
+            },
+            "dashOffset": {
+             "type": "string",
+             "default": ""
+            },
+            "fill": {
+             "type": "boolean",
+             "default": true
+            },
+            "fillColor": {
+             "type": "string",
+             "default": "",
+             "format": "color"
+            },
+            "fillOpacity": {
+             "type": "number",
+             "default": 1
+            },
+            "fillRule": {
+             "type": "string",
+             "enum": [
+              "nonzero",
+              "evenodd",
+              "inherit"
+             ],
+             "default": "inherit"
+            },
+            "interactive": {
+             "type": "boolean",
+             "default": true
+            },
+            "className": {
+             "type": "string",
+             "default": ""
+            }
+           }
+          }
+         },
+         "default": {}
+        },
+        "default": []
+       }
+      }
+     }
+    },
+    "example": {
+     "raster": {
+      "tile": [
+       {
+        "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "urlTemplateParams": {},
+        "WMS": {
+         "layers": "",
+         "styles": "",
+         "format": "image/jpeg",
+         "transparent": false,
+         "version": "1.1.1",
+         "uppercase": false
+        },
+        "options": {
+         "attribution": "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>",
+         "opacity": 1,
+         "zIndex": 1,
+         "tileSize": {
+          "width": 256,
+          "height": 256
+         },
+         "update": {
+          "whenZooming": true,
+          "whenIdle": false,
+          "interval": 200
+         },
+         "zoom": {
+          "max": 18,
+          "min": 0,
+          "offset": 0,
+          "reverse": false,
+          "native": {
+           "max": null,
+           "min": null
+          }
+         },
+         "subdomains": [
+          "a",
+          "b",
+          "c"
+         ],
+         "errorTileUrl": "",
+         "tms": false,
+         "detectRetina": false,
+         "crossOrigin": false
+        }
+       }
+      ],
+      "image": []
+     },
+     "vector": {
+      "polygon": [],
+      "polyline": [],
+      "rectangle": [],
+      "circle": []
+     },
+     "ui": {
+      "marker": [],
+      "popup": []
+     },
+     "other": {
+      "geoJSON": []
+     }
+    }
+   },
+   "hideViewMarkersOnZoom": {
+    "type": "boolean",
+    "description": "Hide view markers while they are being repositioned as a result of zoom.",
+    "default": true
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onMarkerClick",
+   "description": "Interaction event fired when a marker is clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object describing the marker that was clicked.",
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "position": {
+      "type": "object",
+      "description": "An object containing the latitude and longitude of the event.",
+      "properties": {
+       "lat": {
+        "type": "number"
+       },
+       "lng": {
+        "type": "number"
+       }
+      }
+     },
+     "properties": {
+      "type": "object",
+      "default": {}
+     }
+    }
+   }
+  },
+  {
+   "name": "onMapClick",
+   "description": "Interaction event fired when the map is clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the latitude and longitude of the event.",
+    "properties": {
+     "lat": {
+      "type": "number"
+     },
+     "lng": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onMapMouseMove",
+   "description": "Interaction event fired as the mouse moves over the map.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the latitude and longitude of the event.",
+    "properties": {
+     "lat": {
+      "type": "number"
+     },
+     "lng": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onVectorClick",
+   "description": "Interaction event fired when a vector is clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object describing the vector that was clicked.",
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "type": {
+      "type": "string"
+     },
+     "position": {
+      "type": "array",
+      "description": "A list of objects describing the vector.",
+      "items": {
+       "type": "object",
+       "properties": {
+        "lat": {
+         "type": "number"
+        },
+        "lng": {
+         "type": "number"
+        }
+       }
+      }
+     },
+     "properties": {
+      "type": "object",
+      "default": {}
+     }
+    }
+   }
+  },
+  {
+   "name": "onZoomStart",
+   "description": "Map state event fired when the map zoom is about to change (e.g. before zoom animation).",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the current zoom level.",
+    "properties": {
+     "zoom": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onZoom",
+   "description": "Map state event fired repeatedly during any change in zoom level, included zoom and fly animations.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the current zoom level.",
+    "properties": {
+     "zoom": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onZoomEnd",
+   "description": "Map state event fired when the map has changed, after any animations.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the current zoom level.",
+    "properties": {
+     "zoom": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onMoveStart",
+   "description": "Map state event fired when the view of the map starts changing (e.g. user starts dragging the map).",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the latitude and longitude of the event.",
+    "properties": {
+     "lat": {
+      "type": "number"
+     },
+     "lng": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onMove",
+   "description": "Map state event fired repeatedly during any movement on the map, include pan and fly animations.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the latitude and longitude of the event.",
+    "properties": {
+     "lat": {
+      "type": "number"
+     },
+     "lng": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onMoveEnd",
+   "description": "Map state event fired when the center of the map stops changing (e.g. user stopped dragging the map).",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object containing the latitude and longitude of the event.",
+    "properties": {
+     "lat": {
+      "type": "number"
+     },
+     "lng": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  {
+   "name": "onResize",
+   "description": "Fired when the map is resized.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-map-component-events",
+   "schema": {
+    "type": "object",
+    "description": "An object describing the new and old size of the map component.",
+    "properties": {
+     "oldSize": {
+      "type": "object",
+      "properties": {
+       "width": {
+        "type": "number"
+       },
+       "height": {
+        "type": "number"
+       }
+      }
+     },
+     "newSize": {
+      "type": "object",
+      "properties": {
+       "width": {
+        "type": "number"
+       },
+       "height": {
+        "type": "number"
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-map-js",
+   "path": "/res/perspective/js/PerspectiveMap.js",
+   "type": "js"
+  },
+  {
+   "name": "perspective-map-css",
+   "path": "/res/perspective/css/PerspectiveMap.css",
+   "type": "css"
+  }
+ ]
+}

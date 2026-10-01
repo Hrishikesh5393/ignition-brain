@@ -1,0 +1,235 @@
+{
+ "_source": "perspective-common-3.3.9.jar!/perspective-amcharts.components.json (bundled component-definition resource; groupId=perspective-amcharts library=PerspectiveAmCharts hash=72f01804afa9b8079538). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.chart.simple-gauge",
+ "name": "Simple Gauge",
+ "palette": {
+  "category": "chart",
+  "variants": [
+   {
+    "label": "Simple Gauge",
+    "tooltip": "A simple needle gauge component with just one axis."
+   },
+   {
+    "id": "simple-gauge-half-circle",
+    "label": "Half-Circle",
+    "tooltip": "A simple needle gauge component with just one axis."
+   },
+   {
+    "id": "simple-gauge-34-circle",
+    "label": "3/4 Circle",
+    "tooltip": "A simple needle gauge component with just one axis.",
+    "props": {
+     "startAngle": 90,
+     "label": {
+      "offsetY": 22
+     }
+    }
+   },
+   {
+    "id": "simple-gauge-full-axis",
+    "label": "Full Axis",
+    "tooltip": "A simple needle gauge component with just one axis.",
+    "props": {
+     "startAngle": 135,
+     "endAngle": 405,
+     "label": {
+      "offsetY": 12
+     }
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "SimpleGauge",
+ "schema": {
+  "type": "object",
+  "title": "Simple Gauge",
+  "description": "A simple, modern web style Gauge component",
+  "required": [
+   "value",
+   "minValue",
+   "maxValue",
+   "startAngle",
+   "endAngle",
+   "arc",
+   "arcBackground",
+   "label",
+   "animate",
+   "style"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "value": {
+    "type": "number",
+    "default": 0,
+    "description": "Numeric value for gauge to display"
+   },
+   "minValue": {
+    "type": "number",
+    "default": 0,
+    "description": "Minimum gauge value"
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100,
+    "description": "Maximum gauge value"
+   },
+   "startAngle": {
+    "type": "number",
+    "default": 180,
+    "description": "Radial position for start of gauge's arc"
+   },
+   "endAngle": {
+    "type": "number",
+    "default": 360,
+    "description": "Radial position for end of gauge's arc"
+   },
+   "arc": {
+    "type": "object",
+    "description": "Radial band that displays gauge's value",
+    "required": [
+     "width",
+     "color",
+     "cornerRadius"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "width": {
+      "type": "number",
+      "default": 20,
+      "description": "Width of the arc showing gauge's value"
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "#77B6D8",
+      "description": "Color of the arc showing gauge's value"
+     },
+     "cornerRadius": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount to round the edges of the arc"
+     }
+    }
+   },
+   "arcBackground": {
+    "type": "object",
+    "description": "Background or 'track' for gauge arc. Shows shape and total potential value behind the arc.",
+    "required": [
+     "color",
+     "opacity"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "#77B6D8",
+      "description": "Color of the arc background"
+     },
+     "opacity": {
+      "type": "number",
+      "default": 0.2,
+      "description": "Opacity of the arc background, as a number ranged 0 to 1"
+     }
+    }
+   },
+   "label": {
+    "type": "object",
+    "description": "Displays the value as text, with optional units",
+    "required": [
+     "visible",
+     "size",
+     "units",
+     "maxDecimal"
+    ],
+    "additionalProperties": true,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to show label"
+     },
+     "size": {
+      "type": "number",
+      "default": 25,
+      "description": "Font size to display label text"
+     },
+     "offsetX": {
+      "type": "number",
+      "default": 0,
+      "description": "The x offset relative to the middle of the label."
+     },
+     "offsetY": {
+      "type": "number",
+      "default": 0,
+      "description": "The y offset relative to the bottom of the label."
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "#697077",
+      "description": "The color of the text to display."
+     },
+     "units": {
+      "type": "string",
+      "default": "",
+      "description": "Any unit information to append to the value on the label"
+     },
+     "maxDecimal": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "default": 4,
+      "description": "Maximum number of digits after decimal to display in the label. If null, full value will display."
+     }
+    }
+   },
+   "animate": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether gauge should be animated in a sweeping motion when value changes"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "example": {
+   "value": 0,
+   "minValue": 0,
+   "maxValue": 100,
+   "startAngle": 180,
+   "endAngle": 360,
+   "arc": {
+    "width": 20,
+    "color": "#77B6D8",
+    "cornerRadius": 0
+   },
+   "arcBackground": {
+    "color": "#77B6D8",
+    "opacity": 0.2
+   },
+   "label": {
+    "visible": true,
+    "size": 25,
+    "units": "",
+    "color": "#697077",
+    "offsetX": 0,
+    "offsetY": 0
+   },
+   "animate": false
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-amcharts-js",
+   "path": "/res/perspective/js/PerspectiveAmCharts.js",
+   "type": "js"
+  },
+  {
+   "name": "perspective-amcharts-css",
+   "path": "/res/perspective/css/PerspectiveAmCharts.css",
+   "type": "css"
+  }
+ ]
+}

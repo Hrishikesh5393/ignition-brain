@@ -1,0 +1,516 @@
+{
+ "id": "ia.shapes.svg",
+ "palette": {
+  "category": "display",
+  "name": "Drawing",
+  "description": "A vector drawing, symbol, schematic, or diagram that uses SVG format."
+ },
+ "defaultMetaName": "Drawing",
+ "showOnPalette": true,
+ "schema": {
+  "definitions": {
+   "Marker": {
+    "type": "object",
+    "properties": {
+     "type": {
+      "type": "string",
+      "suggestions": {
+       "None": "",
+       "Arrow": "arrow",
+       "Arrow Reversed": "arrow-reversed",
+       "Circle": "circle",
+       "Square": "square",
+       "Line": "line"
+      },
+      "default": ""
+     },
+     "scale": {
+      "type": "number",
+      "default": 1
+     },
+     "rotate": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "suggestions": {
+       "Auto": "auto",
+       "Auto start reverse": "auto-start-reverse",
+       "0 degrees": 0,
+       "45 degrees": 45,
+       "90 degrees": 90,
+       "135 degrees": 135,
+       "180 degrees": 180,
+       "225 degrees": 225,
+       "270 degrees": 270,
+       "315 degrees": 315
+      },
+      "default": "auto"
+     },
+     "color": {
+      "type": "string",
+      "format": "color"
+     },
+     "markerHeight": {
+      "type": [
+       "number",
+       "string"
+      ]
+     },
+     "markerWidth": {
+      "type": [
+       "number",
+       "string"
+      ]
+     },
+     "refX": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "suggestions": {
+       "Left": "left",
+       "Right": "right",
+       "Center": "center"
+      }
+     },
+     "refY": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "suggestions": {
+       "Left": "left",
+       "Right": "right",
+       "Center": "center"
+      }
+     },
+     "viewBox": {
+      "type": "string"
+     }
+    }
+   },
+   "Element": {
+    "type": "object",
+    "properties": {
+     "type": {
+      "type": "string",
+      "suggestions": [
+       "circle",
+       "clipPath",
+       "defs",
+       "ellipse",
+       "group",
+       "line",
+       "linearGradient",
+       "marker",
+       "mask",
+       "pattern",
+       "path",
+       "polygon",
+       "polyline",
+       "radialGradient",
+       "rect",
+       "text",
+       "use",
+       "perspective-arc",
+       "perspective-star"
+      ]
+     },
+     "id": {
+      "description": "A DOM id that will be automatically prepended with prefix to prevent collisions with other DOM ids. Manually assigning new ids will break rendering of elements referencing this id.",
+      "type": "string",
+      "default": ""
+     },
+     "typeAttr": {
+      "description": "The type attribute to be applied to the SVG element.",
+      "type": "string",
+      "default": ""
+     },
+     "name": {
+      "description": "A name to be displayed within the Drawing Editor Layer's panel.",
+      "type": "string",
+      "default": ""
+     },
+     "fill": {
+      "type": [
+       "string",
+       "object"
+      ],
+      "properties": {
+       "opacity": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": 1
+       },
+       "paint": {
+        "type": [
+         "string",
+         "object"
+        ],
+        "format": "color"
+       },
+       "rule": {
+        "type": "string",
+        "enum": [
+         "nonzero",
+         "evenodd"
+        ],
+        "default": "nonzero"
+       },
+       "url": {
+        "type": "string",
+        "default": ""
+       }
+      },
+      "default": {},
+      "description": "Configuration options for the color inside a shape"
+     },
+     "stroke": {
+      "type": [
+       "string",
+       "object"
+      ],
+      "properties": {
+       "dasharray": {
+        "type": "string",
+        "default": ""
+       },
+       "dashoffset": {
+        "type": "string",
+        "default": ""
+       },
+       "linecap": {
+        "type": "string",
+        "enum": [
+         "butt",
+         "round",
+         "square"
+        ],
+        "default": "butt"
+       },
+       "linejoin": {
+        "type": "string",
+        "enum": [
+         "miter",
+         "miter-clip",
+         "round",
+         "bevel"
+        ],
+        "default": "miter"
+       },
+       "miterlimit": {
+        "type": "string",
+        "default": ""
+       },
+       "opacity": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": 1
+       },
+       "paint": {
+        "type": [
+         "string",
+         "object"
+        ],
+        "format": "color"
+       },
+       "url": {
+        "type": "string",
+        "default": ""
+       },
+       "width": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": ""
+       }
+      },
+      "default": {},
+      "description": "Configuration options for the color of the outline of a shape"
+     },
+     "start": {
+      "$ref": "#/definitions/Marker"
+     },
+     "vertex": {
+      "$ref": "#/definitions/Marker"
+     },
+     "end": {
+      "$ref": "#/definitions/Marker"
+     },
+     "textPath": {
+      "type": "object",
+      "properties": {
+       "path": {
+        "type": "string",
+        "default": "",
+        "description": "A literal path SVG path definition or an id reference to a path #pathId."
+       },
+       "spacing": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "exact"
+        ],
+        "default": "exact",
+        "description": "How space between glyphs should be handled."
+       },
+       "startOffset": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": 0,
+        "description": "How far the beginning of the text should be offset from the beginning of the path."
+       }
+      },
+      "default": {},
+      "description": "Renders text along the shape of a path.  Applicable to text type Elements only."
+     },
+     "clipPath": {
+      "type": [
+       "string",
+       "object"
+      ],
+      "default": {}
+     },
+     "clipRule": {
+      "type": "string",
+      "enum": [
+       "nonzero",
+       "evenodd"
+      ],
+      "default": "nonzero"
+     },
+     "mask": {
+      "type": [
+       "string",
+       "object"
+      ],
+      "default": {}
+     },
+     "opacity": {
+      "description": "How transparent an element and its children are.",
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": ""
+     },
+     "overflow": {
+      "description": "Behavior when an element's content is too big to fit in its block formatting context.  Browser support varies.",
+      "type": "string",
+      "enum": [
+       "",
+       "visible",
+       "hidden",
+       "scroll",
+       "auto"
+      ],
+      "default": ""
+     },
+     "pathLength": {
+      "description": "Advanced SVG attribute representing the total length for the path, in user units.",
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": ""
+     },
+     "transform": {
+      "description": "A string representation of SVG transform definitions that are applied to an element and the element's children.",
+      "type": "string",
+      "default": ""
+     },
+     "vectorEffect": {
+      "type": "string",
+      "enum": [
+       "none",
+       "non-scaling-stroke",
+       "non-scaling-size",
+       "non-rotation",
+       "fixed-position"
+      ],
+      "default": "none",
+      "description": "Advanced SVG attribute specifying an effect to be used when drawing a SVG Element."
+     },
+     "visibility": {
+      "type": "string",
+      "enum": [
+       "visible",
+       "hidden",
+       "collapse"
+      ],
+      "default": "visible"
+     },
+     "wrapper": {
+      "type": "object",
+      "default": {},
+      "properties": {
+       "type": {
+        "type": "string",
+        "suggestions": [
+         "",
+         "clipPath",
+         "marker",
+         "mask",
+         "pattern"
+        ],
+        "default": ""
+       },
+       "id": {
+        "description": "A DOM id that will be automatically prepended with prefix to prevent collisions with other DOM ids. Manually assigning new ids will break rendering of elements referencing this id.",
+        "type": "string",
+        "default": ""
+       }
+      },
+      "description": "If provided this element will be wrapped in a wrapper SVG Element of this wrapperType. This is useful for clipPath, mask, and pattern."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "elements": {
+      "type": "array",
+      "items": {
+       "$ref": "#/definitions/Element"
+      }
+     }
+    },
+    "default": {
+     "type": "group"
+    },
+    "required": [
+     "type"
+    ]
+   }
+  },
+  "type": "object",
+  "properties": {
+   "viewBox": {
+    "type": "string",
+    "default": ""
+   },
+   "preserveAspectRatio": {
+    "type": "string",
+    "default": "xMidYMid",
+    "enum": [
+     "none",
+     "xMinYMin",
+     "xMidYMin",
+     "xMaxYMin",
+     "xMinYMid",
+     "xMidYMid",
+     "xMaxYMid",
+     "xMinYMax",
+     "xMidYMax",
+     "xMaxYMax"
+    ]
+   },
+   "elements": {
+    "type": "array",
+    "items": {
+     "$ref": "#/definitions/Element"
+    },
+    "default": []
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onElementClicked",
+   "description": "Fired when an element in the drawing has been clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-drawing-component-events",
+   "schema": {
+    "type": "object",
+    "description": "The event object for the click event.",
+    "properties": {
+     "elementName": {
+      "type": "string",
+      "description": "The name attribute of the element that was clicked."
+     },
+     "elementAddress": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      },
+      "description": "An array of numbers indicating where the clicked element is in the elements tree. (i.e. [0,2,1] would be the 2nd child of the 3rd child of the 1st element)."
+     },
+     "event": {
+      "type": "object",
+      "description": "The event object generated from the mouse click.",
+      "properties": {
+       "altKey": {
+        "type": "boolean",
+        "description": "True if the 'alt' key was held down when the event was fired."
+       },
+       "button": {
+        "type": "number",
+        "description": "The button number that was pressed when the event was fired."
+       },
+       "buttons": {
+        "type": "number",
+        "description": "The buttons being depressed when the event was fired."
+       },
+       "clientX": {
+        "type": "number",
+        "description": "The X coordinate relative to the viewport."
+       },
+       "clientY": {
+        "type": "number",
+        "description": "The Y coordinate relative to the viewport."
+       },
+       "ctrlKey": {
+        "type": "boolean",
+        "description": "True if the 'ctrl' key was held down when the event was fired."
+       },
+       "metaKey": {
+        "type": "boolean",
+        "description": "True if the 'meta' key was held down when the event was fired."
+       },
+       "pageX": {
+        "type": "number",
+        "description": "The X coordinate relative to the whole document."
+       },
+       "pageY": {
+        "type": "number",
+        "description": "The Y coordinate relative to the whole document."
+       },
+       "screenX": {
+        "type": "number",
+        "description": "The X coordinate in global (screen) coordinates."
+       },
+       "screenY": {
+        "type": "number",
+        "description": "The Y coordinate in global (screen) coordinates."
+       },
+       "shiftKey": {
+        "type": "boolean",
+        "description": "True if the 'shift' key was held down when the event was fired."
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

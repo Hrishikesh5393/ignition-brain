@@ -1,0 +1,69 @@
+{
+ "id": "ia.shapes.line",
+ "palette": {
+  "category": "shapes",
+  "name": "Line"
+ },
+ "defaultMetaName": "Line",
+ "showOnPalette": false,
+ "schema": {
+  "type": "object",
+  "properties": {
+   "x1": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": 0
+   },
+   "y1": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": 0
+   },
+   "x2": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": 0
+   },
+   "y2": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": 0
+   },
+   "fill": {
+    "$ref": "urn:ignition-schema:schemas/svg-fill.json"
+   },
+   "stroke": {
+    "$ref": "urn:ignition-schema:schemas/svg-stroke.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "required": [
+   "x1",
+   "y1",
+   "x2",
+   "y2"
+  ]
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,271 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:ignition-skill:schema/named-query/named-query.schema.json",
+  "title": "Ignition Named Query resource (ignition/named-query)",
+  "description": "On-disk format of an Ignition 8.3 Named Query project resource. A Named Query lives at '<project>/ignition/named-query/<name>/' and is made of a raw SQL file (query.sql) plus a resource.json manifest whose 'attributes' map carries the query type, target database, parameter list, caching and authorization config. Verified against decompiled com.inductiveautomation.ignition.common.db.namedquery.NamedQuery (v8.3.9) and a live write+parse round-trip on a live 8.3.9 gateway.",
+
+  "_provenance": {
+    "decompiled_classes": [
+      "common/com/inductiveautomation/ignition/common/db/namedquery/NamedQuery.java  (RESOURCE_TYPE, CURRENT_RESOURCE_VERSION=2, toResource(), fromResource(), Type/ParameterType enums, Parameter.GsonAdapter, PARAMETER_TYPES)",
+      "common/com/inductiveautomation/ignition/common/db/namedquery/QueryParser.java  (token pattern for :name / {name} substitution)",
+      "common/com/inductiveautomation/ignition/common/db/namedquery/SecuredNamedQueryManager.java  (permissions / authorized() OR-semantics)",
+      "common/com/inductiveautomation/ignition/common/user/ZoneRoleRequirement.java  (permissions entry shape {zone,role}, checkAccess())",
+      "common/com/inductiveautomation/ignition/common/sqltags/model/types/DataType.java  (sqlType int values)",
+      "common/com/inductiveautomation/ignition/common/util/TimeUnits.java  (cacheUnit enum names)",
+      "common/com/inductiveautomation/ignition/common/script/builtin/AbstractDBUtilities.java  (execQuery/execScalar/execUpdate + __EXPECTED_QUERY_TYPE guard, parameter-set validation)",
+      "gateway-8.3.9/com/inductiveautomation/ignition/gateway/db/namedquery/NamedQueryExecutor.java  (caching key + TTL, row limiting, fallback, database '{}' selector)",
+      "gateway-8.3.9/com/inductiveautomation/ignition/gateway/db/namedquery/GatewayNamedQueryManager.java  (validateQueryTypeParameter, executeSFquery = UpdateQuery only)",
+      "gateway-8.3.9/com/inductiveautomation/ignition/gateway/script/GatewayDBUtilities.java  (getNamedQueryManager(): SecuredNamedQueryManager only when a securityContext is present)",
+      "gateway-8.3.9/com/inductiveautomation/ignition/gateway/servlets/gateway/functions/NamedQueryRpcImpl.java  (Vision/Designer RPC path: designer canLimit=true/canCache=false; client canCache=true/canLimit=false; empty permissions list -> denied for non-designer)",
+      "perspective-gateway-3.3.9/com/inductiveautomation/perspective/gateway/binding/query/DirectQueryBinding.java  (designerUseLimit && isDesigner  -> maxReturnSize only limits in the Designer; enableValueCache && !isDesigner)"
+    ],
+    "live_verification": "Wrote this exact resource.json + query.sql to <install>\\data\\projects\\<project>\\ignition\\named-query\\probe\\, requestScan(), then NamedQuery.fromResource() parsed it: type=Query, params [{id,Int4=2},{maxRows,Int8=3},{colName,QueryString,String=7}], documentation held the description, query.sql held the SQL verbatim. Probe deleted afterwards. Live 8.3.9 gateway.",
+    "date": "2026-09-04"
+  },
+
+  "_resourceLayout": {
+    "resourceType": "ResourceType(\"ignition\", \"named-query\")  — NamedQuery.RESOURCE_TYPE",
+    "directory": "<install>/data/projects/<project>/ignition/named-query/<name>/   (<name> may contain '/' for folders, e.g. reports/DailyProduction)",
+    "files": {
+      "query.sql": "REQUIRED. Raw SQL text, exactly as typed in the Designer's Named Query editor. Key 'query.sql' — NamedQuery.ResourceKeys.QUERY_FILE. Written via builder.putData(\"query.sql\", ...).",
+      "resource.json": "REQUIRED. The manifest described by this schema."
+    },
+    "legacy": "resource.json version 1 (NamedQuery.LEGACY_RESOURCE_VERSION) is the pre-8.x form: an XML-serialized NamedQuery blob in data.bin, no query.sql, attributes absent. fromResource() still reads it. DO NOT author v1 — always write version 2; toResource() calls builder.removeData(\"data.bin\")."
+  },
+
+  "type": "object",
+  "required": ["scope", "version", "files", "attributes"],
+  "additionalProperties": true,
+  "properties": {
+    "scope": {
+      "const": "G",
+      "description": "Gateway scope. Named queries execute in gateway scope. — resource-formats.md §2; matches every live named-query resource."
+    },
+    "version": {
+      "const": 2,
+      "description": "NamedQuery.CURRENT_RESOURCE_VERSION. toResource() calls builder.setVersion(2). 1 = legacy XML form (do not author)."
+    },
+    "restricted": { "type": "boolean", "default": false, "description": "ResourceManifest default. Not used by named queries." },
+    "overridable": { "type": "boolean", "default": true, "description": "ResourceManifest default." },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["query.sql"],
+      "description": "Payload file names in this directory. Always exactly [\"query.sql\"]. Read into a HashSet — order irrelevant.",
+      "examples": [["query.sql"]]
+    },
+    "documentation": {
+      "type": "string",
+      "description": "The query's free-text description (the 'Description' field in the Designer editor). toResource() writes it here via builder.setDocumentation(nq.getDescription()); an empty/absent description omits the key. QUIRK: fromResource() v2 reads an *attribute* named 'description', not this key, so the description does NOT round-trip back into the in-memory NamedQuery model — it is purely documentation on disk. Do NOT also put a 'description' key in attributes."
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Named-query config. Every key below is written by toResource(); fromResource() reads each with .ifPresent(...) so any key may be omitted and falls back to the NamedQuery field default noted here.",
+      "required": ["type"],
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Query", "ScalarQuery", "UpdateQuery"],
+          "description": "NamedQuery.Type enum name (bare name — the Designer dropdown shows a localized label via BundleUtil.i18n). REQUIRED in practice — fromResource maps it to Type.valueOf(...); a missing type leaves the field null and the query fails to execute. See _queryTypes below.",
+          "_source": "NamedQuery.Type; attribute key 'type' — ResourceKeys.TYPE"
+        },
+        "database": {
+          "type": "string",
+          "default": "",
+          "description": "Target datasource (database connection) name. '' (empty) = use the project's default datasource (GlobalProps.getDefaultDatasourceName()). '{}' = prompt: the caller MUST pass a parameter named 'database' at execution time (NamedQuery.DATABASE_PARAM_OPTION / DATABASE_PARAM_IDENTIFIER). Any other value = that exact connection name.",
+          "_source": "NamedQuery.database (field default \"\"); NamedQueryExecutor.NamedQueryInstance.execute() database resolution"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "false => execute() throws 'Named Query cannot be executed when disabled.'",
+          "_source": "NamedQuery.enabled"
+        },
+        "cacheEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Query-level result cache. When true (and the caller allows caching, and type != UpdateQuery) results are cached keyed by (bound args + rebuilt query text + datasource name + resourceId) for the TTL below. NOTE the attribute key is 'cacheEnabled' though the NamedQuery field is 'cachingEnabled'.",
+          "_source": "NamedQuery.cachingEnabled; ResourceKeys.CACHE_ENABLED='cacheEnabled'; NamedQueryExecutor.getCachedValue()/cacheKey()"
+        },
+        "cacheAmount": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 1,
+          "description": "TTL magnitude. Effective TTL in ms = cacheAmount * cacheUnit multiplier (NamedQuery.getCacheInMillis()).",
+          "_source": "NamedQuery.cacheAmount"
+        },
+        "cacheUnit": {
+          "type": "string",
+          "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+          "default": "SEC",
+          "description": "TimeUnits enum name. Read as TimeUnits.valueOf(...).",
+          "_source": "NamedQuery.cacheUnit (default TimeUnits.SEC); TimeUnits.java"
+        },
+        "useMaxReturnSize": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to cap the row count of a Query result at maxReturnSize. Only honoured when the caller passes canLimit=true — which is ONLY the Perspective/Vision query binding *in the Designer* (designerUseLimit && isDesigner). At runtime and from scripting (execQuery / runNamedQuery pass canLimit=false) the cap is NOT applied. Use SQL (TOP/LIMIT/FETCH) for a real runtime cap.",
+          "_source": "NamedQuery.useMaxReturnSize; NamedQueryExecutor shouldLimit = canUseLimit && config.isUseMaxReturnSize(); DirectQueryBinding.buildFetchParameters()"
+        },
+        "maxReturnSize": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 100,
+          "description": "Row cap used when useMaxReturnSize applies (see caveat above). Stored as a long (getAsLong).",
+          "_source": "NamedQuery.maxReturnSize (default 100L)"
+        },
+        "fallbackEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "ScalarQuery only: when true, execution errors OR a zero-row result return fallbackValue instead of raising / returning null.",
+          "_source": "NamedQuery.fallbackEnabled; NamedQueryExecutor.execute() catch-block + runPrepQuery ScalarQuery branch"
+        },
+        "fallbackValue": {
+          "type": "string",
+          "description": "The scalar fallback string (coerced to the column type by the caller). Attribute is OMITTED entirely when null. Only meaningful with type=ScalarQuery and fallbackEnabled=true.",
+          "_source": "NamedQuery.fallbackValue; toResource() removeAttribute when null"
+        },
+        "autoBatchEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Store-and-forward auto-batching hint for UpdateQuery used via execUpdateAsync / runSFNamedQuery (data goes through the S&F engine as QuerySFData). Ignored for synchronous execution.",
+          "_source": "NamedQuery.autoBatchEnabled; GatewayNamedQueryManager.executeSFquery()"
+        },
+        "syntaxProvider": {
+          "type": "string",
+          "description": "Optional database-syntax / translator override key (free-form string). Attribute is OMITTED when null. filter(JsonElement::isJsonPrimitive) on read.",
+          "_source": "NamedQuery.syntaxProvider; toResource() removeAttribute when null"
+        },
+        "parameters": {
+          "type": "array",
+          "description": "Declared parameters. OMITTED when empty. Serialized by NamedQuery.Parameter.GsonAdapter. The set of identifiers here must EXACTLY match the tokens the caller supplies — execQuery/execScalar/execUpdate call validateQueryParameters(required, provided) and raise ValueError on any mismatch (missing or extra).",
+          "items": { "$ref": "#/$defs/parameter" }
+        },
+        "permissions": {
+          "type": "array",
+          "description": "Authorization requirements (zone/role pairs), checked ONLY for Perspective/Vision query bindings — every scripted system.db.exec* call bypasses this (see _authorization). OMITTED when empty or when it is only the single empty requirement (the default). WARNING: never write \"permissions\": [] (an explicitly empty array) — the Vision RPC path (NamedQueryRpcImpl.hasPermissions) then denies every non-Designer user. Omit the key instead.",
+          "items": { "$ref": "#/$defs/permission" }
+        },
+        "description": {
+          "description": "DO NOT USE. fromResource() v2 looks for the description under this attribute key, but toResource() actually writes the description to the top-level 'documentation' key (see that property). Present here only to document the read/write asymmetry.",
+          "_source": "NamedQuery.fromResource case 2: resource.getAttribute(\"description\")"
+        },
+        "lastModification": {
+          "description": "Designer-written audit attribute { actor, timestamp }. Not required — omit when authoring by hand.",
+          "_source": "resource-formats.md §2"
+        },
+        "lastModificationSignature": {
+          "description": "Designer-written audit hash. Not required — omit when authoring by hand.",
+          "_source": "resource-formats.md §2"
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "parameter": {
+      "type": "object",
+      "required": ["type", "identifier", "sqlType"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Parameter", "QueryString", "Database"],
+          "description": "NamedQuery.ParameterType enum name. 'Parameter' = a bound value, matched by ':identifier' in query.sql, replaced with a JDBC '?' placeholder and passed as a prepared-statement arg (SAFE; Designer UI labels this 'Value'). 'QueryString' = raw string substitution, matched by '{identifier}' in query.sql, spliced into the SQL text literally (NOT parameterised — SQL-injection surface, use only for trusted structural fragments like a sort column). 'Database' = the special 'database' selector; only valid when attributes.database == '{}'.",
+          "_source": "NamedQuery.ParameterType; QueryParser.parse() pattern (\\{[\\p{L}\\p{N}\\-_]+\\})|(\\:[\\p{L}\\p{N}\\-_]+)"
+        },
+        "identifier": {
+          "type": "string",
+          "pattern": "^[\\p{L}\\p{N}\\-_]+$",
+          "description": "Parameter name. Must match [letters, digits, - , _]+ and must NOT be 'database' (case-insensitive) — NamedQuery.isValidParamName(). Referenced in query.sql as ':identifier' (Parameter) or '{identifier}' (QueryString).",
+          "_source": "NamedQuery.isValidParamName()"
+        },
+        "sqlType": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 20],
+          "description": "DataType enum INT value (serialized as parameter.sqlType.getIntValue()). Allowed set = NamedQuery.PARAMETER_TYPES. Mapping: 0 Int1(Byte), 1 Int2(Short), 2 Int4(Integer), 3 Int8(Long), 4 Float4(Float), 5 Float8(Double), 6 Boolean, 7 String, 8 DateTime(java.util.Date), 20 ByteArray(byte[]). The value is coerced to this type (TypeUtilities.coerceNullSafe) before binding.",
+          "_source": "DataType.java int values; NamedQuery.PARAMETER_TYPES; NamedQueryExecutor.NamedQueryInstance.coerce()"
+        }
+      }
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "zone": {
+          "type": ["string", "null"],
+          "description": "Security-zone name the caller must be in, or null / absent = any zone. Blank zone requirement is skipped in checkAccess(). A blank zones list on the caller is treated as ['Default']."
+        },
+        "role": {
+          "type": ["string", "null"],
+          "description": "Role name the caller must hold (case-insensitive, trimmed), or null / absent = any role. Blank role requirement is skipped."
+        }
+      },
+      "description": "ZoneRoleRequirement — serialized by ZoneRoleRequirement.GsonAdapter as {\"zone\":..,\"role\":..}. A requirement with both null is the 'empty requirement' = allow everyone (the NamedQuery default when 'permissions' is absent)."
+    }
+  },
+
+  "_queryTypes": {
+    "Query": "Returns a Dataset (all rows). Invoke: system.db.execQuery(path, params[, tx][, project]). Cacheable. Row-limitable (Designer only). runPrepQuery -> connection.runPrepQuery / runPrepLimitQuery.",
+    "ScalarQuery": "Returns a single value (row 0, column 0) via runPrepLimitQuery(query, 1, args). Zero rows -> fallbackValue if fallbackEnabled else null. Invoke: system.db.execScalar(path, params[, tx][, project]). Cacheable. Only type that supports fallback.",
+    "UpdateQuery": "INSERT/UPDATE/DELETE/DDL. Returns affected-row count (Integer), or the generated key (Long) when getKey=true -> runPrepInsertGetKey. Invoke: system.db.execUpdate(path, params[, tx][, getKey][, project]); async / store-and-forward via system.db.execUpdateAsync(path, params[, project]). NOT cacheable. The only type allowed through store-and-forward."
+  },
+
+  "_paramSubstitution": {
+    "pattern": "QueryParser regex: (\\{[\\p{L}\\p{N}\\-_]+\\})|(\\:[\\p{L}\\p{N}\\-_]+)",
+    ":name": "ParameterType.Parameter — replaced with a single '?' (StringUtils.replaceOnce) and the value appended to the JDBC arg list, in first-appearance order. Repeat ':name' to bind the value again (each occurrence -> its own '?' + arg).",
+    "{name}": "ParameterType.QueryString — every occurrence replaced with TypeUtilities.toString(value) spliced into the SQL. An empty/blank value raises 'MissingQueryStringValue'. Not escaped.",
+    "note": "A token in query.sql only substitutes if a matching parameter of the SAME ParameterType is declared in attributes.parameters (paramTypeLookup check in parseAndRebuild). ':database' style tokens are never used — the database selector is passed as the reserved 'database' key, not a query token."
+  },
+
+  "_authorization": {
+    "model": "attributes.permissions is a list of ZoneRoleRequirement. authorized() = GRANTED if ANY requirement matches the caller's (roles, zones) — OR semantics. Absent / only-empty-requirement => unrestricted.",
+    "enforced_for": "Perspective *query bindings* (the session's SecuredNamedQueryManager via QueryBindingParams); Vision clients (query bindings + client-scope system.db.* over RPC -> NamedQueryRpcImpl.hasPermissions against the client session's authUser).",
+    "NOT_enforced_for": "Any scripted execution. GatewayDBUtilities._execNamedQuery() calls context.getNamedQueryManager() (the raw GatewayNamedQueryManager) DIRECTLY -- it never consults the SecuredNamedQueryManager wrapper, even when a session SecurityContext is on the thread. So system.db.execQuery/execScalar/execUpdate/runNamedQuery from a gateway timer, tag-change, message handler, WebDev route, OR a Perspective event script / transform all bypass 'permissions'. Treat permissions as a guard on the declarative query binding only, not a security boundary for scripts.",
+    "designer": "The Designer is always allowed (session.isDesigner() -> true) regardless of permissions."
+  },
+
+  "_invocation": {
+    "modern_8_3": [
+      "system.db.execQuery(path, parameters, tx=None, project=None) -> Dataset            (type must be Query)",
+      "system.db.execScalar(path, parameters, tx=None, project=None) -> Object             (type must be ScalarQuery)",
+      "system.db.execUpdate(path, parameters, tx=None, getKey=False, project=None) -> Long  (type must be UpdateQuery)",
+      "system.db.execUpdateAsync(path, parameters, project=None) -> bool                    (UpdateQuery, store-and-forward)"
+    ],
+    "deprecated_since_8_3_still_present": [
+      "system.db.runNamedQuery([project,] path, parameters, tx=None, getKey=False)  — NOTE project is the FIRST positional arg here, unlike execQuery where path is first",
+      "system.db.runSFNamedQuery(...), system.db.clearNamedQueryCache(...), system.db.clearAllNamedQueryCaches(...)"
+    ],
+    "type_guard": "execQuery/execScalar/execUpdate inject params['__EXPECTED_QUERY_TYPE'] = the expected NamedQuery.Type; GatewayNamedQueryManager.validateQueryTypeParameter() raises IllegalArgumentException 'Query type mismatch' if the resource's type differs. Call the function that matches attributes.type.",
+    "parameter_set": "The keys of `parameters` must exactly equal the set of declared identifiers (validateQueryParameters). Missing or extra keys -> ValueError. The 'database' key is additionally required when attributes.database == '{}'.",
+    "path": "'path' is the resource folder path under ignition/named-query/, without that prefix and without the project name — e.g. resource dir ignition/named-query/reports/DailyProduction/  ->  path 'reports/DailyProduction'.",
+    "cross_ref": "skill/references/gateway/system-api.md"
+  },
+
+  "examples": [
+    {
+      "scope": "G",
+      "version": 2,
+      "restricted": false,
+      "overridable": true,
+      "files": ["query.sql"],
+      "attributes": {
+        "type": "Query",
+        "database": "",
+        "enabled": true,
+        "cacheEnabled": false,
+        "cacheAmount": 1,
+        "cacheUnit": "SEC",
+        "useMaxReturnSize": false,
+        "maxReturnSize": 100,
+        "fallbackEnabled": false,
+        "autoBatchEnabled": false,
+        "parameters": [
+          { "type": "Parameter", "identifier": "lineId", "sqlType": 2 }
+        ]
+      },
+      "documentation": "Active work orders for one production line."
+    }
+  ]
+}

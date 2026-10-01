@@ -12,10 +12,19 @@ knowledge and tooling only.
   a real Ignition 8.3.7 install, not just public docs — see
   `knowledgebase/reference_ignition_install_truth.md`-equivalent notes in
   `memory/` for how.
-- `skills/` — Claude Code skills. `ignition/` is the router (KB vs live
-  gateway, when to trust which). `ignition-perspective/` is the schema-first
-  discipline for building/editing Perspective views, with verified gotchas in
-  `references/gotchas.md`.
+- `skills/` — Claude Code skills, pure platform mechanics only (global
+  Ignition 8.3 behavior, no client/project specifics — those live in
+  `knowledgebase/`, `memory/`, or the consuming project's own context, never
+  baked into a skill). `ignition/` is the entry point and Helm selector,
+  routing to the focused skill(s) a task needs:
+  `ignition-alarms`, `ignition-data`, `ignition-deploy`, `ignition-forge`,
+  `ignition-perspective`, `ignition-platform`, `ignition-playbook`,
+  `ignition-scout`, `ignition-scripting`, `ignition-security`,
+  `ignition-tags`. Install with `sh skills/ignition/install.sh` (symlinks
+  into `~/.claude/skills`).
+  `ignition_outdated/` and `ignition-perspective_outdated/` are the prior
+  2-skill generation, kept for reference only — superseded by the above,
+  do not install.
 - `memory/` — standalone lessons-learned notes (tag param substitution,
   event-script body-only convention, component icon registration, flex
   layout props-vs-CSS, etc). Each is self-contained; frontmatter carries a
@@ -28,11 +37,14 @@ knowledge and tooling only.
 
 ## Setting this up on a new machine
 
-1. Copy `skills/ignition` and `skills/ignition-perspective` into
-   `~/.claude/skills/`.
-2. Update the hardcoded KB path in `skills/ignition/SKILL.md` (currently
-   points at the old machine's `knowledgebase/` copy) to wherever you clone
-   this repo.
+1. Run `sh skills/ignition/install.sh` (symlinks `ignition` + all
+   `ignition-*` skills into `~/.claude/skills/`; pass `--target DIR` for a
+   different Agent Skills folder).
+2. The skills carry no hardcoded paths — they're global Ignition 8.3
+   knowledge only. Project-specific facts (this gateway's KB, naming
+   conventions, verified schema notes) live in `knowledgebase/` and
+   `memory/` below, referenced from your project's own context, not from
+   the skill.
 3. Drop the `memory/*.md` files into your Claude Code memory directory and
    add index lines to `MEMORY.md` if you use the auto-memory system.
 4. Follow `mcp/README.md` to clone and wire up the live ignition-mcp server.

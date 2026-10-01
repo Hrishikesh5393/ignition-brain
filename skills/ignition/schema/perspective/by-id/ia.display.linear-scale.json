@@ -1,0 +1,229 @@
+{
+ "id": "ia.display.linear-scale",
+ "name": "Linear Scale",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Linear Scale",
+    "tooltip": "A level indicator component that displays tick marks and labels."
+   }
+  ]
+ },
+ "defaultMetaName": "LinearScale",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "minValue": {
+    "type": "number",
+    "default": 0,
+    "description": "The minimum value shown on the scale"
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100,
+    "description": "The maximum value shown on the scale"
+   },
+   "majorTicks": {
+    "$ref": "#/definitions/TickConfig",
+    "description": "The most prominent tick marks indicating periodic scale values",
+    "default": {
+     "span": 20,
+     "length": 20,
+     "color": "",
+     "stroke": 1
+    }
+   },
+   "minorTicks": {
+    "$ref": "#/definitions/TickConfig",
+    "description": "Secondary tick marks indicating periodic scale values",
+    "default": {
+     "span": 5,
+     "length": 10,
+     "color": "",
+     "stroke": 1
+    }
+   },
+   "fineTicks": {
+    "$ref": "#/definitions/TickConfig",
+    "description": "Smallest tick marks indicating periodic scale values, useful for very short spans",
+    "default": {
+     "span": 1,
+     "length": 5,
+     "color": "",
+     "stroke": 1
+    }
+   },
+   "labels": {
+    "type": "object",
+    "description": "Displays of the numeric values of major tick marks",
+    "properties": {
+     "angle": {
+      "type": "number",
+      "default": 0,
+      "description": "Rotation of the numeric labels"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+       "classes": "",
+       "fill": ""
+      }
+     }
+    }
+   },
+   "indicators": {
+    "type": "array",
+    "description": "Markers of special significance to place along the scale",
+    "items": {
+     "$ref": "#/definitions/IndicatorConfig"
+    },
+    "example": [
+     {
+      "label": "High",
+      "labelColor": "",
+      "color": "",
+      "length": 25,
+      "stroke": 1.5,
+      "opacity": 0.4,
+      "indicatorStyle": "range",
+      "labelAngle": 270,
+      "extent": 15,
+      "value": 85
+     },
+     {
+      "label": "Low",
+      "labelColor": "",
+      "color": "",
+      "length": 25,
+      "stroke": 2,
+      "opacity": 1,
+      "indicatorStyle": "wedge",
+      "labelAngle": 270,
+      "extent": 2,
+      "value": 20
+     }
+    ]
+   },
+   "mirror": {
+    "type": "boolean",
+    "default": false,
+    "description": "Aligns the scale to the opposite side of the component"
+   },
+   "reverse": {
+    "type": "boolean",
+    "default": false,
+    "description": "Inverts the order of scale values, so min to max is ordered in reverse"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "TickConfig": {
+    "type": "object",
+    "properties": {
+     "span": {
+      "type": "number",
+      "default": 20,
+      "description": "Distance between each tick mark of this type"
+     },
+     "length": {
+      "type": "number",
+      "default": 20,
+      "description": "Length of the tick"
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "Color of the tick"
+     },
+     "stroke": {
+      "type": "number",
+      "default": 1,
+      "description": "Width of the tick"
+     }
+    }
+   },
+   "IndicatorConfig": {
+    "type": "object",
+    "properties": {
+     "value": {
+      "type": "number",
+      "default": 0,
+      "description": "Value along the scale at which point this indicator is placed (or is started)"
+     },
+     "label": {
+      "type": "string",
+      "default": "",
+      "description": "Text to display along with this indicator"
+     },
+     "labelColor": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "Color of this indicator label"
+     },
+     "labelAngle": {
+      "type": "number",
+      "default": 0,
+      "description": "Rotational angle of this indicator label"
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "Color of this indicator, or of the area making up this indicator"
+     },
+     "stroke": {
+      "type": "number",
+      "default": 1,
+      "description": "If type 'line' or 'wedge', the width of this indicator"
+     },
+     "opacity": {
+      "type": "number",
+      "default": 1,
+      "description": "Opacity of this indicator"
+     },
+     "length": {
+      "type": "number",
+      "default": 25,
+      "description": "Length of this indicator, as measured by its x value within the scale"
+     },
+     "indicatorStyle": {
+      "type": "string",
+      "enum": [
+       "line",
+       "wedge",
+       "range"
+      ],
+      "default": "line",
+      "description": "'line' displays similar to a tick mark, 'wedge' displays a triangle shape, and 'range' displays a rectilinear range along the scale as measured by the property 'extent'"
+     },
+     "extent": {
+      "type": "number",
+      "default": 2,
+      "description": "If indicatorStyle is 'range', the extent along the scale this indicator is placed (starting at 'value')"
+     }
+    },
+    "additionalProperties": false,
+    "required": [
+     "value"
+    ]
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

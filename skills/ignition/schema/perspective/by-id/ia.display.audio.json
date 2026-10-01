@@ -1,0 +1,118 @@
+{
+ "id": "ia.display.audio",
+ "name": "Audio",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Audio",
+    "tooltip": "Plays audio tracks supported by the browser."
+   }
+  ]
+ },
+ "defaultMetaName": "Audio",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "source": {
+    "type": "string",
+    "description": "The source URL of the media file.",
+    "default": ""
+   },
+   "play": {
+    "type": "boolean",
+    "description": "The play state of the media file. Toggling the property will start or pause the media file.",
+    "default": false
+   },
+   "loop": {
+    "type": "boolean",
+    "description": "Determines if the media file should loop when the end is reached.",
+    "default": false
+   },
+   "volume": {
+    "type": "number",
+    "description": "The percentage of maximum volume in use (from 0 to 100).",
+    "default": 100
+   },
+   "playbackRate": {
+    "type": "number",
+    "description": "A double that represents the playback rate of the media file.",
+    "default": 1
+   },
+   "display": {
+    "type": "boolean",
+    "description": "The visible state of the component."
+   },
+   "allowDownload": {
+    "type": "boolean",
+    "description": "Determines if the audio player allows downloading of the media file.",
+    "default": false
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onPlay",
+   "description": "This event is fired when playback has begun.",
+   "schema": {
+    "type": "object"
+   }
+  },
+  {
+   "name": "onPause",
+   "description": "This event is fired when playback has been paused.",
+   "schema": {
+    "type": "object"
+   }
+  },
+  {
+   "name": "onError",
+   "description": "This event is fired when there is an error attempting to playback.",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "errorMessage": {
+      "type": "string",
+      "description": "Error message when attempting to play media file."
+     }
+    }
+   }
+  },
+  {
+   "name": "onEnded",
+   "description": "This event is fired when playback has ended due to reaching end of media.",
+   "schema": {
+    "type": "object"
+   }
+  },
+  {
+   "name": "onLoaded",
+   "description": "This event is fired when the first frame of the media has loaded.",
+   "schema": {
+    "type": "object"
+   }
+  },
+  {
+   "name": "onRateChanged",
+   "description": "This event is fired when the playback rate of the media has changed.",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,216 @@
+{
+ "id": "ia.display.moving-analog-indicator",
+ "name": "Moving Analog Indicator",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Moving Analog Indicator",
+    "tooltip": "Displays an analog value in context with other information so you can visually see if the value is within the normal range or not."
+   }
+  ]
+ },
+ "defaultMetaName": "MovingAnalogIndicator",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "processValue": {
+    "type": "number",
+    "default": 50,
+    "description": "Current value of the process"
+   },
+   "setpointValue": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null,
+    "description": "Current value of the setpoint"
+   },
+   "minValue": {
+    "type": "number",
+    "default": 0,
+    "description": "The minimum value shown on the indicator"
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100,
+    "description": "The maximum value shown on the indicator"
+   },
+   "desiredHigh": {
+    "type": "number",
+    "example": 65,
+    "description": "Upper limit of 'desired' range"
+   },
+   "desiredLow": {
+    "type": "number",
+    "example": 40,
+    "description": "Lower limit of 'desired' range"
+   },
+   "highAlarm": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": 90,
+    "description": "Value above which is a high alarm"
+   },
+   "highHighAlarm": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": null,
+    "description": "Value above which is a high-high alarm"
+   },
+   "highInterlock": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": null,
+    "description": "Value above which an interlock will be activated"
+   },
+   "lowAlarm": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": 10,
+    "description": "Value below which is a low alarm"
+   },
+   "lowLowAlarm": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": null,
+    "description": "Value below which is a low-low alarm"
+   },
+   "lowInterlock": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "example": null,
+    "description": "Value below which an interlock will be activated"
+   },
+   "desiredRangeColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color for the area in the 'desired' range"
+   },
+   "defaultRangeColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of any area not defined as a range"
+   },
+   "inactiveAlarmColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color for an inactive alarm range"
+   },
+   "level2AlarmColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color for an active level 2 alarm (high or low)"
+   },
+   "level1AlarmColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color for an active level 1 alarm (high-high or low-low)"
+   },
+   "interlockColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color for interlock range"
+   },
+   "indicatorColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of the process value indicator"
+   },
+   "setpointColor": {
+    "type": "string",
+    "format": "color",
+    "default": "",
+    "description": "Color of the setpoint value marker"
+   },
+   "label": {
+    "type": "object",
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display label"
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "#,##0",
+       "#,##0.0",
+       "#,##0.00",
+       "0",
+       "0.0",
+       "0.00",
+       "#,##0%"
+      ],
+      "default": "#,##0",
+      "description": "Format of numeric value in label, including commas, decimal places etc."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "example": {
+       "classes": ""
+      }
+     }
+    },
+    "description": "Numeric value displayed as text next to indicator"
+   },
+   "sectionOutline": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "Color for range borders"
+     },
+     "width": {
+      "type": "number",
+      "default": 2,
+      "description": "Width for range borders"
+     }
+    },
+    "description": "Border surrounding each range area"
+   },
+   "reverseIndicator": {
+    "type": "boolean",
+    "default": false,
+    "description": "Put the process value indicator on the other side of the scale"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

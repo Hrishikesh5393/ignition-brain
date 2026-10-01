@@ -1,0 +1,189 @@
+{
+ "id": "ia.input.checkbox",
+ "name": "Checkbox",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Checkbox",
+    "tooltip": "Simple component that represents a bit that is either on (checked), off (not checked), or indeterminate."
+   },
+   {
+    "id": "checkbox-right",
+    "label": "Text Right",
+    "tooltip": "Simple component that represents a bit that is either on (checked), off (not checked), or indeterminate."
+   },
+   {
+    "id": "checkbox-left",
+    "label": "Text Left",
+    "tooltip": "Simple component that represents a bit that is either on (checked), off (not checked), or indeterminate.",
+    "props": {
+     "textPosition": "left"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "Checkbox",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "selected": {
+    "type": [
+     "boolean",
+     "null"
+    ],
+    "default": false,
+    "description": "Output value for checkbox"
+   },
+   "text": {
+    "type": "string",
+    "default": "text",
+    "description": "Label for checkbox"
+   },
+   "textPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "right",
+     "bottom",
+     "left"
+    ],
+    "default": "right",
+    "description": "Where to place label text in relation to checkbox"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Whether user can currently interact with the checkbox"
+   },
+   "triState": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether checkbox supports a third state of 'indeterminate' - effectively 'null' or 'no choice'"
+   },
+   "checkedIcon": {
+    "$ref": "#/definitions/icon",
+    "default": {
+     "path": "material/check_box",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {}
+    },
+    "description": "Icon to show when checked."
+   },
+   "uncheckedIcon": {
+    "$ref": "#/definitions/icon",
+    "default": {
+     "path": "material/check_box_outline_blank",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {}
+    },
+    "description": "Icon to show when unchecked."
+   },
+   "indeterminateIcon": {
+    "$ref": "#/definitions/icon",
+    "default": {
+     "path": "material/indeterminate_check_box",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {}
+    },
+    "description": "Icon to show when in indeterminate or tristate."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "icon": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "default": "",
+      "description": "Shorthand path to icon source, in format: library/iconName"
+     },
+     "library": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of library where icon is located. Must also supply 'name'."
+     },
+     "name": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of icon. Must also supply 'library'."
+     },
+     "color": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of the icon when enabled. Can be a named color."
+       },
+       "disabled": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of the icon when disabled. Can be a named color."
+       }
+      }
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {}
+     }
+    },
+    "oneOf": [
+     {
+      "required": [
+       "path"
+      ]
+     },
+     {
+      "required": [
+       "library",
+       "name"
+      ]
+     }
+    ],
+    "default": {
+     "path": "",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {}
+    }
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

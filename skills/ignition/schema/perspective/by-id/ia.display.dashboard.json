@@ -1,0 +1,349 @@
+{
+ "id": "ia.display.dashboard",
+ "name": "Dashboard",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Dashboard",
+    "tooltip": "Exposes layout capabilities to end users in a Perspective Session. Widgets are configured in the Designer by designers and made available to Perspective Session users."
+   }
+  ]
+ },
+ "defaultMetaName": "Dashboard",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "pack": {
+    "type": "boolean",
+    "description": "Enables widget packing algorithm. When disabled, widgets can be placed anywhere on the Dashboard and the component will not try to rearrange them in an optimal layout.",
+    "default": true
+   },
+   "grid": {
+    "type": "string",
+    "description": "The grids layout mode.",
+    "enum": [
+     "fixed",
+     "stretch"
+    ],
+    "default": "stretch"
+   },
+   "isEditing": {
+    "type": "boolean",
+    "description": "Whether the dashboard is in runtime edit mode.",
+    "default": false
+   },
+   "editingToggle": {
+    "type": "boolean",
+    "description": "Whether to display the dashboard editing toggle.",
+    "default": true
+   },
+   "fixed": {
+    "type": "object",
+    "description": "Fixed configuration used when dashboard mode is fixed.",
+    "required": [
+     "cellSize",
+     "rowCount",
+     "columnCount"
+    ],
+    "visibleWhen": {
+     "property": "grid",
+     "equals": "fixed"
+    },
+    "properties": {
+     "cellSize": {
+      "type": "number",
+      "description": "Grid cell size in pixels.",
+      "default": 100
+     },
+     "rowCount": {
+      "type": "number",
+      "description": "The number of rows in the grid",
+      "default": 10
+     },
+     "columnCount": {
+      "type": "number",
+      "description": "The number of columns in the grid",
+      "default": 10
+     },
+     "rowGutterSize": {
+      "type": "number",
+      "description": "The size of the grid gaps or gutters between rows in pixels.",
+      "default": 6
+     },
+     "columnGutterSize": {
+      "type": "number",
+      "description": "The size of the grid gaps or gutters between columns in pixels.",
+      "default": 6
+     }
+    }
+   },
+   "stretch": {
+    "type": "object",
+    "description": "Stretch configuration used when dashboard mode is stretch.",
+    "visibleWhen": {
+     "property": "grid",
+     "equals": "stretch"
+    },
+    "required": [
+     "rowCount",
+     "columnCount"
+    ],
+    "properties": {
+     "rowCount": {
+      "type": "number",
+      "description": "The number of rows in the grid",
+      "default": 8
+     },
+     "columnCount": {
+      "type": "number",
+      "description": "The number of columns in the grid",
+      "default": 8
+     },
+     "rowGutterSize": {
+      "type": "number",
+      "description": "The size of the grid gaps or gutters between rows in pixels.",
+      "default": 6
+     },
+     "columnGutterSize": {
+      "type": "number",
+      "description": "The size of the grid gaps or gutters between columns in pixels.",
+      "default": 6
+     }
+    }
+   },
+   "widgets": {
+    "type": "array",
+    "description": "Widgets currently in dashboard display.",
+    "items": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string",
+       "description": "The unique widget name.",
+       "default": ""
+      },
+      "viewPath": {
+       "type": "string",
+       "description": "The current configured view path of the widget.",
+       "format": "view-path",
+       "default": ""
+      },
+      "viewParams": {
+       "type": "object",
+       "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+       "default": {},
+       "extension": {
+        "view-params": {
+         "path": "../viewPath"
+        }
+       }
+      },
+      "isConfigurable": {
+       "type": "boolean",
+       "description": "If enabled, provides a toggle that becomes available when a widget is selected which is used to configure the widgets view. When the toggled on, the configuring view parameter will be true.",
+       "default": false
+      },
+      "header": {
+       "type": "object",
+       "description": "Widget header configuration.",
+       "properties": {
+        "enabled": {
+         "type": "boolean",
+         "description": "Whether the widget header should show.",
+         "default": true
+        },
+        "title": {
+         "type": "string",
+         "description": "The header title.",
+         "default": ""
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       }
+      },
+      "body": {
+       "type": "object",
+       "description": "Widget body configuration.",
+       "properties": {
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       }
+      },
+      "minSize": {
+       "type": "object",
+       "description": "This widgets minimum size used when determining widget layout.",
+       "properties": {
+        "columnSpan": {
+         "type": "number",
+         "description": "The minimum allowable columns that this widget may span.",
+         "default": 1
+        },
+        "rowSpan": {
+         "type": "number",
+         "description": "The minimum allowable rows that this widget may span.",
+         "default": 1
+        }
+       }
+      },
+      "position": {
+       "type": "object",
+       "description": "The widgets position in the dashboard.",
+       "required": [
+        "rowStart",
+        "rowEnd",
+        "columnStart",
+        "columnEnd"
+       ],
+       "properties": {
+        "rowStart": {
+         "type": "number",
+         "default": 1
+        },
+        "rowEnd": {
+         "type": "number",
+         "default": 2
+        },
+        "columnStart": {
+         "type": "number",
+         "default": 1
+        },
+        "columnEnd": {
+         "type": "number",
+         "default": 2
+        }
+       }
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      }
+     }
+    },
+    "default": []
+   },
+   "availableWidgets": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "viewPath": {
+       "type": "string",
+       "description": "The primary view path of the widget.",
+       "format": "view-path",
+       "default": ""
+      },
+      "viewParams": {
+       "type": "object",
+       "descriptions": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+       "default": {},
+       "extension": {
+        "view-params": {
+         "path": "../viewPath"
+        }
+       }
+      },
+      "isConfigurable": {
+       "type": "boolean",
+       "description": "If enabled, provides a toggle that becomes available when a widget is selected which is used to configure the widgets view. When the toggled on, the configuring view parameter will be true.",
+       "default": false
+      },
+      "defaultSize": {
+       "type": "object",
+       "properties": {
+        "columnSpan": {
+         "type": "number",
+         "default": 2
+        },
+        "rowSpan": {
+         "type": "number",
+         "default": 2
+        }
+       }
+      },
+      "minSize": {
+       "type": "object",
+       "description": "This widgets minimum size used when determining widget layout.",
+       "properties": {
+        "columnSpan": {
+         "type": "number",
+         "description": "The minimum allowable columns that this widget may span.",
+         "default": 1
+        },
+        "rowSpan": {
+         "type": "number",
+         "description": "The minimum allowable rows that this widget may span.",
+         "default": 1
+        }
+       }
+      },
+      "category": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "A category in which to group this widget when displayed in the add widgets modal.",
+       "default": ""
+      },
+      "name": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "A unique name to provide this widget.  This is used in the add widget modal.",
+       "default": ""
+      },
+      "header": {
+       "type": "object",
+       "description": "Widget header configuration",
+       "properties": {
+        "enabled": {
+         "type": "boolean",
+         "description": "Whether the widget header should show.",
+         "default": true
+        },
+        "title": {
+         "type": "string",
+         "description": "The header title.",
+         "default": ""
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       }
+      },
+      "body": {
+       "type": "object",
+       "description": "Widget body configuration.",
+       "properties": {
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+        }
+       }
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      }
+     }
+    },
+    "default": []
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

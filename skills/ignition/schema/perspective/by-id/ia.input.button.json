@@ -1,0 +1,157 @@
+{
+ "id": "ia.input.button",
+ "name": "Button",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Button",
+    "tooltip": "A standard button component commonly used for navigation and control."
+   },
+   {
+    "id": "button-primary",
+    "label": "Primary",
+    "tooltip": "A standard button component commonly used for navigation and control."
+   },
+   {
+    "id": "button-secondary",
+    "label": "Secondary",
+    "tooltip": "A standard button component commonly used for navigation and control.",
+    "props": {
+     "primary": false
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "Button",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "text": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": "Button",
+    "description": "Text to display on button"
+   },
+   "textStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style properties that are applied to the text within the button."
+   },
+   "primary": {
+    "type": "boolean",
+    "default": true,
+    "description": "Toggle between the default primary and secondary button style."
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Enables button interaction."
+   },
+   "image": {
+    "type": "object",
+    "description": "An optional image to be embedded in the button",
+    "properties": {
+     "source": {
+      "type": "string",
+      "format": "image",
+      "default": "",
+      "description": "The image source URI. Could be a URL to an image on the internet or gateway, or could be an embedded image."
+     },
+     "icon": {
+      "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+     },
+     "width": {
+      "type": "number",
+      "default": 24,
+      "description": "The width of the button image in pixels"
+     },
+     "height": {
+      "type": "number",
+      "default": 24,
+      "description": "The height of the button image in pixels"
+     },
+     "position": {
+      "type": "string",
+      "enum": [
+       "left",
+       "center",
+       "right",
+       "top",
+       "bottom"
+      ],
+      "default": "left",
+      "description": "The position of the image within the button relative to the text"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties that are applied to the image within the button."
+     }
+    },
+    "default": {
+     "source": "",
+     "icon": {
+      "path": "",
+      "color": ""
+     },
+     "width": 24,
+     "height": 24,
+     "position": "left",
+     "style": {
+      "classes": ""
+     }
+    }
+   },
+   "align": {
+    "type": "string",
+    "description": "Align text and image (if present) along the cross axis. Vertical if imagePosition top or bottom, else horizontal.",
+    "enum": [
+     "start",
+     "center",
+     "end",
+     "stretch"
+    ],
+    "default": "center"
+   },
+   "justify": {
+    "type": "string",
+    "description": "Justify text and image (if present) along the main axis. Horizontal if imagePosition top or bottom, else vertical.",
+    "enum": [
+     "start",
+     "center",
+     "end",
+     "space-around",
+     "space-between",
+     "space-evenly"
+    ],
+    "default": "center"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

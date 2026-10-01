@@ -1,0 +1,179 @@
+{
+ "id": "ia.input.date-time-picker",
+ "name": "DateTime Picker",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "DateTime Picker",
+    "tooltip": "Provides a calendar from which the user can select the date and time."
+   },
+   {
+    "id": "date-time-picker-datetime",
+    "label": "Date and Time",
+    "tooltip": "Provides a calendar from which the user can select the date and time."
+   },
+   {
+    "id": "date-time-picker-date",
+    "label": "Date",
+    "tooltip": "Provides a calendar from which the user can select the date and time.",
+    "props": {
+     "pickerType": "date"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "DateTimePicker",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Current date/time as a Date object or timestamp in milliseconds",
+    "default": null
+   },
+   "formattedValue": {
+    "type": [
+     "string",
+     "null"
+    ],
+    "description": "Date and time in configured format",
+    "default": ""
+   },
+   "pickerType": {
+    "type": "string",
+    "enum": [
+     "datetime",
+     "date"
+    ],
+    "default": "datetime",
+    "description": "Whether to display and enable picker for date only, or both date and time"
+   },
+   "minDate": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Minimum date/time as a Date object or timestamp in milliseconds. If null, the minimum date is 10 years in the past from today.",
+    "default": null
+   },
+   "maxDate": {
+    "type": [
+     "date",
+     "number",
+     "null"
+    ],
+    "description": "Maximum date/time as a Date object or timestamp in milliseconds. If null, the maximum date is 10 years in the future from today.",
+    "default": null
+   },
+   "format": {
+    "type": "string",
+    "default": "lll",
+    "description": "Template for formatting date display - must be valid moment.js format, e.g. 'MM/DD/YYYY h:mm a'"
+   },
+   "locale": {
+    "type": "string",
+    "default": "en",
+    "suggestions": [
+     "en",
+     "ar",
+     "be",
+     "bg",
+     "bn",
+     "ca",
+     "cs",
+     "cy",
+     "da",
+     "de-at",
+     "de-ch",
+     "de",
+     "el",
+     "en-au",
+     "en-ca",
+     "en-gb",
+     "en-ie",
+     "en-il",
+     "en-nz",
+     "es-do",
+     "es-us",
+     "es",
+     "et",
+     "eu",
+     "fi",
+     "fr-ca",
+     "fr-ch",
+     "fr",
+     "hi",
+     "hu",
+     "is",
+     "it",
+     "ja",
+     "ko",
+     "lt",
+     "lv",
+     "mk",
+     "ms-my",
+     "ms",
+     "mt",
+     "nb",
+     "nn",
+     "pl",
+     "pt-br",
+     "pt",
+     "ro",
+     "ru",
+     "sk",
+     "sl",
+     "sr-cyrl",
+     "sr",
+     "sv",
+     "sw",
+     "th",
+     "tr",
+     "uk",
+     "uz",
+     "vi",
+     "zh-cn",
+     "zh-hk",
+     "zh-tw"
+    ],
+    "description": "Code for localization of language and formatting"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "False will disable any interaction with calendar"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

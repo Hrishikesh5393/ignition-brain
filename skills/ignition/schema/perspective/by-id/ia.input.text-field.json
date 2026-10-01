@@ -1,0 +1,67 @@
+{
+ "id": "ia.input.text-field",
+ "name": "Text Field",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Text Field",
+    "tooltip": "Used for input of a single line of text."
+   }
+  ]
+ },
+ "defaultMetaName": "TextField",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "text": {
+    "type": "string",
+    "default": "",
+    "description": "Text to display"
+   },
+   "placeholder": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": "",
+    "description": "Text displayed when text is empty"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "If user should be allowed to alter text."
+   },
+   "deferUpdates": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, updates to props.text will be deferred until focus is lost or enter is pressed."
+   },
+   "rejectUpdatesWhileFocused": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, props.text will not accept updates from external sources while focused."
+   },
+   "spellcheck": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, the component will highlight potential spelling errors while text is being edited."
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

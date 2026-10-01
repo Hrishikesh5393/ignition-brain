@@ -1,0 +1,136 @@
+{
+ "id": "ia.display.thermometer",
+ "name": "Thermometer",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Thermometer",
+    "tooltip": "Displays a temperature value depicted as a level in a mercury thermometer."
+   }
+  ]
+ },
+ "defaultMetaName": "Thermometer",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "thermometerColor": {
+    "type": "string",
+    "format": "color",
+    "default": ""
+   },
+   "mercuryColor": {
+    "type": "string",
+    "format": "color",
+    "default": ""
+   },
+   "axisLabelColor": {
+    "type": "string",
+    "format": "color",
+    "default": ""
+   },
+   "strokeWidth": {
+    "type": "number",
+    "default": 2
+   },
+   "highBound": {
+    "type": "number",
+    "default": 100
+   },
+   "lowBound": {
+    "type": "number",
+    "default": 0
+   },
+   "value": {
+    "type": "number",
+    "default": 25
+   },
+   "unit": {
+    "type": "string",
+    "default": "C"
+   },
+   "valueFontColor": {
+    "type": "string",
+    "format": "color",
+    "default": ""
+   },
+   "valueFont": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "fontSize": 25
+    }
+   },
+   "intervals": {
+    "type": "array",
+    "items": {
+     "additionalProperties": false,
+     "properties": {
+      "color": {
+       "type": "string",
+       "format": "color",
+       "default": ""
+      },
+      "high": {
+       "type": [
+        "number",
+        "null"
+       ],
+       "default": null
+      },
+      "low": {
+       "type": [
+        "number",
+        "null"
+       ],
+       "default": null
+      }
+     },
+     "required": [
+      "high",
+      "color",
+      "low"
+     ],
+     "type": "object",
+     "default": {
+      "low": null,
+      "high": null,
+      "color": ""
+     }
+    },
+    "example": [
+     {
+      "low": 0,
+      "high": 25,
+      "color": "#47A9E5"
+     },
+     {
+      "low": 25,
+      "high": 75,
+      "color": "#B394EF"
+     },
+     {
+      "low": 75,
+      "high": 100,
+      "color": "#DB3939"
+     }
+    ]
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "additionalProperties": false
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

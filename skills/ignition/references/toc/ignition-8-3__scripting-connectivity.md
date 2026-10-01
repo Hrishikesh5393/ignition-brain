@@ -1,0 +1,126 @@
+# TOC: references/ignition-8-3/scripting-connectivity.md
+
+1727 lines, ~19.2k tokens. Line ranges are 1-based inclusive; `Read` with offset=start, limit=end-start+1.
+
+L8-43 (0.7k) ## How OPC access works in Ignition, and when to script against it directly
+L44-47 (0.1k) ## system.opc
+  L48-63 (0.2k) ### system.opc.browse
+  L64-76 (0.1k) ### system.opc.browseServer
+  L77-91 (0.2k) ### system.opc.browseSimple
+  L92-103 (0.1k) ### system.opc.getServerState
+  L104-115 (0.1k) ### system.opc.getServers
+  L116-127 (0.1k) ### system.opc.isServerEnabled
+  L128-140 (0.1k) ### system.opc.readValue
+  L141-153 (0.1k) ### system.opc.readValues
+  L154-166 (0.1k) ### system.opc.setServerEnabled
+  L167-180 (0.1k) ### system.opc.writeValue
+  L181-194 (0.1k) ### system.opc.writeValues
+L195-198 (0.1k) ## system.opcua
+  L199-216 (0.2k) ### system.opcua.addConnection
+  L217-231 (0.2k) ### system.opcua.callMethod
+  L232-243 (0.1k) ### system.opcua.removeConnection
+L244-247 (0.1k) ## system.opchda
+  L248-259 (0.1k) ### system.opchda.browse
+  L260-271 (0.1k) ### system.opchda.getAggregates
+  L272-283 (0.1k) ### system.opchda.getAttributes
+  L284-294 (0.1k) ### system.opchda.getServers
+  L295-310 (0.1k) ### system.opchda.insert
+  L311-326 (0.2k) ### system.opchda.insertReplace
+  L327-338 (0.1k) ### system.opchda.isServerAvailable
+  L339-354 (0.2k) ### system.opchda.readAttributes
+  L355-371 (0.2k) ### system.opchda.readProcessed
+  L372-388 (0.2k) ### system.opchda.readRaw
+  L389-404 (0.1k) ### system.opchda.replace
+L405-408 (0.1k) ## system.device
+  L409-423 (0.2k) ### system.device.addDevice
+  L424-435 (0.1k) ### system.device.getDeviceHostname
+  L436-446 (0.1k) ### system.device.listDevices
+  L447-458 (0.1k) ### system.device.refreshBrowse
+  L459-470 (0.1k) ### system.device.removeDevice
+  L471-482 (0.1k) ### system.device.restart
+  L483-495 (0.1k) ### system.device.setDeviceEnabled
+  L496-508 (0.1k) ### system.device.setDeviceHostname
+L509-512 (0.1k) ## system.serial
+  L513-524 (0.1k) ### system.serial.closeSerialPort
+  L525-541 (0.2k) ### system.serial.configureSerialPort
+  L542-553 (0.1k) ### system.serial.openSerialPort
+  L554-570 (0.2k) ### system.serial.port
+  L571-584 (0.1k) ### system.serial.readBytes
+  L585-599 (0.2k) ### system.serial.readBytesAsString
+  L600-613 (0.1k) ### system.serial.readLine
+  L614-628 (0.2k) ### system.serial.readUntil
+  L629-641 (0.1k) ### system.serial.sendBreak
+  L642-656 (0.1k) ### system.serial.write
+  L657-669 (0.1k) ### system.serial.writeBytes
+L670-680 (0.2k) ## system.dnp / system.dnp3 — two parallel DNP3 scripting namespaces
+  L681-694 (0.1k) ### system.dnp.demandPoll
+  L695-710 (0.1k) ### system.dnp.directOperateAnalog
+  L711-729 (0.2k) ### system.dnp.directOperateBinary
+  L730-743 (0.1k) ### system.dnp.freezeAnalogs
+  L744-759 (0.2k) ### system.dnp.freezeAtTimeAnalogs
+  L760-775 (0.2k) ### system.dnp.freezeAtTimeCounters
+  L776-789 (0.1k) ### system.dnp.freezeClearAnalogs
+  L790-803 (0.1k) ### system.dnp.freezeClearCounters
+  L804-817 (0.1k) ### system.dnp.freezeCounters
+  L818-833 (0.1k) ### system.dnp.selectOperateAnalog
+  L834-852 (0.2k) ### system.dnp.selectOperateBinary
+  L853-867 (0.1k) ### system.dnp.synchronizeTime
+  L868-883 (0.2k) ### system.dnp3.directOperateAnalog
+  L884-902 (0.3k) ### system.dnp3.directOperateBinary
+  L903-916 (0.1k) ### system.dnp3.freezeAnalogs
+  L917-932 (0.2k) ### system.dnp3.freezeAnalogsAtTime
+  L933-946 (0.1k) ### system.dnp3.freezeCounters
+  L947-962 (0.2k) ### system.dnp3.freezeCountersAtTime
+  L963-978 (0.2k) ### system.dnp3.selectOperateAnalog
+  L979-997 (0.3k) ### system.dnp3.selectOperateBinary
+L998-1001 (0.1k) ## system.bacnet
+  L1002-1017 (0.2k) ### system.bacnet.readRaw
+  L1018-1032 (0.2k) ### system.bacnet.readRawMultiple
+  L1033-1044 (0.1k) ### system.bacnet.synchronizeTime
+  L1045-1056 (0.1k) ### system.bacnet.synchronizeTimeUtc
+  L1057-1074 (0.3k) ### system.bacnet.writeRaw
+  L1075-1092 (0.3k) ### system.bacnet.writeRawMultiple
+  L1093-1108 (0.2k) ### system.bacnet.writeWithPriority
+L1109-1112 (0.1k) ## system.iec61850
+  L1113-1126 (0.2k) ### system.iec61850.cancel
+  L1127-1139 (0.2k) ### system.iec61850.getControlParams
+  L1140-1152 (0.1k) ### system.iec61850.listFiles
+  L1153-1166 (0.1k) ### system.iec61850.operate
+  L1167-1180 (0.1k) ### system.iec61850.readFile
+  L1181-1194 (0.1k) ### system.iec61850.select
+  L1195-1208 (0.1k) ### system.iec61850.writeFile
+L1209-1212 (0.1k) ## system.secsgem
+  L1213-1225 (0.1k) ### system.secsgem.deleteToolProgram
+  L1226-1246 (0.3k) ### system.secsgem.copyEquipment
+  L1247-1259 (0.1k) ### system.secsgem.enableDisableEquipment
+  L1260-1274 (0.2k) ### system.secsgem.getResponse
+  L1275-1286 (0.1k) ### system.secsgem.getToolProgram
+  L1287-1297 (0.1k) ### system.secsgem.getToolProgramDataset
+  L1298-1312 (0.2k) ### system.secsgem.sendRequest
+  L1313-1328 (0.2k) ### system.secsgem.sendResponse
+  L1329-1341 (0.1k) ### system.secsgem.startSimEventRun
+  L1342-1353 (0.1k) ### system.secsgem.toDataset
+  L1354-1365 (0.1k) ### system.secsgem.toTreeDataset
+L1366-1369 (0.1k) ## system.mongodb
+  L1370-1384 (0.2k) ### system.mongodb.aggregate
+  L1385-1399 (0.2k) ### system.mongodb.deleteMany
+  L1400-1414 (0.2k) ### system.mongodb.deleteOne
+  L1415-1433 (0.3k) ### system.mongodb.find
+  L1434-1448 (0.2k) ### system.mongodb.findOne
+  L1449-1463 (0.2k) ### system.mongodb.insertMany
+  L1464-1478 (0.2k) ### system.mongodb.insertOne
+  L1479-1490 (0.1k) ### system.mongodb.listCollectionNames
+  L1491-1501 (0.1k) ### system.mongodb.listConnectorInfo
+  L1502-1517 (0.2k) ### system.mongodb.replaceOne
+  L1518-1533 (0.2k) ### system.mongodb.updateMany
+  L1534-1549 (0.2k) ### system.mongodb.updateOne
+L1550-1553 (0.1k) ## system.kafka
+  L1554-1564 (0.1k) ### system.kafka.listConnectorInfo
+  L1565-1579 (0.1k) ### system.kafka.listTopicPartitions
+  L1580-1591 (0.1k) ### system.kafka.listTopics
+  L1592-1609 (0.2k) ### system.kafka.pollPartition
+  L1610-1626 (0.2k) ### system.kafka.pollTopic
+  L1627-1642 (0.2k) ### system.kafka.seekLatest
+  L1643-1662 (0.2k) ### system.kafka.sendRecord
+  L1663-1682 (0.2k) ### system.kafka.sendRecordAsync
+L1683-1727 (1.0k) ## Gotchas and 8.3 notes

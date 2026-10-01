@@ -1,0 +1,81 @@
+{
+ "id": "ia.shapes.rect",
+ "palette": {
+  "category": "shapes",
+  "name": "Rectangle"
+ },
+ "defaultMetaName": "Rectangle",
+ "showOnPalette": false,
+ "schema": {
+  "type": "object",
+  "properties": {
+   "x": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": 0
+   },
+   "y": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": 0
+   },
+   "width": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": 0
+   },
+   "height": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": 0
+   },
+   "rx": {
+    "type": [
+     "number",
+     "string"
+    ]
+   },
+   "ry": {
+    "type": [
+     "number",
+     "string"
+    ]
+   },
+   "fill": {
+    "$ref": "urn:ignition-schema:schemas/svg-fill.json"
+   },
+   "stroke": {
+    "$ref": "urn:ignition-schema:schemas/svg-stroke.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "required": [
+   "x",
+   "y",
+   "width",
+   "height"
+  ]
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

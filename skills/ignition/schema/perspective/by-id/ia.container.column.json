@@ -1,0 +1,160 @@
+{
+ "id": "ia.container.column",
+ "name": "Column Container",
+ "palette": {
+  "category": "container",
+  "variants": [
+   {
+    "label": "Column",
+    "tooltip": "A 12 column grid layout in which components can be organized. The columns that alter their layout depending on screen viewport size."
+   }
+  ]
+ },
+ "defaultMetaName": "ColumnContainer",
+ "schema": {
+  "type": "object",
+  "required": [
+   "breakpoints",
+   "gutters",
+   "style"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "breakpoints": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "name",
+      "minWidth"
+     ],
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "minWidth": {
+       "type": "number"
+      }
+     },
+     "default": {
+      "name": "",
+      "minWidth": 0
+     }
+    },
+    "default": [
+     {
+      "name": "sm",
+      "minWidth": 0
+     },
+     {
+      "name": "md",
+      "minWidth": 480
+     },
+     {
+      "name": "lg",
+      "minWidth": 996
+     }
+    ],
+    "description": "Width breakpoints declarations for child layouts. When container is sized below minWidth, child position rules will fall back to the next set breakpoint rules"
+   },
+   "currentBreakpoint": {
+    "type": "string",
+    "description": "The name of the currently applied breakpoint (read-only).",
+    "default": "",
+    "required": true
+   },
+   "gutters": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "vertical",
+     "horizontal"
+    ],
+    "properties": {
+     "vertical": {
+      "type": "number"
+     },
+     "horizontal": {
+      "type": "number"
+     }
+    },
+    "default": {
+     "vertical": 10,
+     "horizontal": 10
+    },
+    "description": "Amount of space, in pixels, to place between child components"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": ""
+    }
+   }
+  }
+ },
+ "childPositionSchema": {
+  "type": "object",
+  "required": [
+   "breakpoints"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "height": {
+    "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+    "description": "Component height. Rows adjust height to accommodate components. Use 'auto' to let component content (such as text) dictate height."
+   },
+   "breakpoints": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "name",
+      "span",
+      "rowIndex",
+      "colIndex",
+      "order"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "name": {
+       "type": "string",
+       "description": "Name of a breakpoint defined in container. If this matches the currently applied breakpoint, these rules determine child layout."
+      },
+      "span": {
+       "type": "number",
+       "description": "Number of columns the child's width will span."
+      },
+      "rowIndex": {
+       "type": "number",
+       "default": 0,
+       "description": "Row index (starting from 0) in which to place child. Children may wrap lines within a row. Children in separate rows don't affect each other's layout"
+      },
+      "colIndex": {
+       "type": "number",
+       "default": 0,
+       "description": "Column number upon which the child's span should begin unless forced to wrap."
+      },
+      "order": {
+       "type": "number",
+       "description": "Where component is placed among its siblings within its row. Ordering is independent per row."
+      }
+     }
+    },
+    "default": []
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

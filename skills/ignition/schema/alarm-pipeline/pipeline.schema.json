@@ -1,0 +1,132 @@
+{
+  "_source": "Verified from decompiled alarm-notification-common-7.3.9 / alarm-notification-gateway-7.3.9 (com.inductiveautomation.ignition.alarming.common.pipelines.PipelineDescriptor, com.inductiveautomation.ignition.alarming.pipelines.AlarmPipelineManagerImpl) in the decompiled jars, and a live round-trip on a 8.3.9 gateway: a PipelineDescriptor was XML-serialized with the module's own XMLSerializer, written to data/projects/<project>/com.inductiveautomation.alarm-notification/alarm-pipelines/_fm_throwaway/{resource.json,data.bin}, picked up by requestScan() (AlarmPipelineManager.getPipelineNames() -> ['project:<project>:/pipeline:<name>']), then deleted. Nothing here is invented.",
+
+  "resourceType": {
+    "moduleId": "com.inductiveautomation.alarm-notification",
+    "typeId": "alarm-pipelines",
+    "_cite": "PipelineDescriptor.RESOURCE_TYPE = new ResourceType(\"com.inductiveautomation.alarm-notification\", \"alarm-pipelines\")"
+  },
+
+  "onDisk": {
+    "directory": "data/projects/<project>/com.inductiveautomation.alarm-notification/alarm-pipelines/<PipelineName>/",
+    "pipelineNameIsFolderPath": true,
+    "nestingAllowed": true,
+    "_nestingNote": "AlarmPipelineManagerImpl.startPipelineFromResource() uses resource.getFolderPath() as the pipeline name and resource.getCollectionName() as the project name; a name with '/' nests (e.g. 'Area1/Escalation').",
+    "files": {
+      "resource.json": {
+        "role": "resource manifest (see skill/references/gateway/resource-formats.md §2)",
+        "verifiedMinimal": {
+          "scope": "G",
+          "version": 1,
+          "restricted": false,
+          "overridable": true,
+          "files": ["data.bin"],
+          "attributes": {}
+        },
+        "notes": [
+          "scope 'G' accepted and loaded+ran on the gateway (the pipeline executes in gateway scope).",
+          "The Designer additionally writes attributes.lastModificationSignature / attributes.lastModification {actor,timestamp}; not required for a hand-built resource.",
+          "files MUST list 'data.bin' — that is Resource.DEFAULT_DATA_KEY and the only payload."
+        ]
+      },
+      "data.bin": {
+        "role": "the block graph",
+        "format": "Ignition XML object-serialization (NOT JSON)",
+        "producedBy": "gatewayContext XMLSerializer with the alarm-notification module's configureSerializer() delegates registered; AlarmPipelineManagerImpl reads it back with gatewayContext.createDeserializer().deserialize(bytes), rootObjects().get(0) -> PipelineDescriptor",
+        "shape": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><objects><o cls=\"com.inductiveautomation.ignition.alarming.common.pipelines.PipelineDescriptor\"><o-c m=\"setRawValueMap\" s=\"1;java.util.Map\">… a HashMap of BasicProperty -> value …</o-c></o></objects>",
+        "_handAuthoringNote": "This is Java-object XML with class refs, ctor arg-lists and back-references (<ref>N</ref>). It is not practical to hand-write. Build a PipelineDescriptor on the gateway (module classloader) and serialize it, or edit the pipeline in the Designer. See the reference doc for the worked gateway-script recipe."
+      }
+    }
+  },
+
+  "PipelineDescriptor": {
+    "_cite": "PipelineDescriptor extends BasicPropertySet implements CommonBlockProperties",
+    "properties": {
+      "enabled": {
+        "key": "enabled",
+        "type": "Boolean",
+        "default": true,
+        "purpose": "false -> the manager builds a DisabledPipeline; alarm events routed to it fall straight through (no blocks run).",
+        "_cite": "PipelineDescriptor.ENABLED; AlarmPipelineManagerImpl.startPipelineFromResource() 'if (enabled) … else pipeline = new DisabledPipeline(…)'"
+      },
+      "blocks": {
+        "key": "blocks",
+        "type": "ObservablePropertySet[]",
+        "purpose": "One PropertySet per block. Each MUST carry factoryId + blockId (see blocks.schema.json commonProperties). Order is not significant — edges are by blockId UUID.",
+        "_cite": "PipelineDescriptor.BLOCKS; addBlock() throws if a block lacks factoryId, auto-assigns blockId if missing"
+      },
+      "startingBlock": {
+        "key": "startingBlock",
+        "type": "ObservablePropertySet",
+        "purpose": "A holder PropertySet whose 'outputId' (UUID) names the first block to run. If absent/unresolvable the pipeline starts at the synthetic NoOp terminal (i.e. does nothing).",
+        "_cite": "PipelineDescriptor.STARTING_BLOCK; constructor seeds it with an empty BasicPropertySet; manager: 'new SingleThreadAlarmPipeline(… (UUID) startingBlockConfig.getOrElse(OUTPUT_ID, NoOpBlock.BLOCK_ID))'"
+      },
+      "dropoutConditions": {
+        "key": "dropoutConditions",
+        "type": "EnumSet<DropoutCondition>",
+        "default": ["OnAck", "OnClear", "OnShelve"],
+        "enumValues": {
+          "OnAck": "event exits the pipeline as soon as it is acknowledged (localized label 'Acknowledged')",
+          "OnClear": "event exits the pipeline as soon as it clears (localized label 'Cleared')",
+          "OnShelve": "event exits the pipeline as soon as it is shelved (localized label 'Shelved')"
+        },
+        "purpose": "Pipeline-wide early-exit. Checked by DropoutCondition.drop(conditions,event) in every block's evaluation context and inside NotificationBlock before each user notification. This is how a two-way ACK stops a running escalation.",
+        "serializedAs": "<enumset cls=\"…DropoutCondition\"><enum n=\"OnAck\"/>…</enumset> (member name(), not the localized label)",
+        "_cite": "PipelineDescriptor.DROPOUT_CONDITIONS (default EnumSet.allOf); DropoutCondition enum {OnAck,OnClear,OnShelve}; the manager copies this onto every block config at load"
+      },
+      "fallbackPipeline": {
+        "key": "fallbackPipeline",
+        "type": "String",
+        "default": null,
+        "purpose": "Pipeline name to hand the event to when a block hits an evaluation error (ExpressionBlock / SwitchBlock catch blocks). Empty/null -> the event is dropped and logged.",
+        "_cite": "PipelineDescriptor.FALLBACK_PIPELINE; ExpressionBlock/SwitchBlock onEvaluate() catch: 'getAlarmPipelineManager().evaluate(QualifiedPath.of(\"project\",projectName,\"pipeline\",fallbackPipelineName), event)'"
+      },
+      "projectName": {
+        "key": "projectName",
+        "type": "String",
+        "purpose": "The owning project. Injected onto the descriptor and every block config at load time from resource.getCollectionName(); not something you normally persist by hand.",
+        "_cite": "PipelineDescriptor.PROJECT_NAME; AlarmPipelineManagerImpl.startPipelineFromResource(): 'blockConfig.set(PipelineDescriptor.PROJECT_NAME, resource.getCollectionName())'"
+      }
+    }
+  },
+
+  "flowGraph": {
+    "nodes": "each entry of PipelineDescriptor.blocks; identified by its blockId (UUID)",
+    "edges": "output properties on a block config hold the blockId UUID of the successor: 'outputId' (linear blocks), 'trueOutput'/'falseOutput' (Expression), 'outputId0'..'outputId{N-1}' (Splitter, Switch), '_default_' (Switch catch-all)",
+    "entryPoint": "PipelineDescriptor.startingBlock.outputId",
+    "danglingEdge": "if an output UUID is missing from the block map the block falls through to the synthetic NoOpBlock (AbstractPipelineBlock.getOutputBlock -> map.get(NoOpBlock.BLOCK_ID)); NoOp marks the tracking context complete and destroys it after 15 s. A block with no output set therefore just ends that path of the pipeline.",
+    "parallelism": "SplitterBlock branches the AlarmEvent (AlarmEventInstance.branch) down every outputId{i} and bumps CommonAlarmProperties.LiveBranchCount.",
+    "handoff": "JumpBlock destroys the current tracking context and calls AlarmPipelineManager.evaluate(<other pipeline>, event) — a full transfer, not a call/return."
+  },
+
+  "bindingToAnAlarm": {
+    "_cite": "com.inductiveautomation.ignition.common.alarming.config.CommonAlarmProperties, category 'Notification'",
+    "properties": {
+      "activePipeline": { "key": "activePipeline", "type": "String", "default": "", "purpose": "pipeline run when the alarm becomes active" },
+      "clearPipeline":  { "key": "clearPipeline",  "type": "String", "default": "", "purpose": "pipeline run when the alarm clears" },
+      "ackPipeline":    { "key": "ackPipeline",    "type": "String", "default": "", "purpose": "pipeline run when the alarm is acknowledged" },
+      "defaultPipelineProject": {
+        "key": "defaultPipelineProject",
+        "type": "String",
+        "default": "alarm-pipelines",
+        "purpose": "project used to resolve an unqualified pipeline name on this alarm. A pipeline reference may instead be fully qualified as 'project:<Proj>:/pipeline:<Name>'."
+      }
+    },
+    "note": "These are ordinary alarm-config keys (dict entries in a tag's 'alarms' list). Cross-reference skill/references/standards/alarms.md."
+  },
+
+  "notificationProfilesReferenced": {
+    "role": "NotificationBlock.notificationProfiles / .notificationProfile name(s) resolve to gateway-scoped Alarm Notification Profiles (Gateway Config → Alarming → Notification), NOT project resources.",
+    "typesInThisModule": {
+      "EmailNotificationProfileType": "two-way capable email — appends an ACK link, and/or polls POP3 for reply-to-ACK (EmailNotificationProfileConfig.twoWay / .twoWayPop3)",
+      "OneWayNotificationProfileType": "send-only email, with its own priority criteria + consolidation settings",
+      "RemoteNotificationProfileType": "delegate to a named profile on another gateway across the gateway network"
+    },
+    "otherTypes": "SMS and voice profiles are contributed by separate add-on modules (e.g. the Twilio module); none were installed on gateway 8.3.9 as observed 2026-09-04.",
+    "rosters": {
+      "resourceType": "ignition/roster-config (gateway-scoped config resource; Gateway Config → Alarming → Rosters)",
+      "scripting": "system.alarm.getRosters() / the roster script functions",
+      "_cite": "RosterConfig.RESOURCE_TYPE = new ResourceType(\"ignition\", \"roster-config\")"
+    }
+  }
+}

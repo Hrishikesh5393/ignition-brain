@@ -1,0 +1,175 @@
+{
+ "id": "ia.display.video-player",
+ "name": "Video Player",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Video Player",
+    "tooltip": "Enables you to embed video or a live feed in a Perspective view."
+   }
+  ]
+ },
+ "defaultMetaName": "VideoPlayer",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "source": {
+    "type": "string",
+    "description": "The location of the video source.",
+    "default": ""
+   },
+   "liveFeed": {
+    "type": "boolean",
+    "description": "This should be set to true if the source of the video is a live camera feed.",
+    "default": false
+   },
+   "poster": {
+    "type": "string",
+    "description": "The location of the poster image to use as the background while the video is loading and before it has been played.",
+    "default": "",
+    "visibleWhen": {
+     "property": "liveFeed",
+     "equals": false
+    }
+   },
+   "autohideControls": {
+    "type": "boolean",
+    "description": "The visible state of the video controls. If set to true, controls will auto-hide when the cursor is not hovering the video.",
+    "default": false,
+    "visibleWhen": {
+     "property": "liveFeed",
+     "equals": false
+    }
+   },
+   "controls": {
+    "type": "object",
+    "properties": {
+     "autoplay": {
+      "type": "boolean",
+      "description": "Should the video play by default once loaded. NOTE: The video will be muted when initially playing when this is enabled.",
+      "default": false
+     },
+     "loop": {
+      "type": "boolean",
+      "description": "Should the video play continuously.",
+      "default": false
+     },
+     "mute": {
+      "type": "boolean",
+      "description": "The muted state of the video's audio track.",
+      "default": false
+     },
+     "play": {
+      "type": "boolean",
+      "description": "The play state of the video.",
+      "default": false
+     },
+     "seek": {
+      "type": "number",
+      "description": "The time (in seconds) from which the video should start playing.",
+      "default": 0
+     },
+     "volume": {
+      "type": "number",
+      "description": "The percentage of maximum volume in use (from 0 to 100).",
+      "default": 75
+     },
+     "playRate": {
+      "type": "number",
+      "description": "The speed at which the video will be played (where 1 is normal speed, .5 is half speed, 2 is double speed, etc.).",
+      "default": 1
+     }
+    },
+    "visibleWhen": {
+     "property": "liveFeed",
+     "equals": false
+    }
+   },
+   "status": {
+    "type": "object",
+    "properties": {
+     "loadedData": {
+      "type": "boolean",
+      "description": "True when the current playback position of the media has finished loading; often the first frame.",
+      "default": false
+     },
+     "playing": {
+      "type": "boolean",
+      "description": "True when playback is ready to start after having been paused or delayed due to lack of data.",
+      "default": false
+     },
+     "paused": {
+      "type": "boolean",
+      "description": "True when playback has been paused.",
+      "default": false
+     },
+     "progress": {
+      "type": "number",
+      "description": "Number representing the time (in seconds) where playback has occurred.",
+      "default": 0
+     },
+     "rateChanged": {
+      "type": "number",
+      "description": "Number representing the current playback rate (1 being normal speed).",
+      "default": 1
+     },
+     "seeking": {
+      "type": "boolean",
+      "description": "True when a seek operation is in progress.",
+      "default": false
+     },
+     "seeked": {
+      "type": "number",
+      "description": "Number representing the time (in seconds) where the seek action was completed.",
+      "default": 0
+     },
+     "waiting": {
+      "type": "boolean",
+      "description": "True when playback has stopped because of a temporary lack of data.",
+      "default": false
+     },
+     "ended": {
+      "type": "boolean",
+      "description": "True when playback has stopped because the end of the media was reached.",
+      "default": false
+     }
+    },
+    "visibleWhen": {
+     "property": "liveFeed",
+     "equals": false
+    }
+   },
+   "controlStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "The styles to apply to the individual controls.",
+    "default": {
+     "classes": ""
+    },
+    "visibleWhen": {
+     "property": "liveFeed",
+     "equals": false
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "The styles to apply to the component.",
+    "default": {
+     "classes": ""
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

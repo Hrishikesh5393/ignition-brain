@@ -1,0 +1,84 @@
+{
+ "id": "ia.input.barcodescannerinput",
+ "name": "Barcode Scanner Input",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Barcode Scanner Input",
+    "tooltip": "Enables users to scan a barcode directly from a device's built-in camera."
+   }
+  ]
+ },
+ "defaultMetaName": "BarcodeScannerInput",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "prefix": {
+    "type": "string",
+    "default": "",
+    "description": "String that marks the start of barcode scan capture."
+   },
+   "suffix": {
+    "type": "string",
+    "default": "",
+    "description": "String that marks the end of barcode scan capture."
+   },
+   "regex": {
+    "type": "string",
+    "default": "",
+    "description": "Regex describing format of scans. The first capture will be used as barcode."
+   },
+   "window": {
+    "type": "number",
+    "default": 20,
+    "description": "Length of buffer to monitor for regex match."
+   },
+   "captureMode": {
+    "enum": [
+     "keyup",
+     "keydown",
+     "keypress"
+    ],
+    "type": "string",
+    "default": "keypress",
+    "description": "Key capture mode used for specifying key event to listen for."
+   },
+   "data": {
+    "type": "array",
+    "items": {
+     "type": "string"
+    },
+    "description": "Barcode scans returned from scanner"
+   },
+   "dataStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

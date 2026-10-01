@@ -1,0 +1,192 @@
+{
+ "id": "ia.display.tag-browse-tree",
+ "name": "Tag Browse Tree",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Tag Browse Tree",
+    "tooltip": "Provides the ability to select tags from a tag provider and perform actions on them from the component events."
+   }
+  ]
+ },
+ "defaultMetaName": "TagBrowseTree",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "root": {
+    "type": "object",
+    "required": [
+     "path"
+    ],
+    "description": "Configuration for the path from which the displaying folder/tag structure will start.",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "String value representing the \"starting path\" from which the tag structure will begin displaying.",
+      "default": ""
+     }
+    }
+   },
+   "filter": {
+    "type": "object",
+    "description": "Tree filtering configuration.",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Enables the visibility of the filter.",
+      "default": false
+     },
+     "text": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The filter text.",
+      "default": ""
+     }
+    }
+   },
+   "selection": {
+    "type": "object",
+    "description": "Configuration for the selected tags.",
+    "required": [
+     "mode",
+     "values"
+    ],
+    "properties": {
+     "mode": {
+      "type": "string",
+      "description": "Mode used when selecting tags.",
+      "enum": [
+       "single",
+       "multiple"
+      ],
+      "default": "multiple"
+     },
+     "values": {
+      "type": "array",
+      "description": "List of the selected tag paths in the order in which selection occurred.",
+      "default": []
+     }
+    }
+   },
+   "display": {
+    "type": "object",
+    "description": "Display settings for the component.",
+    "required": [
+     "refreshIcon"
+    ],
+    "properties": {
+     "refreshIcon": {
+      "type": "object",
+      "description": "Display settings for the refresh icon.",
+      "required": [
+       "visible",
+       "path",
+       "style"
+      ],
+      "properties": {
+       "visible": {
+        "type": "boolean",
+        "description": "Visibility setting for the refresh icon.",
+        "default": true
+       },
+       "path": {
+        "type": "string",
+        "format": "icon-path",
+        "description": "Path to the icon used to represent the \"refresh\" action.",
+        "default": "material/refresh"
+       },
+       "style": {
+        "description": "Style to apply to the refresh icon.",
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onNodeClick",
+   "description": "This event is fired when a node is clicked in the tree.",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Tag path of the node that was clicked."
+     },
+     "name": {
+      "type": "string",
+      "description": "Name of the node that was clicked."
+     }
+    }
+   }
+  },
+  {
+   "name": "onNodeDoubleClick",
+   "description": "This event is fired when a node is double-clicked in the tree.",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Tag path of the node that was clicked."
+     },
+     "name": {
+      "type": "string",
+      "description": "Name of the node that was clicked."
+     }
+    }
+   }
+  },
+  {
+   "name": "onNodeContextMenu",
+   "description": "This event is fired when a node is right-clicked in the tree.",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Tag path of the node that was clicked."
+     },
+     "name": {
+      "type": "string",
+      "description": "Name of the node that was clicked."
+     }
+    }
+   }
+  }
+ ],
+ "extensionFunctions": [
+  {
+   "name": "filterBrowseNode",
+   "description": "Called for each tag before it is displayed in the tag browse tree. Return False to exclude the tag from displayed results.",
+   "defaultImplementation": "return True",
+   "arguments": [
+    {
+     "name": "node",
+     "description": "The tag returned as type NodeBrowseInfo. See the Ignition JavaDocs for usage."
+    }
+   ]
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

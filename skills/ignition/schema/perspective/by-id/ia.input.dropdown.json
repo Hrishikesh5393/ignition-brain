@@ -1,0 +1,237 @@
+{
+ "id": "ia.input.dropdown",
+ "name": "Dropdown",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Dropdown",
+    "tooltip": "Displays a list of choices when the user clicks on the dropdown button."
+   },
+   {
+    "id": "dropdown-single",
+    "label": "Single Selection",
+    "tooltip": "Displays a list of choices when the user clicks on the dropdown button."
+   },
+   {
+    "id": "dropdown-multi",
+    "label": "Multi-Selection",
+    "tooltip": "Displays a list of choices when the user clicks on the dropdown button.",
+    "props": {
+     "multiSelect": true
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "Dropdown",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "string",
+     "number",
+     "boolean",
+     "array",
+     "object",
+     "null"
+    ],
+    "default": "",
+    "description": "The result of current selections (input) after any processing"
+   },
+   "options": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "value": {
+       "type": [
+        "string",
+        "number",
+        "boolean",
+        "array",
+        "object",
+        "null"
+       ],
+       "description": "Actual value to be matched by input/selection"
+      },
+      "label": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "Text to display in menu representing this option"
+      },
+      "isDisabled": {
+       "type": "boolean",
+       "description": "Whether this option is currently disabled from selection",
+       "default": false
+      }
+     },
+     "default": {
+      "value": "",
+      "label": ""
+     },
+     "required": [
+      "value",
+      "label"
+     ]
+    },
+    "default": [],
+    "description": "Configuration objects for each dropdown option. At minimum, 'value' and 'label' are required for each."
+   },
+   "multiSelect": {
+    "type": "boolean",
+    "default": false,
+    "description": "Enable multiple selected values"
+   },
+   "wrapMultiSelectValues": {
+    "type": "boolean",
+    "default": true,
+    "description": "Wrap values when true, display values on one line when false",
+    "visibleWhen": {
+     "property": "multiSelect",
+     "equals": true
+    }
+   },
+   "placeholder": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "default": "Select...",
+      "description": "Prompt text to display when no options are selected"
+     },
+     "color": {
+      "type": "string",
+      "default": "",
+      "format": "color",
+      "description": "Color of placeholder text"
+     },
+     "icon": {
+      "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+     }
+    },
+    "default": {
+     "text": "Select...",
+     "color": "",
+     "icon": {
+      "path": "",
+      "color": "",
+      "style": {
+       "width": "16px",
+       "height": "16px"
+      }
+     }
+    }
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "If set to false, component is disabled. Field will not focus and dropdown is hidden"
+   },
+   "search": {
+    "type": "object",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether options are searchable by typing text into the field"
+     },
+     "matching": {
+      "type": "string",
+      "enum": [
+       "start",
+       "any"
+      ],
+      "default": "any",
+      "description": "Whether search string must match from the start or may match any position of an option"
+     },
+     "noResultsText": {
+      "type": "string",
+      "default": "No results found",
+      "description": "Text to display in dropdown when no options match search"
+     },
+     "searchParam": {
+      "type": "string",
+      "default": "",
+      "description": "The text being searched for"
+     }
+    },
+    "default": {
+     "enabled": true,
+     "matching": "any",
+     "noResultsText": "No results found",
+     "searchParam": ""
+    }
+   },
+   "showClearIcon": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether to render a button allowing user to clear the selection"
+   },
+   "allowCustomOptions": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether user may enter a custom value to be submitted"
+   },
+   "textAlign": {
+    "type": "string",
+    "description": "Aligns the value(s) and/or placeholder text displayed within the dropdown",
+    "enum": [
+     "left",
+     "center",
+     "right"
+    ],
+    "default": "left"
+   },
+   "minMenuHeight": {
+    "type": "number",
+    "description": "Minimum height of the dropdown menu.",
+    "default": 150
+   },
+   "maxMenuHeight": {
+    "type": "number",
+    "description": "Maximum height of the dropdown menu before it becomes scrollable.",
+    "default": 350
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "dropdownOptionStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "required": [
+   "value",
+   "options",
+   "style"
+  ]
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

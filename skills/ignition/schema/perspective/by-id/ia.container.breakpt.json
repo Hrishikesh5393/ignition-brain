@@ -1,0 +1,76 @@
+{
+ "id": "ia.container.breakpt",
+ "name": "Breakpoint Container",
+ "palette": {
+  "category": "container",
+  "variants": [
+   {
+    "label": "Breakpoint",
+    "tooltip": "A simple container whose purpose is to swap subcontainers based on a ‘breakpoint’ in pixels."
+   }
+  ]
+ },
+ "defaultMetaName": "BreakpointContainer",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+   "breakpoint",
+   "style"
+  ],
+  "properties": {
+   "breakpoint": {
+    "type": "number",
+    "default": 640,
+    "description": "Width (in pixels) below which container will display small child, and at and above which will display large child"
+   },
+   "currentBreakpoint": {
+    "type": "string",
+    "description": "The name of the currently applied breakpoint (read-only).",
+    "default": "",
+    "required": true
+   },
+   "determinant": {
+    "type": "string",
+    "description": "The dimension in which to break.",
+    "enum": [
+     "width",
+     "height"
+    ],
+    "default": "width"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "childPositionSchema": {
+  "type": "object",
+  "properties": {
+   "size": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   }
+  },
+  "additionalProperties": false,
+  "required": [
+   "size"
+  ]
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

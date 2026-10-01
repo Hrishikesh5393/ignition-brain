@@ -1,0 +1,193 @@
+{
+ "id": "ia.symbol.pump",
+ "name": "Pump",
+ "palette": {
+  "category": "symbols",
+  "variants": [
+   {
+    "label": "Pump",
+    "tooltip": "An animated component that looks like a pump."
+   },
+   {
+    "id": "pump-centrifugal",
+    "label": "Centrifugal",
+    "tooltip": "Devices that utilize pressure to transfer fluids from one location to another."
+   },
+   {
+    "id": "pump-vacuum",
+    "label": "Vacuum",
+    "tooltip": "Devices that utilize pressure to transfer fluids from one location to another.",
+    "props": {
+     "variant": "vacuum"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "Pump",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "appearance": {
+    "type": "string",
+    "description": "auto uses the value of the Session Prop symbols.appearance if it exists, default is mimic.",
+    "enum": [
+     "auto",
+     "p&id",
+     "mimic",
+     "simple"
+    ],
+    "default": "auto"
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "centrifugal",
+     "vacuum"
+    ],
+    "default": "centrifugal"
+   },
+   "animationSpeed": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "description": "The speed of animations as a percent. 0 turns off animations.",
+    "default": "auto"
+   },
+   "state": {
+    "type": "string",
+    "format": "symbol-states",
+    "default": "default"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "right"
+   },
+   "feet": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right",
+     "none"
+    ],
+    "visibleWhen": {
+     "property": "appearance",
+     "equals": [
+      "mimic",
+      "simple",
+      "auto"
+     ]
+    },
+    "default": "bottom"
+   },
+   "label": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": [
+       "string",
+       "number",
+       "boolean",
+       "null",
+       "object",
+       "array"
+      ],
+      "default": "Pump",
+      "description": "Label to display as text",
+      "example": "Pump"
+     },
+     "location": {
+      "type": "string",
+      "enum": [
+       "top",
+       "bottom",
+       "left",
+       "right",
+       "hidden"
+      ],
+      "default": "bottom"
+     },
+     "justify": {
+      "type": "string",
+      "description": "Horizontal text alignment.",
+      "enum": [
+       "left",
+       "center",
+       "right",
+       "auto"
+      ],
+      "default": "center"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "value": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": [
+       "string",
+       "number",
+       "boolean",
+       "null",
+       "object",
+       "array"
+      ],
+      "default": "100%",
+      "description": "Value to display as text",
+      "example": "100%"
+     },
+     "location": {
+      "type": "string",
+      "enum": [
+       "top",
+       "bottom",
+       "left",
+       "right",
+       "hidden"
+      ],
+      "default": "bottom"
+     },
+     "justify": {
+      "type": "string",
+      "description": "Horizontal text alignment.",
+      "enum": [
+       "left",
+       "center",
+       "right"
+      ],
+      "default": "center"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

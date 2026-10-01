@@ -1,0 +1,74 @@
+{
+ "id": "ia.display.view",
+ "name": "Embedded View",
+ "palette": {
+  "category": "embedding",
+  "variants": [
+   {
+    "label": "Embedded View",
+    "tooltip": "Enables an entire view to be embedded within another view."
+   }
+  ]
+ },
+ "defaultMetaName": "EmbeddedView",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "path": {
+    "type": "string",
+    "default": "",
+    "format": "view-path",
+    "description": "Path of embedded view to display"
+   },
+   "params": {
+    "type": "object",
+    "default": {},
+    "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+    "extension": {
+     "view-params": {
+      "path": "/path"
+     }
+    }
+   },
+   "useDefaultViewWidth": {
+    "type": "boolean",
+    "description": "Use of view's default width instead of adjusting based on the content's width.",
+    "default": false
+   },
+   "useDefaultViewHeight": {
+    "type": "boolean",
+    "description": "Use of view's default height instead of adjusting based on the content's height.",
+    "default": false
+   },
+   "loading": {
+    "type": "object",
+    "properties": {
+     "order": {
+      "type": "string",
+      "enum": [
+       "after-parent",
+       "with-parent"
+      ],
+      "description": "Controls when the embedded view loads: after the parent is displayed or combined with the parent view loading",
+      "default": "after-parent"
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,200 @@
+{
+ "id": "ia.input.signature-pad",
+ "name": "Signature Pad",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Signature Pad",
+    "tooltip": "Enables users to draw a signature and “submit” it."
+   }
+  ]
+ },
+ "defaultMetaName": "SignaturePad",
+ "schema": {
+  "type": "object",
+  "title": "Signature Pad",
+  "description": "A component for collecting signatures",
+  "additionalProperties": false,
+  "properties": {
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "When enabled the canvas, clear button, and submit button are interactable, and component scripting functions for clearSignature and submitSignature are enabled."
+   },
+   "pad": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+     "pen": {
+      "type": "object",
+      "properties": {
+       "color": {
+        "format": "color",
+        "type": "string",
+        "description": "Color used to draw the lines with the pen.",
+        "default": "#000000"
+       },
+       "width": {
+        "type": "number",
+        "description": "Width of the lines drawn by the pen.",
+        "default": 1
+       }
+      }
+     },
+     "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "clearColor": {
+        "format": "color",
+        "type": "string",
+        "description": "Visible canvas color which will be submitted as part of the signature image.",
+        "default": "transparent"
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     }
+    }
+   },
+   "actionBar": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+     "position": {
+      "type": "string",
+      "description": "Action Bar position relative to the canvas.",
+      "enum": [
+       "top",
+       "bottom",
+       "left",
+       "right"
+      ],
+      "default": "bottom"
+     },
+     "submitButton": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "text": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": "Submit",
+        "description": "Text to display on button"
+       },
+       "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enables submit button interaction. This does not affect the submitSignature component scripting function."
+       },
+       "primary": {
+        "type": "boolean",
+        "default": true,
+        "description": "Toggle between the default primary and secondary button style."
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "clearButton": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "text": {
+        "type": [
+         "string",
+         "number"
+        ],
+        "default": "Clear",
+        "description": "Text to display on button"
+       },
+       "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enables clear button interaction. This does not affect the clearSignature component scripting function."
+       },
+       "primary": {
+        "type": "boolean",
+        "default": false,
+        "description": "Toggle between the default primary and secondary button style."
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "status": {
+    "type": "object",
+    "properties": {
+     "touched": {
+      "type": "boolean",
+      "description": "True when the signature pad contains a signature.",
+      "default": false
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onSignatureSubmitted",
+   "description": "Fired after the gateway has received a submitted signature.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-signature-pad-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "signature": {
+      "type": "string",
+      "description": "Base64-encoded PNG DataURL of the submitted signature."
+     },
+     "signatureFile": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "The name of the submitted signature file."
+       },
+       "size": {
+        "type": "integer",
+        "description": "The size (in bytes) of the submitted signature file."
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "onSignatureCleared",
+   "description": "Fired after the gateway has received a signal that the signature has been cleared.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-signature-pad-component-events",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

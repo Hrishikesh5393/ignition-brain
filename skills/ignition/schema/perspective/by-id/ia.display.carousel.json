@@ -1,0 +1,325 @@
+{
+ "id": "ia.display.carousel",
+ "name": "Carousel",
+ "palette": {
+  "category": "embedding",
+  "variants": [
+   {
+    "label": "Carousel",
+    "tooltip": "Enables you to cycle through a selection of views at a defined rate."
+   }
+  ]
+ },
+ "defaultMetaName": "Carousel",
+ "schema": {
+  "type": "object",
+  "title": "Carousel",
+  "description": "A component which displays one or more Views as slides in a loop, optionally in automated fashion.",
+  "additionalProperties": false,
+  "properties": {
+   "views": {
+    "title": "Views",
+    "type": "array",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "viewPath": {
+       "type": "string",
+       "description": "The path of the view to render in the carousel.",
+       "title": "View Path",
+       "format": "view-path",
+       "default": ""
+      },
+      "viewParams": {
+       "type": "object",
+       "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+       "title": "View Parameters",
+       "default": {},
+       "extension": {
+        "view-params": {
+         "path": "../viewPath"
+        }
+       }
+      },
+      "direction": {
+       "type": "string",
+       "enum": [
+        "row",
+        "column"
+       ],
+       "default": "row",
+       "description": "Direction of child layout."
+      },
+      "justify": {
+       "type": "string",
+       "enum": [
+        "flex-start",
+        "flex-end",
+        "center"
+       ],
+       "default": "flex-start",
+       "description": "Adjusts placement of view along the main axis."
+      },
+      "alignItems": {
+       "type": "string",
+       "enum": [
+        "flex-start",
+        "flex-end",
+        "center"
+       ],
+       "default": "flex-start",
+       "description": "Adjusts placement of view along the cross axis."
+      }
+     },
+     "required": [
+      "viewPath"
+     ]
+    }
+   },
+   "activePane": {
+    "type": "number",
+    "description": "Active pane being displayed.",
+    "default": 0
+   },
+   "lazyLoad": {
+    "type": "boolean",
+    "description": "Load views on demand or progressively.",
+    "default": true
+   },
+   "autoplay": {
+    "type": "object",
+    "title": "Auto Play",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, the carousel will automatically scroll through the views according to the transitionDelay."
+     },
+     "transitionDelay": {
+      "type": "number",
+      "title": "Transition Delay",
+      "default": 2500,
+      "description": "Delay (in ms) at which slides scroll through the carousel when autoplay is true."
+     },
+     "pauseOnHover": {
+      "type": "boolean",
+      "title": "Pause on Hover",
+      "default": false,
+      "description": "Pause autoplay on mouse over."
+     },
+     "pauseOnFocus": {
+      "type": "boolean",
+      "title": "Pause on Focus",
+      "default": false,
+      "description": "Pause autoplay on focus."
+     },
+     "pauseOnDotHover": {
+      "type": "boolean",
+      "title": "Pause on Dot Hover",
+      "default": false,
+      "description": "Pause autoplay on dot mouse over."
+     }
+    }
+   },
+   "behavior": {
+    "type": "object",
+    "title": "Behavior",
+    "description": "Behavior and interaction related carousel options.",
+    "properties": {
+     "transitionSpeed": {
+      "type": "number",
+      "title": "Transition Speed",
+      "default": 500,
+      "description": "The speed (in ms) at which the carousel transitions between slides."
+     },
+     "fade": {
+      "type": "boolean",
+      "title": "Fade",
+      "default": false,
+      "description": "Enables slides to fade in and out of view on transition."
+     },
+     "mobileSwipeable": {
+      "type": "boolean",
+      "title": "Mobile Swipeable",
+      "default": true,
+      "description": "Enables swiping on mobile to change slides."
+     },
+     "desktopDraggable": {
+      "type": "boolean",
+      "title": "Desktop Draggable",
+      "default": true,
+      "description": "Enables scrolling via drag on desktop."
+     },
+     "swipeThreshold": {
+      "type": "number",
+      "title": "Swipe threshold",
+      "default": 200,
+      "min": 50,
+      "description": "The maximum length of a drag, in pixels, to allow before initiating a slide transition.  Minimum of 50 pixels. Actual threshold will be either the provided value, or half the width of the slide pane, whichever is smaller."
+     }
+    }
+   },
+   "appearance": {
+    "type": "object",
+    "title": "Appearance",
+    "description": "Appearance related carousel options.",
+    "properties": {
+     "dots": {
+      "type": "object",
+      "title": "Dots",
+      "description": "Carousel dots configuration.",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable dots."
+       },
+       "iconPath": {
+        "type": "string",
+        "default": "",
+        "description": "Path to an icon that will be used if provided."
+       },
+       "styles": {
+        "type": "object",
+        "title": "Dot Styles",
+        "description": "Configure active and inactive styles for the dot icon.",
+        "properties": {
+         "active": {
+          "type": "object",
+          "description": "Styles to apply when the dot icon is active.",
+          "properties": {
+           "fillColor": {
+            "type": "string",
+            "format": "color",
+            "description": "The active icon color or fill, enabled when the current slide's index matches the dot's index.",
+            "default": "#51BAFC"
+           },
+           "style": {
+            "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+           }
+          }
+         },
+         "inactive": {
+          "type": "object",
+          "description": "Styles to apply when the dot icon is inactive.",
+          "properties": {
+           "fillColor": {
+            "type": "string",
+            "format": "color",
+            "description": "The inactive icon color or fill, enabled when the current slide's index does not match the dot's index.",
+            "default": "#E2E4E6"
+           },
+           "style": {
+            "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "arrows": {
+      "type": "object",
+      "title": "Arrows",
+      "description": "Carousel arrows configuration.",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable arrows."
+       },
+       "next": {
+        "type": "object",
+        "description": "Next arrow icon configuration.",
+        "properties": {
+         "iconPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to an icon that will be used for the next arrow if provided."
+         },
+         "fillColor": {
+          "type": "string",
+          "format": "color",
+          "description": "Fill color to apply to icon.",
+          "default": "#51BAFC"
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+         }
+        }
+       },
+       "previous": {
+        "type": "object",
+        "description": "Previous arrow icon configuration.",
+        "properties": {
+         "iconPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to an icon that will be used for the previous arrow if provided."
+         },
+         "fillColor": {
+          "type": "string",
+          "format": "color",
+          "description": "Fill color to apply to icon.",
+          "default": "#51BAFC"
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+         }
+        }
+       }
+      }
+     },
+     "useDefaultViewWidth": {
+      "type": "boolean",
+      "description": "Enables the use of view default width instead of dynamically adjusting based on the available width.",
+      "default": false
+     },
+     "useDefaultViewHeight": {
+      "type": "boolean",
+      "description": "Enables the use of view default height instead of dynamically adjusting based on the available height.",
+      "default": false
+     },
+     "slidesToShow": {
+      "type": "number",
+      "title": "Slides to Show",
+      "default": 1,
+      "description": "Number of slides to show on each carousel page.",
+      "visibleWhen": {
+       "property": "../behavior/fade",
+       "equals": false
+      }
+     },
+     "slidePadding": {
+      "type": "number",
+      "title": "Slide Padding",
+      "default": 20,
+      "description": "Applies padding between slides."
+     },
+     "reverse": {
+      "type": "boolean",
+      "title": "Reverse",
+      "default": false,
+      "description": "Reverses the slide order."
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

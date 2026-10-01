@@ -1,0 +1,170 @@
+{
+ "id": "ia.input.multi-state-button",
+ "name": "Multi-State Button",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Multi-State Button",
+    "tooltip": "A column or row of buttons that acts as a multi-state control button."
+   },
+   {
+    "id": "multi-state-button-vertical",
+    "label": "Column",
+    "tooltip": "A column or row of buttons that acts as a multi-state control button."
+   },
+   {
+    "id": "multi-state-button-horizontal",
+    "label": "Row",
+    "tooltip": "A column or row of buttons that acts as a multi-state control button.",
+    "props": {
+     "orientation": "row"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "MultiStateButton",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "controlValue": {
+    "example": 0
+   },
+   "indicatorValue": {
+    "example": 0
+   },
+   "states": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "text": {
+       "type": "string",
+       "default": ""
+      },
+      "value": {
+       "type": "number",
+       "default": ""
+      },
+      "selectedStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      },
+      "unselectedStyle": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      },
+      "tooltipText": {
+       "type": "string",
+       "description": "Mousing over this button will show a tooltip with this text, if present"
+      }
+     },
+     "additionalProperties": false,
+     "required": [
+      "text",
+      "value",
+      "selectedStyle",
+      "unselectedStyle"
+     ]
+    },
+    "minItems": 2,
+    "uniqueItems": true,
+    "example": [
+     {
+      "text": "Hand",
+      "value": 2,
+      "selectedStyle": {
+       "classes": "",
+       "backgroundColor": "#FFF275"
+      },
+      "unselectedStyle": {
+       "classes": ""
+      }
+     },
+     {
+      "text": "Off",
+      "value": 0,
+      "selectedStyle": {
+       "classes": "",
+       "backgroundColor": "#F84553"
+      },
+      "unselectedStyle": {
+       "classes": ""
+      }
+     },
+     {
+      "text": "Auto",
+      "value": 1,
+      "selectedStyle": {
+       "classes": "",
+       "backgroundColor": "#7CEA9C"
+      },
+      "unselectedStyle": {
+       "classes": ""
+      }
+     }
+    ]
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "column",
+     "row"
+    ],
+    "default": "column"
+   },
+   "defaultSelectedStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "defaultUnselectedStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "primary": {
+    "type": "boolean",
+    "default": false,
+    "description": "Toggle between the default primary and secondary button style."
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "Whether user is able to currently interact with buttons"
+   },
+   "buttonGap": {
+    "type": "number",
+    "default": 4,
+    "description": "Space (pixels) between each button in group"
+   },
+   "endButtonCornerRadius": {
+    "type": [
+     "number",
+     "string"
+    ],
+    "default": "",
+    "description": "Amount to round the end corners of the first and last button"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

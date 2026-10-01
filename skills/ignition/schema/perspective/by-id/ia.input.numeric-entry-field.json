@@ -1,0 +1,180 @@
+{
+ "id": "ia.input.numeric-entry-field",
+ "name": "Numeric Entry Field",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Numeric Entry Field",
+    "tooltip": "A text field that is specialized for use with numbers only."
+   },
+   {
+    "id": "numeric-entry-field-direct",
+    "label": "Direct",
+    "tooltip": "A text field that is specialized for use with numbers only.",
+    "props": {
+     "mode": "direct"
+    }
+   },
+   {
+    "id": "numeric-entry-field-protected",
+    "label": "Protected",
+    "tooltip": "A text field that is specialized for use with numbers only.",
+    "props": {
+     "mode": "protected"
+    }
+   },
+   {
+    "id": "numeric-entry-field-button",
+    "label": "Button",
+    "tooltip": "A text field that is specialized for use with numbers only.",
+    "props": {
+     "mode": "button"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "NumericEntryField",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "value": {
+    "type": [
+     "string",
+     "number",
+     "null"
+    ],
+    "default": "",
+    "description": "Value as a number or numeric string. Values larger than 9,007,199,254,740,991 (JavaScript's max safe integer) will behave unpredictably."
+   },
+   "format": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "description": "Format to apply to number.",
+    "suggestions": {
+     "none": "none",
+     "number [1,000.12]": "0,0.##",
+     "integer [1,200]": "0,0",
+     "four decimal precision [1.1200]": "0,0.0000",
+     "percent [10.12%]": "0.##%",
+     "scientific [1.01E+03]": "0.00e+0",
+     "accounting [$ (1,000.12)]": "$ (0,0.00)",
+     "financial [(1,000.12)]": "(0,0.00)",
+     "currency [$1,000.12]": "$0,0.00",
+     "currency (rounded) [$1,012]": "$0,0",
+     "duration [24:01:00]": "00:00:00",
+     "abbreviation [1.2k]": "0.0a",
+     "ordinal [100th]": "0o"
+    },
+    "default": "0,0.##"
+   },
+   "mode": {
+    "type": "string",
+    "enum": [
+     "direct",
+     "protected",
+     "button"
+    ],
+    "default": "direct",
+    "description": "Can be direct, protected, or button. Direct mode requires no special action to enter into edit mode. Protected requires double click or long-press to enter edit mode. Button requires that the user click the button to enter edit mode."
+   },
+   "align": {
+    "type": "string",
+    "enum": [
+     "right",
+     "left"
+    ],
+    "default": "right",
+    "description": "Aligns the input's value right or left."
+   },
+   "inputBounds": {
+    "type": "object",
+    "description": "Max and min input value bounds configuration.",
+    "properties": {
+     "minimum": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "The min allowable input value.",
+      "default": null
+     },
+     "maximum": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "The max allowable input value.",
+      "default": null
+     },
+     "invalidStyle": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style applied to input when input value does not meet bounds."
+     }
+    }
+   },
+   "placeholder": {
+    "type": "string",
+    "default": "",
+    "description": "Text displayed when value is empty."
+   },
+   "spinner": {
+    "type": "object",
+    "description": "Provides buttons for incrementing & decrementing the value",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "The spinner will be displayed when enabled.",
+      "default": true
+     },
+     "increment": {
+      "type": "number",
+      "description": "The amount to increment or decrement the value when the spinner's buttons are clicked.",
+      "default": 1
+     }
+    }
+   },
+   "tooltipText": {
+    "type": "string",
+    "default": "",
+    "description": "Mousing over this button will show a tooltip with this text, if present"
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "If user should be allowed to alter the value."
+   },
+   "containerStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Applies style to the root element of the component which contains the input and edit button. Use the style prop to apply style to the input element directly"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onActionPerformed",
+   "description": "This event is fired when the 'action' of the component occurs.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-action-performed-event",
+   "schema": {
+    "type": "object"
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

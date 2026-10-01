@@ -1,0 +1,214 @@
+{
+ "id": "ia.input.fileupload",
+ "name": "File Upload",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "File Upload",
+    "tooltip": "Allows users to upload files to the Gateway from a Perspective Session."
+   }
+  ]
+ },
+ "defaultMetaName": "FileUpload",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "enabled": {
+    "type": "boolean",
+    "description": "Whether or not the control is enabled."
+   },
+   "maxUploads": {
+    "type": "number",
+    "description": "The maximum amount of simultaneous uploads."
+   },
+   "supportedFileTypes": {
+    "type": "array",
+    "description": "A list of the file types that the control will allow. If nothing is specified, all file types are allowed.",
+    "items": {
+     "type": "string",
+     "pattern": "^([A-Za-z0-9])*$"
+    }
+   },
+   "fileSizeLimit": {
+    "type": "number",
+    "description": "The maximum file size in MB (per file) that a user can upload."
+   },
+   "fileUploadIcon": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "default": "",
+      "description": "Shorthand path to icon source, in format: library/iconName",
+      "format": "icon-path"
+     },
+     "library": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of library where icon is located. Must also supply 'name'."
+     },
+     "name": {
+      "type": "string",
+      "description": "Optional alternative to 'path', name of icon. Must also supply 'library'."
+     },
+     "color": {
+      "oneOf": [
+       {
+        "type": "string",
+        "format": "color",
+        "description": "Color of the icon. Here for convenience, may instead assign 'fill' in the styles prop.",
+        "default": ""
+       },
+       {
+        "type": "object",
+        "properties": {
+         "enabled": {
+          "type": "string",
+          "format": "color",
+          "description": "Color of the icon when parent component is enabled.",
+          "default": ""
+         },
+         "disabled": {
+          "type": "string",
+          "format": "color",
+          "description": "Color of the icon when parent component is disabled.",
+          "default": ""
+         }
+        },
+        "default": {
+         "enabled": "",
+         "disabled": ""
+        }
+       }
+      ]
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {}
+     }
+    },
+    "oneOf": [
+     {
+      "required": [
+       "path"
+      ]
+     },
+     {
+      "required": [
+       "library",
+       "name"
+      ]
+     }
+    ],
+    "default": {
+     "path": "material/cloud_upload",
+     "color": {
+      "enabled": "",
+      "disabled": ""
+     },
+     "style": {}
+    }
+   },
+   "style": {
+    "anyOf": [
+     {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       },
+       "disabled": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    ]
+   }
+  },
+  "default": {
+   "enabled": true,
+   "maxUploads": 5,
+   "supportedFileTypes": [],
+   "fileSizeLimit": 10,
+   "fileUploadIcon": {
+    "path": "material/cloud_upload",
+    "color": {
+     "enabled": "",
+     "disabled": ""
+    },
+    "style": {}
+   },
+   "style": {
+    "enabled": {},
+    "disabled": {}
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onFileReceived",
+   "description": "Fired after the gateway has received a file upload.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-file-upload-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "file": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "The name of the uploaded file."
+       },
+       "size": {
+        "type": "integer",
+        "description": "The size (in bytes) of the file that was uploaded."
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "onUploadsCleared",
+   "description": "This event is fired when the user has cleared all uploads after the uploads have completed.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-file-upload-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "files": {
+      "type": "array",
+      "description": "A list of completed uploads. Each object in the list will have the following attributes:",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": "The name of the uploaded file."
+        },
+        "size": {
+         "type": "integer",
+         "description": "The size (in bytes) of the file that was uploaded."
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

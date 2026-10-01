@@ -1,0 +1,49 @@
+{
+ "id": "spc.chart.control",
+ "name": "SPC Control Chart",
+ "palette": {
+  "category": "Statistical Process Control",
+  "variants": [
+   {
+    "label": "Control Chart",
+    "tooltip": "X-bar/R, X-bar/S, I-MR or attribute chart with zones and rule markers."
+   }
+  ]
+ },
+ "defaultMetaName": "spcControlChart",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dataSource", "characteristicId", "chartType"],
+  "properties": {
+   "dataSource": {"enum": ["gatewayRpc", "namedQuery", "tagHistory"], "default": "gatewayRpc"},
+   "characteristicId": {"type": "number", "default": 0},
+   "chartType": {"enum": ["XBAR_R", "XBAR_S", "I_MR", "P", "NP", "U", "C"], "default": "XBAR_R"},
+   "seriesField": {"enum": ["stat", "dispersion"], "default": "stat"},
+   "subgroupSize": {"type": "number", "default": 5},
+   "ruleSet": {"enum": ["NELSON", "WESTERN_ELECTRIC"], "default": "NELSON"},
+   "rule2Run": {"type": "number", "default": 9},
+   "timeRange": {
+    "type": "object",
+    "properties": {
+     "mode": {"enum": ["realtime", "historical"], "default": "realtime"},
+     "fromMs": {"type": "number", "default": 0},
+     "toMs": {"type": "number", "default": 0}
+    }
+   },
+   "display": {
+    "type": "object",
+    "properties": {
+     "showZones": {"type": "boolean", "default": true},
+     "showRuleMarkers": {"type": "boolean", "default": true},
+     "showCapability": {"type": "boolean", "default": false},
+     "seriesColor": {"type": "string", "default": "#1f77b4"}
+    }
+   },
+   "chart": {
+    "type": "object",
+    "default": {"points": [], "limits": null, "variableLimits": [], "violations": []}
+   }
+  }
+ }
+}

@@ -1,0 +1,450 @@
+{
+ "id": "ia.display.sparkline",
+ "name": "Sparkline",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Sparkline",
+    "tooltip": "A minimalistic chart component that displays a line-chart history for a single datapoint."
+   }
+  ]
+ },
+ "defaultMetaName": "Sparkline",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "points": {
+    "anyOf": [
+     {
+      "type": "array",
+      "items": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "object",
+         "properties": {
+          "x": {
+           "type": "number"
+          },
+          "y": {
+           "type": "number"
+          }
+         }
+        }
+       ]
+      }
+     },
+     {
+      "type": "string"
+     },
+     {
+      "type": "dataset"
+     }
+    ],
+    "description": "Data points to plot. May be a dataset, or an array of values or objects containing x and y coordinates ([{x: 0, y: 9}]). Also may be a string formatted with x and y values separated by comma ('x,y x,y').",
+    "example": [
+     59,
+     80,
+     80,
+     100,
+     68,
+     62,
+     87,
+     72,
+     42,
+     49,
+     58,
+     53,
+     57,
+     51,
+     42,
+     32,
+     37,
+     30,
+     24,
+     38,
+     57,
+     29,
+     18,
+     32,
+     38,
+     24,
+     24,
+     24,
+     20,
+     21,
+     29,
+     32,
+     26,
+     18,
+     32,
+     36,
+     30,
+     36,
+     29,
+     32,
+     29,
+     28,
+     41,
+     20,
+     28,
+     58,
+     18,
+     24,
+     16,
+     2,
+     22,
+     17,
+     22,
+     21,
+     12,
+     22,
+     14,
+     13,
+     11,
+     20,
+     16,
+     16,
+     18,
+     12,
+     28,
+     28,
+     32,
+     16,
+     16,
+     24,
+     16,
+     20,
+     14,
+     18,
+     12,
+     26,
+     17,
+     11,
+     30,
+     16,
+     9,
+     20,
+     42,
+     13,
+     13,
+     24,
+     17,
+     13,
+     20,
+     12,
+     14,
+     13,
+     14,
+     71,
+     82,
+     20,
+     16,
+     20,
+     22,
+     17,
+     5
+    ]
+   },
+   "stroke": {
+    "type": "string",
+    "description": "Color of the line. DEPRECATED: renamed to color.",
+    "format": "color"
+   },
+   "strokeWidth": {
+    "type": "number",
+    "description": "Thickness of the line in px. DEPRECATED: renamed to width."
+   },
+   "color": {
+    "type": "string",
+    "description": "Stroke color.",
+    "format": "color",
+    "default": ""
+   },
+   "width": {
+    "type": "number",
+    "description": "Stroke width.",
+    "default": 0.75
+   },
+   "opacity": {
+    "type": "number",
+    "description": "Stroke opacity.",
+    "default": 1
+   },
+   "dashArray": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "description": "Pattern of dashes and gaps used to paint stroke.",
+    "default": ""
+   },
+   "range": {
+    "type": "object",
+    "properties": {
+     "high": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "A fixed value for the upper edge of the chart as a number.",
+      "default": ""
+     },
+     "low": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "A fixed value for the lower edge of the chart as a number.",
+      "default": ""
+     }
+    }
+   },
+   "desired": {
+    "type": "object",
+    "description": "The desired operating range.",
+    "properties": {
+     "high": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "The high value of the desired operating range as a number.",
+      "default": ""
+     },
+     "low": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "The low value of the desired operating range as a number.",
+      "default": ""
+     },
+     "stroke": {
+      "$ref": "#/definitions/stroke",
+      "default": {
+       "color": "",
+       "width": 1,
+       "opacity": 1,
+       "dashArray": 4
+      }
+     },
+     "fill": {
+      "$ref": "#/definitions/fill",
+      "default": {
+       "color": "",
+       "opacity": 0.1
+      }
+     }
+    }
+   },
+   "marker": {
+    "type": "object",
+    "properties": {
+     "first": {
+      "$ref": "#/definitions/marker",
+      "default": {
+       "shape": "circle",
+       "size": 5,
+       "stroke": {
+        "color": "",
+        "width": 0.5,
+        "opacity": 1,
+        "dashArray": ""
+       },
+       "fill": {
+        "color": "",
+        "opacity": 1
+       },
+       "style": {
+        "classes": ""
+       }
+      }
+     },
+     "last": {
+      "$ref": "#/definitions/marker",
+      "default": {
+       "shape": "circle",
+       "size": 5,
+       "stroke": {
+        "color": "",
+        "width": 0.5,
+        "opacity": 1,
+        "dashArray": ""
+       },
+       "fill": {
+        "color": "",
+        "opacity": 1
+       },
+       "style": {
+        "classes": ""
+       }
+      }
+     },
+     "low": {
+      "$ref": "#/definitions/marker",
+      "default": {
+       "shape": "square",
+       "size": 5,
+       "stroke": {
+        "color": "",
+        "width": 0.5,
+        "opacity": 1,
+        "dashArray": ""
+       },
+       "fill": {
+        "color": "",
+        "opacity": 1
+       },
+       "style": {
+        "classes": ""
+       }
+      }
+     },
+     "high": {
+      "$ref": "#/definitions/marker",
+      "default": {
+       "shape": "square",
+       "size": 5,
+       "stroke": {
+        "color": "",
+        "width": 0.5,
+        "opacity": 1,
+        "dashArray": ""
+       },
+       "fill": {
+        "color": "",
+        "opacity": 1
+       },
+       "style": {
+        "classes": ""
+       }
+      }
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "stroke": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "description": "Stroke color.",
+      "format": "color",
+      "default": ""
+     },
+     "width": {
+      "type": "number",
+      "description": "Stroke width.",
+      "default": 0.5
+     },
+     "opacity": {
+      "type": "number",
+      "description": "Stroke opacity.",
+      "default": 1
+     },
+     "dashArray": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "Pattern of dashes and gaps used to paint stroke.",
+      "default": ""
+     }
+    },
+    "default": {
+     "color": "",
+     "width": 0.5,
+     "opacity": 1,
+     "dashArray": ""
+    }
+   },
+   "fill": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "description": "Fill color.",
+      "format": "color",
+      "default": ""
+     },
+     "opacity": {
+      "type": "number",
+      "description": "Fill opacity.",
+      "default": 1
+     }
+    },
+    "default": {
+     "color": "",
+     "opacity": 1
+    }
+   },
+   "marker": {
+    "type": "object",
+    "properties": {
+     "shape": {
+      "type": "string",
+      "enum": [
+       "square",
+       "circle",
+       "triangle"
+      ],
+      "default": "circle"
+     },
+     "size": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 5
+     },
+     "stroke": {
+      "$ref": "#/definitions/stroke"
+     },
+     "fill": {
+      "$ref": "#/definitions/fill"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    },
+    "default": {
+     "shape": "circle",
+     "size": 5,
+     "stroke": {
+      "color": "",
+      "width": 0.5,
+      "opacity": 1,
+      "dashArray": ""
+     },
+     "fill": {
+      "color": "",
+      "opacity": 1
+     },
+     "style": {
+      "classes": ""
+     }
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

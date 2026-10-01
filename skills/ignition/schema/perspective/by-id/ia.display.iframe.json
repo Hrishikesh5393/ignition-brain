@@ -1,0 +1,59 @@
+{
+ "id": "ia.display.iframe",
+ "name": "Inline Frame",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Inline Frame",
+    "tooltip": "A component that uses the <iframe> tag to embed another webpage."
+   }
+  ],
+  "description": "A component that uses the <iframe> tag to embed another webpage."
+ },
+ "defaultMetaName": "IFrame",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "src": {
+    "type": "string",
+    "default": "",
+    "description": "The source URL of the webpage to embed."
+   },
+   "allowFullScreen": {
+    "type": "boolean",
+    "default": false
+   },
+   "referrerPolicy": {
+    "type": "string",
+    "default": "no-referrer",
+    "enum": [
+     "no-referrer",
+     "no-referrer-when-downgrade",
+     "origin",
+     "origin-when-cross-origin",
+     "unsafe-url"
+    ]
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": "",
+     "border": "unset"
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,350 @@
+{
+ "id": "ia.container.coord",
+ "version": 1,
+ "name": "Coordinate Container",
+ "palette": {
+  "category": "container",
+  "variants": [
+   {
+    "label": "Coordinate",
+    "tooltip": "A container that makes a component's size and location relative to its parent's size and location."
+   },
+   {
+    "id": "coord-fixed",
+    "label": "Fixed",
+    "tooltip": "A container that makes a component's size and location relative to its parent's size and location."
+   },
+   {
+    "id": "coord-percent",
+    "label": "Percent",
+    "tooltip": "A container that makes a component's size and location relative to its parent's size and location.",
+    "props": {
+     "mode": "percent"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "CoordinateContainer",
+ "schema": {
+  "type": "object",
+  "required": [
+   "mode",
+   "aspectRatio",
+   "style"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "mode": {
+    "type": "string",
+    "enum": [
+     "fixed",
+     "percent"
+    ],
+    "default": "fixed",
+    "description": "Whether child layouts should always be in fixed coordinate space, or should stretch relative to different container sizes"
+   },
+   "aspectRatio": {
+    "type": "string",
+    "default": "",
+    "description": "Only applied in 'percent' mode. Dimensions, in 'x:y' format to maintain container aspect ratio for different sizes. Missing or invalid value will default to '1:1'",
+    "visibleWhen": {
+     "property": "mode",
+     "equals": "percent"
+    }
+   },
+   "pipes": {
+    "type": "array",
+    "description": "An array of pipes.",
+    "items": {
+     "type": "object",
+     "required": [
+      "appearance",
+      "width",
+      "origin"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "name": {
+       "type": [
+        "number",
+        "string"
+       ],
+       "description": "A name to display in the Designer Project browser"
+      },
+      "appearance": {
+       "type": "string",
+       "description": "auto uses the value of the Session Prop pipes.autoAppearance if it exists, default is mimic.",
+       "enum": [
+        "auto",
+        "p&id",
+        "mimic",
+        "simple"
+       ]
+      },
+      "flanges": {
+       "type": "boolean",
+       "description": "Displays flanges at the ends and mid pipe when the appearance is mimic, or when auto and Session Prop pipes.autoAppearance is mimic",
+       "visibleWhen": {
+        "property": "appearance",
+        "equals": [
+         "auto",
+         "mimic"
+        ]
+       }
+      },
+      "lineVariant": {
+       "type": "string",
+       "description": "Changes the line variant when appearance is p&id, or when auto and Session Prop pipes.autoAppearance is p&id. midArrows are dependent on the direction of the start and end arrows, with start taking precedence except for terminal segments",
+       "enum": [
+        "solid",
+        "dashed",
+        "midArrow",
+        "wavy"
+       ],
+       "visibleWhen": {
+        "property": "appearance",
+        "equals": [
+         "auto",
+         "p&id"
+        ]
+       }
+      },
+      "start": {
+       "type": "string",
+       "description": "Draws a decoration at the Pipe's origin when appearance is p&id, or when auto and Session Prop pipes.autoAppearance is p&id",
+       "enum": [
+        "none",
+        "arrowInward",
+        "arrowOutward"
+       ],
+       "visibleWhen": {
+        "property": "appearance",
+        "equals": [
+         "auto",
+         "p&id"
+        ]
+       }
+      },
+      "end": {
+       "type": "string",
+       "description": "Draws a decoration at the end of Pipe connections without further connections when appearance is p&id, or when auto and Session Prop pipes.autoAppearance is p&id",
+       "enum": [
+        "none",
+        "arrowInward",
+        "arrowOutward"
+       ],
+       "visibleWhen": {
+        "property": "appearance",
+        "equals": [
+         "auto",
+         "p&id"
+        ]
+       }
+      },
+      "fill": {
+       "type": "string",
+       "description": "Fill color when appearance is mimic or simple, or when auto and Session Prop pipes.autoAppearance is mimic or simple",
+       "format": "color",
+       "visibleWhen": {
+        "property": "appearance",
+        "equals": [
+         "auto",
+         "mimic",
+         "simple"
+        ]
+       }
+      },
+      "stroke": {
+       "type": "string",
+       "description": "Stroke color",
+       "format": "color"
+      },
+      "width": {
+       "type": "number",
+       "description": "The width of the pipe"
+      },
+      "origin": {
+       "$ref": "#/definitions/point"
+      },
+      "visible": {
+       "type": "boolean",
+       "description": "Enables pipe visibility.",
+       "default": true
+      }
+     },
+     "default": {
+      "appearance": "auto",
+      "flanges": true,
+      "lineVariant": "solid",
+      "start": "none",
+      "end": "none",
+      "fill": "",
+      "stroke": "",
+      "width": 10,
+      "origin": {
+       "x": 0,
+       "y": 0,
+       "connections": []
+      },
+      "visible": true
+     }
+    },
+    "default": []
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": ""
+    }
+   }
+  },
+  "definitions": {
+   "point": {
+    "type": "object",
+    "description": "An array of pipes points forming a contiguous pipe segment.",
+    "required": [
+     "x",
+     "y"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "x": {
+      "type": "Number",
+      "default": 0
+     },
+     "y": {
+      "type": "Number",
+      "default": 0
+     },
+     "connections": {
+      "type": "array",
+      "description": "An Array of Points connected to this Point",
+      "items": {
+       "$ref": "#/definitions/point"
+      },
+      "default": []
+     }
+    }
+   }
+  }
+ },
+ "childPositionSchema": {
+  "type": "object",
+  "required": [
+   "x",
+   "y"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "x": {
+    "$ref": "urn:ignition-schema:schemas/css-length.schema.json"
+   },
+   "y": {
+    "$ref": "urn:ignition-schema:schemas/css-length.schema.json"
+   },
+   "width": {
+    "$ref": "urn:ignition-schema:schemas/css-length.schema.json"
+   },
+   "height": {
+    "$ref": "urn:ignition-schema:schemas/css-length.schema.json"
+   },
+   "rotate": {
+    "$ref": "urn:ignition-schema:schemas/css-rotation.schema.json"
+   }
+  },
+  "default": {
+   "x": 0,
+   "y": 0,
+   "rotate": {
+    "angle": "0deg",
+    "anchor": "50% 50%"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onPipeClicked",
+   "description": "Interaction event fired when a pipe is clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-coordinate-container-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "pipeIndex": {
+      "type": "number",
+      "description": "The array index of the pipe within props.pipes that was clicked."
+     },
+     "pipeName": {
+      "type": "string",
+      "description": "The name of the pipe that was clicked."
+     },
+     "event": {
+      "type": "object",
+      "description": "The event object generated from the mouse click.",
+      "properties": {
+       "altKey": {
+        "type": "boolean",
+        "description": "True if the 'alt' key was held down when the event was fired."
+       },
+       "button": {
+        "type": "number",
+        "description": "The button number that was pressed when the event was fired."
+       },
+       "buttons": {
+        "type": "number",
+        "description": "The buttons being depressed when the event was fired."
+       },
+       "clientX": {
+        "type": "number",
+        "description": "The X coordinate in local coordinates."
+       },
+       "clientY": {
+        "type": "number",
+        "description": "The Y coordinate in local coordinates."
+       },
+       "ctrlKey": {
+        "type": "boolean",
+        "description": "True if the 'ctrl' key was held down when the event was fired."
+       },
+       "metaKey": {
+        "type": "boolean",
+        "description": "True if the 'meta' key was held down when the event was fired."
+       },
+       "pageX": {
+        "type": "number",
+        "description": "The X coordinate relative to the whole document."
+       },
+       "pageY": {
+        "type": "number",
+        "description": "The Y coordinate relative to the whole document."
+       },
+       "screenX": {
+        "type": "number",
+        "description": "The X coordinate in global (screen) coordinates."
+       },
+       "screenY": {
+        "type": "number",
+        "description": "The Y coordinate in global (screen) coordinates."
+       },
+       "shiftKey": {
+        "type": "boolean",
+        "description": "True if the 'shift' key was held down when the event was fired."
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

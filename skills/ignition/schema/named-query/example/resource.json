@@ -1,0 +1,25 @@
+{
+  "scope": "G",
+  "version": 2,
+  "restricted": false,
+  "overridable": true,
+  "files": ["query.sql"],
+  "attributes": {
+    "type": "Query",
+    "database": "",
+    "enabled": true,
+    "cacheEnabled": true,
+    "cacheAmount": 30,
+    "cacheUnit": "SEC",
+    "useMaxReturnSize": false,
+    "maxReturnSize": 100,
+    "fallbackEnabled": false,
+    "autoBatchEnabled": false,
+    "parameters": [
+      { "type": "Parameter", "identifier": "lineId", "sqlType": 2 },
+      { "type": "Parameter", "identifier": "since", "sqlType": 8 },
+      { "type": "QueryString", "identifier": "sortCol", "sqlType": 7 }
+    ]
+  },
+  "documentation": "Recent completed batches for one production line, newest first. sortCol is a trusted column-name fragment (QueryString) - never bind user input to it."
+}

@@ -1,0 +1,1858 @@
+{
+ "_source": "perspective-common-3.3.9.jar!/perspective-timeseries.components.json (bundled component-definition resource; groupId=perspective-timeseries library=PerspectiveTimeseriesCharts hash=b6cb9f73dbcdc115f2bb). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.chart.powerchart",
+ "name": "Power Chart",
+ "palette": {
+  "category": "chart",
+  "variants": [
+   {
+    "label": "Power Chart",
+    "tooltip": "A flexible chart designed to visualize time series data and provide full configuration from a running session."
+   }
+  ]
+ },
+ "defaultMetaName": "PowerChart",
+ "schema": {
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+   "config": {
+    "type": "object",
+    "description": "Configuration for the data feeding the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "penNamePathDepth": {
+      "type": "number",
+      "description": "Depth of the tag path to include in the pen name.",
+      "default": 1
+     },
+     "tagBrowserStartPath": {
+      "type": "string",
+      "description": "A path to a nested History provider structure from which browsing will start.",
+      "default": ""
+     },
+     "mode": {
+      "type": "string",
+      "description": "The type of query that is being made against the data source.",
+      "enum": [
+       "realtime",
+       "historical"
+      ],
+      "default": "realtime"
+     },
+     "refreshRate": {
+      "type": "number",
+      "description": "Duration (in milliseconds) that data will be queried for updated results.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "realtime"
+       ]
+      },
+      "default": 1000
+     },
+     "pointCount": {
+      "type": "number",
+      "description": "Number of data points returned for the selected time range.",
+      "default": 300
+     },
+     "unitOfTime": {
+      "type": "number",
+      "description": "Time unit used for a realtime data query.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "realtime"
+       ]
+      },
+      "default": 8
+     },
+     "measureOfTime": {
+      "type": "string",
+      "description": "Time measurement used for a realtime data query.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "realtime"
+       ]
+      },
+      "enum": [
+       "seconds",
+       "minutes",
+       "hours",
+       "days",
+       "weeks",
+       "months",
+       "years"
+      ],
+      "default": "hours"
+     },
+     "startDate": {
+      "type": [
+       "date",
+       "null"
+      ],
+      "description": "Start date for a historical data query.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "default": null
+     },
+     "endDate": {
+      "type": [
+       "date",
+       "null"
+      ],
+      "description": "End date for a historical data query.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "default": null
+     },
+     "rangeStartDate": {
+      "type": [
+       "date",
+       "null"
+      ],
+      "description": "READ-ONLY: Start date for the modified chart data range that the user has selected either with the range brush or by panning/zooming.",
+      "default": null
+     },
+     "rangeEndDate": {
+      "type": [
+       "date",
+       "null"
+      ],
+      "description": "READ-ONLY: End date for the modified chart data range that the user has selected either with the range brush or by panning/zooming.",
+      "default": null
+     },
+     "dateFormat": {
+      "type": "string",
+      "description": "The date format displayed when in historical mode using a MomentJS date string (https://momentjs.com/).",
+      "suggestions": {
+       "[2020/03/10]": "YYYY/MM/DD",
+       "[03/10/2020]": "MM/DD/YYYY",
+       "[3-10-2020]": "M-D-YYYY",
+       "[2020-3-10]": "YYYY-M-D",
+       "[Mar 10th 20]": "MMM Do YY",
+       "[March 10th 2020]": "MMMM Do YYYY",
+       "none": "None"
+      },
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "default": "YYYY/MM/DD"
+     },
+     "timeFormat": {
+      "type": "string",
+      "description": "The time format displayed when in historical mode using a MomentJS time string (https://momentjs.com/).",
+      "suggestions": {
+       "12 Hour [8:41]": "h:mm",
+       "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+       "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+       "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+       "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+       "Unix Millisecond Timestamp [1563464737269]": "x",
+       "Unix Timestamp [1563464737]": "X",
+       "none": "None"
+      },
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "default": "h:mm A"
+     },
+     "rangeSelectorPen": {
+      "type": "string",
+      "description": "The pen that will drive the data display of the range selector in Historical mode.",
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "historical"
+       ]
+      },
+      "default": "",
+      "dynamicSuggestions": "../../pens/*/data/source"
+     },
+     "responsiveDesignWidth": {
+      "type": "number",
+      "description": "A number (in pixels) that will be used as the switch over width to the responsive design for the chart.",
+      "default": 750
+     },
+     "visibility": {
+      "type": "object",
+      "description": "Settings to show/hide elements within the component interface.",
+      "additionalProperties": false,
+      "properties": {
+       "showTagBrowser": {
+        "type": "boolean",
+        "description": "Flag representing the visible state of the tag browser.",
+        "default": false
+       },
+       "showDateRangeSelector": {
+        "type": "boolean",
+        "description": "Flag representing the visible state of the realtime/historical date range selector.",
+        "default": true
+       },
+       "showPenControlDisplay": {
+        "type": "boolean",
+        "description": "Flag representing the visible state of the pen data table and pen legend.",
+        "default": true
+       },
+       "buttons": {
+        "type": "object",
+        "description": "Settings to show/hide the buttons used in the interface.",
+        "additionalProperties": false,
+        "properties": {
+         "showTagBrowserButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Open Tag Browser\" and \"Close Tag Browser\" buttons.",
+          "default": true
+         },
+         "showPanZoomButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Pan and Zoom\" mode button.",
+          "default": true
+         },
+         "showXTraceButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"X Trace\" mode button.",
+          "default": true
+         },
+         "showRangeBrushButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Range Brush\" mode button.",
+          "default": true
+         },
+         "showAnnotationButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Annotation\" mode button.",
+          "default": true
+         },
+         "showFullscreenButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Fullscreen\" presentation mode button.",
+          "default": true
+         },
+         "showSettingsButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"Settings\" menu button.",
+          "default": true
+         },
+         "showMoreButton": {
+          "type": "boolean",
+          "description": "Flag representing the visible state of the \"More\" menu button.",
+          "default": true
+         }
+        }
+       }
+      }
+     },
+     "export": {
+      "type": "object",
+      "description": "Settings to control the format of the data exported from the chart.",
+      "additionalProperties": false,
+      "properties": {
+       "dateFormat": {
+        "type": "string",
+        "description": "The date format of the exported data using a MomentJS date string (https://momentjs.com/).",
+        "suggestions": {
+         "[2020/03/10]": "YYYY/MM/DD",
+         "[03/10/2020]": "MM/DD/YYYY",
+         "[3-10-2020]": "M-D-YYYY",
+         "[2020-3-10]": "YYYY-M-D",
+         "[Mar 10th 20]": "MMM Do YY",
+         "[March 10th 2020]": "MMMM Do YYYY",
+         "none": "None"
+        },
+        "default": "None"
+       },
+       "timeFormat": {
+        "type": "string",
+        "description": "The time format of the exported data using a MomentJS time string (https://momentjs.com/).",
+        "suggestions": {
+         "12 Hour [8:41]": "h:mm",
+         "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+         "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+         "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+         "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+         "Unix Millisecond Timestamp [1563464737269]": "x",
+         "Unix Timestamp [1563464737]": "X",
+         "none": "None"
+        },
+        "default": "x"
+       }
+      }
+     }
+    }
+   },
+   "interaction": {
+    "type": "object",
+    "description": "Configuration for the presentation of, and interaction with, chart data.",
+    "additionalProperties": false,
+    "properties": {
+     "fullscreen": {
+      "type": "boolean",
+      "description": "Flag representing the fullscreen presentation mode of the chart.",
+      "default": false
+     },
+     "chartZoomLevel": {
+      "type": "number",
+      "description": "READ-ONLY: The zoom level displayed on the chart."
+     },
+     "rangeZoomLevel": {
+      "type": "number",
+      "description": "READ-ONLY: The zoom level displayed on the range brush in Historical mode."
+     },
+     "mode": {
+      "type": "string",
+      "description": "Current user interaction mode of the chart.",
+      "enum": [
+       "panAndZoom",
+       "xTrace",
+       "rangeBrush",
+       "annotation"
+      ],
+      "default": "panAndZoom"
+     },
+     "panAndZoom": {
+      "type": "object",
+      "description": "Configuration to use when panning and zooming.",
+      "additionalProperties": false,
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "panAndZoom"
+       ]
+      },
+      "properties": {
+       "freeRange": {
+        "type": "boolean",
+        "description": "When enabled, this allows panning and zooming to dictate the time range used for the chart display.",
+        "default": false
+       }
+      }
+     },
+     "xTrace": {
+      "type": "object",
+      "description": "Configuration to build the x-trace display.",
+      "additionalProperties": false,
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "xTrace"
+       ]
+      },
+      "properties": {
+       "values": {
+        "type": "array",
+        "description": "An array of timestamp or numeric values representing the visible x-trace positions. In \"historical\" interaction mode, a timestamp representing an x-trace position. In \"realtime\" interaction mode, a number representing the percentage of the distance to the end of the chart where the x-trace will be positioned.",
+        "items": {
+         "type": [
+          "date",
+          "number"
+         ],
+         "description": "In \"historical\" interaction mode, a timestamp representing an x-trace position. In \"realtime\" interaction mode, a number representing the percentage of the distance to the end of the chart where the x-trace will be positioned."
+        },
+        "default": []
+       },
+       "infoBox": {
+        "type": "object",
+        "description": "Configuration to build the box portion of the x-trace display.",
+        "additionalProperties": false,
+        "properties": {
+         "visible": {
+          "type": "boolean",
+          "description": "The visible state of the box.",
+          "default": true
+         },
+         "showTime": {
+          "type": "boolean",
+          "description": "The visible state of the time value above the box.",
+          "default": true
+         },
+         "width": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The width of the box.",
+          "default": "auto"
+         },
+         "dataFormat": {
+          "type": "string",
+          "description": "Format pattern for displaying the data.",
+          "suggestions": {
+           "number [1,000.12]": "0,0.##",
+           "integer [1,200]": "0,0",
+           "four decimal precision [1.1200]": "0,0.0000",
+           "percent [10.12%]": "0.##%",
+           "scientific [1.01E+03]": "0.00e+0",
+           "accounting [$ (1,000.12)]": "$ (0,0.00)",
+           "financial [(1,000.12)]": "(0,0.00)",
+           "currency [$1,000.12]": "$0,0.00",
+           "currency (rounded) [$1,012]": "$0,0",
+           "duration [24:01:00]": "00:00:00",
+           "abbreviation [1.2k]": "0.0a",
+           "ordinal [100th]": "0o"
+          },
+          "default": "0,0.##"
+         },
+         "dateFormat": {
+          "type": "string",
+          "description": "The date format of the date/time display using a MomentJS date string (https://momentjs.com/).",
+          "suggestions": {
+           "[2020/03/10]": "YYYY/MM/DD",
+           "[03/10/2020]": "MM/DD/YYYY",
+           "[3-10-2020]": "M-D-YYYY",
+           "[2020-3-10]": "YYYY-M-D",
+           "[Mar 10th 20]": "MMM Do YY",
+           "[March 10th 2020]": "MMMM Do YYYY",
+           "none": "None"
+          },
+          "default": "YYYY/MM/DD"
+         },
+         "timeFormat": {
+          "type": "string",
+          "description": "The time format of the date/time display using a MomentJS time string (https://momentjs.com/).",
+          "suggestions": {
+           "12 Hour [8:41]": "h:mm",
+           "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+           "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+           "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+           "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+           "Unix Millisecond Timestamp [1563464737269]": "x",
+           "Unix Timestamp [1563464737]": "X",
+           "none": "None"
+          },
+          "default": "h:mm A"
+         },
+         "stroke": {
+          "$ref": "#/definitions/stroke"
+         },
+         "fill": {
+          "$ref": "#/definitions/fill"
+         },
+         "font": {
+          "$ref": "#/definitions/font"
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the X-Trace info box. Any style properties that can be applied to a 'rect' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "line": {
+        "type": "object",
+        "description": "Configuration to build the vertical line portion of the x-trace display.",
+        "additionalProperties": false,
+        "properties": {
+         "visible": {
+          "type": "boolean",
+          "description": "The visible state of the line.",
+          "default": true
+         },
+         "color": {
+          "type": "string",
+          "description": "The color of the line.",
+          "format": "color",
+          "default": "#757A7F"
+         },
+         "width": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The width of the line.",
+          "default": 1
+         },
+         "opacity": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The opacity of the line.",
+          "default": 0.5
+         },
+         "dashArray": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The dashed appearance of the line.",
+          "default": 0
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the X-Trace tracking line. Any style properties that can be applied to a 'line' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       }
+      }
+     },
+     "annotation": {
+      "type": "object",
+      "description": "Configuration to build the annotation display.",
+      "additionalProperties": false,
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "annotation"
+       ]
+      },
+      "properties": {
+       "infoBox": {
+        "type": "object",
+        "description": "Configuration to build the box portion of the annotation display.",
+        "additionalProperties": false,
+        "properties": {
+         "visible": {
+          "type": "boolean",
+          "description": "The visible state of the box.",
+          "default": true
+         },
+         "showTime": {
+          "type": "boolean",
+          "description": "The visible state of the time value above the box.",
+          "default": true
+         },
+         "width": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The width of the box.",
+          "default": "auto"
+         },
+         "dateFormat": {
+          "type": "string",
+          "description": "The date format of the date/time display using a MomentJS date string (https://momentjs.com/).",
+          "suggestions": {
+           "[2020/03/10]": "YYYY/MM/DD",
+           "[03/10/2020]": "MM/DD/YYYY",
+           "[3-10-2020]": "M-D-YYYY",
+           "[2020-3-10]": "YYYY-M-D",
+           "[Mar 10th 20]": "MMM Do YY",
+           "[March 10th 2020]": "MMMM Do YYYY",
+           "none": "None"
+          },
+          "default": "YYYY/MM/DD"
+         },
+         "timeFormat": {
+          "type": "string",
+          "description": "The time format of the date/time display using a MomentJS time string (https://momentjs.com/).",
+          "suggestions": {
+           "12 Hour [8:41]": "h:mm",
+           "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+           "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+           "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+           "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+           "Unix Millisecond Timestamp [1563464737269]": "x",
+           "Unix Timestamp [1563464737]": "X",
+           "none": "None"
+          },
+          "default": "h:mm A"
+         },
+         "icon": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The configuration applied to the icons within the annotation's infoBox.",
+          "properties": {
+           "stroke": {
+            "$ref": "#/definitions/stroke"
+           },
+           "fill": {
+            "$ref": "#/definitions/fill"
+           },
+           "style": {
+            "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+           }
+          },
+          "default": {
+           "stroke": {
+            "color": "#929597",
+            "width": 0,
+            "opacity": 0,
+            "dashArray": 0
+           },
+           "fill": {
+            "color": "#929597",
+            "opacity": 1
+           },
+           "style": {
+            "classes": ""
+           }
+          }
+         },
+         "stroke": {
+          "$ref": "#/definitions/stroke"
+         },
+         "fill": {
+          "$ref": "#/definitions/fill"
+         },
+         "font": {
+          "$ref": "#/definitions/font"
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the annotation info box. Any style properties that can be applied to a 'rect' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "line": {
+        "type": "object",
+        "description": "Configuration to build the connecting line portion of the annotation display.",
+        "additionalProperties": false,
+        "properties": {
+         "visible": {
+          "type": "boolean",
+          "description": "The visible state of the line.",
+          "default": true
+         },
+         "color": {
+          "type": "string",
+          "description": "The color of the line.",
+          "format": "color",
+          "default": "#757A7F"
+         },
+         "width": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The width of the line.",
+          "default": 1
+         },
+         "opacity": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The opacity of the line.",
+          "default": 0.9
+         },
+         "dashArray": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The dashed appearance of the line.",
+          "default": 0
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the annotation line. Any style properties that can be applied to a 'line' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "dot": {
+        "type": "object",
+        "description": "Configuration to build the dot portion of the annotation display.",
+        "additionalProperties": false,
+        "properties": {
+         "visible": {
+          "type": "boolean",
+          "description": "The visible state of the dot.",
+          "default": true
+         },
+         "color": {
+          "type": "string",
+          "description": "The color of the dot.",
+          "format": "color",
+          "default": "#757A7F"
+         },
+         "radius": {
+          "type": "number",
+          "description": "The radius of the dot.",
+          "default": 3
+         },
+         "opacity": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The opacity of the dot.",
+          "default": 1
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the annotation dot. Any style properties that can be applied to a 'circle' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       }
+      }
+     },
+     "rangeBrush": {
+      "type": "object",
+      "description": "Configuration to build the range brush display.",
+      "additionalProperties": false,
+      "visibleWhen": {
+       "property": "mode",
+       "equals": [
+        "rangeBrush"
+       ]
+      },
+      "properties": {
+       "values": {
+        "type": "array",
+        "description": "An array of config objects used to build each range brush.",
+        "items": {
+         "type": "object",
+         "description": "An object containing the start and end timestamps for each range brush.",
+         "additionalProperties": false,
+         "properties": {
+          "id": {
+           "type": "string",
+           "description": "The ID of the brush."
+          },
+          "start": {
+           "type": [
+            "date",
+            "string"
+           ],
+           "description": "The start timestamp position.",
+           "default": ""
+          },
+          "end": {
+           "type": [
+            "date",
+            "string"
+           ],
+           "description": "The end timestamp position.",
+           "default": ""
+          },
+          "plot": {
+           "type": "number",
+           "description": "The plot into which this range brush will be added."
+          }
+         }
+        },
+        "default": []
+       },
+       "active": {
+        "type": "object",
+        "description": "Configuration to build the active range brush display.",
+        "additionalProperties": false,
+        "properties": {
+         "color": {
+          "type": "string",
+          "description": "The color of the active range brush.",
+          "format": "color",
+          "default": "#0C7BB3"
+         },
+         "opacity": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The opacity of the active range brush.",
+          "default": 0.3
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Additional style properties to be applied to the active range brush. Any style properties that can be applied to a 'rect' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "inactive": {
+        "type": "object",
+        "description": "Configuration to build the inactive range brush displays.",
+        "additionalProperties": false,
+        "properties": {
+         "color": {
+          "type": "string",
+          "description": "The color of the range brush.",
+          "format": "color",
+          "default": "#757A7F"
+         },
+         "opacity": {
+          "type": [
+           "number",
+           "string"
+          ],
+          "description": "The opacity of the range brush.",
+          "default": 0.3
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the range brush. Any style properties that can be applied to a 'rect' SVG shape can be applied here.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "axes": {
+    "type": "array",
+    "description": "Collection of predefined axes against which the data visualizations can be drawn.",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "name": {
+       "type": "string",
+       "description": "The name of the axis.",
+       "default": ""
+      },
+      "position": {
+       "type": "string",
+       "enum": [
+        "left",
+        "right"
+       ],
+       "description": "The side of the plot upon which the axis should be drawn.",
+       "default": "left"
+      },
+      "width": {
+       "type": "number",
+       "description": "The width of the axis.",
+       "default": 60
+      },
+      "color": {
+       "type": "string",
+       "description": "The color of the Y axis vertical bar.",
+       "format": "color",
+       "default": "#757A7F"
+      },
+      "dataFormat": {
+       "type": "string",
+       "description": "Format pattern for displaying the data for this axis.",
+       "suggestions": {
+        "number [1,000.12]": "0,0.##",
+        "integer [1,200]": "0,0",
+        "four decimal precision [1.1200]": "0,0.0000",
+        "percent [10.12%]": "0.##%",
+        "scientific [1.01E+03]": "0.00e+0",
+        "accounting [$ (1,000.12)]": "$ (0,0.00)",
+        "financial [(1,000.12)]": "(0,0.00)",
+        "currency [$1,000.12]": "$0,0.00",
+        "currency (rounded) [$1,012]": "$0,0",
+        "duration [24:01:00]": "00:00:00",
+        "abbreviation [1.2k]": "0.0a",
+        "ordinal [100th]": "0o"
+       },
+       "default": "0,0.##"
+      },
+      "range": {
+       "type": "object",
+       "description": "Configuration for the upper and lower limits of the axis.",
+       "additionalProperties": false,
+       "properties": {
+        "auto": {
+         "type": "boolean",
+         "description": "If true, the minimum and maximum displaying values for the axis will be auto calculated.",
+         "default": true
+        },
+        "min": {
+         "type": [
+          "number",
+          "string",
+          "null"
+         ],
+         "description": "Minimum range value. If no value is provided, a minimum value will be calculated from the data bound to this axis.",
+         "default": "",
+         "visibleWhen": {
+          "property": "auto",
+          "equals": false
+         }
+        },
+        "max": {
+         "type": [
+          "number",
+          "string",
+          "null"
+         ],
+         "description": "Maximum range value. If no value is provided, a maximum value will be calculated from the data bound to this axis.",
+         "default": "",
+         "visibleWhen": {
+          "property": "auto",
+          "equals": false
+         }
+        }
+       }
+      },
+      "label": {
+       "type": "object",
+       "description": "Y axis label configuration.",
+       "additionalProperties": false,
+       "properties": {
+        "text": {
+         "type": "string",
+         "description": "The text of the Y axis label.",
+         "default": ""
+        },
+        "offset": {
+         "type": "number",
+         "description": "Offset the Y axis label from its default position. This allows you to fine tune the label location, which may be necessary depending on the scale and how much room the tick labels take up. Maybe positive or negative.",
+         "default": 0
+        },
+        "font": {
+         "type": "object",
+         "description": "Y axis label font configuration.",
+         "additionalProperties": false,
+         "properties": {
+          "color": {
+           "type": "string",
+           "description": "The color of the Y axis label text.",
+           "format": "color",
+           "default": "#757A7F"
+          },
+          "size": {
+           "type": [
+            "number",
+            "string"
+           ],
+           "description": "The size of the Y axis label text.",
+           "default": 10
+          }
+         }
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+         "description": "Style properties to be applied to the Y axis label. Any style that applies to an SVG text element can be used.",
+         "default": {
+          "classes": ""
+         }
+        }
+       }
+      },
+      "tick": {
+       "type": "object",
+       "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+       "additionalProperties": false,
+       "properties": {
+        "color": {
+         "type": "string",
+         "description": "The color of the ticks.",
+         "format": "color",
+         "default": "#757A7F"
+        },
+        "count": {
+         "type": [
+          "number",
+          "string"
+         ],
+         "description": "The number of ticks. If \"Auto\" is used, the ticks will be determined by available space in the interface.",
+         "default": "Auto",
+         "suggestions": {
+          "2": 2,
+          "4": 4,
+          "6": 6,
+          "8": 8,
+          "10": 10,
+          "Auto": "Auto"
+         }
+        },
+        "label": {
+         "type": "object",
+         "description": "Tick label configuration.",
+         "additionalProperties": false,
+         "properties": {
+          "format": {
+           "type": "string",
+           "description": "Data format displayed by each tick using a D3 format string (https://github.com/d3/d3-format).",
+           "suggestions": {
+            "Auto": "Auto",
+            "Integer [1234]": "d",
+            "2 Decimal Points [1234.00]": ".2f",
+            "4 Decimal Points [1234.0000]": ".4f",
+            "Comma-Separated Integer [1,234]": ",.0f",
+            "Comma-Separated w/ 2 Decimal Points [1,234.00]": ",.2f",
+            "Percentage [123400%]": ".0%",
+            "Currency [$1,234.00]": "$,.2f",
+            "Hexadecimal (lowercase) [4d2]": "x",
+            "Hexadecimal (uppercase) [4D2]": "X",
+            "Binary [10011010010]": "b",
+            "Octal [2322]": "o",
+            "Exponential [1.234000e+3]": "e"
+           },
+           "default": "Auto"
+          },
+          "font": {
+           "type": "object",
+           "description": "Label font configuration.",
+           "properties": {
+            "color": {
+             "type": "string",
+             "description": "The color of the label text.",
+             "format": "color",
+             "default": "#757A7F"
+            },
+            "size": {
+             "type": [
+              "number",
+              "string"
+             ],
+             "description": "The size of the label text.",
+             "default": 10
+            }
+           }
+          },
+          "style": {
+           "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+           "description": "Style properties to be applied to the tick labels. Any style that applies to an SVG text element can be used.",
+           "default": {
+            "classes": ""
+           }
+          }
+         }
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+         "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used.",
+         "default": {
+          "classes": ""
+         }
+        }
+       }
+      },
+      "grid": {
+       "$ref": "#/definitions/grid"
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style properties to be applied to the axis line. Any style that applies to an SVG line element can be used.",
+       "default": {
+        "classes": ""
+       }
+      }
+     }
+    },
+    "default": []
+   },
+   "pens": {
+    "type": "array",
+    "description": "Visual representation of each active data item.",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "name": {
+       "type": "string",
+       "description": "Name of the pen.",
+       "default": ""
+      },
+      "visible": {
+       "type": "boolean",
+       "description": "Visible state of the pen on the chart.",
+       "default": true
+      },
+      "enabled": {
+       "type": "boolean",
+       "description": "Availability of the pen on the chart and pen configuration panel.",
+       "default": true
+      },
+      "selectable": {
+       "type": "boolean",
+       "description": "Flag to allow the pen to be responsive to user selection.",
+       "default": true
+      },
+      "axis": {
+       "type": "string",
+       "description": "Name of an axis in the \"axes\" array to plot against. If left blank, a default axis will be created based on data values.",
+       "default": "",
+       "dynamicSuggestions": "../../../axes/*/name"
+      },
+      "plot": {
+       "type": "number",
+       "description": "The plot to which this pen is bound.",
+       "default": 0
+      },
+      "display": {
+       "type": "object",
+       "description": "Configuration that drives the display of the pen.",
+       "additionalProperties": false,
+       "properties": {
+        "type": {
+         "type": "string",
+         "description": "The type of chart to be built.",
+         "enum": [
+          "line",
+          "area",
+          "bar",
+          "scatter"
+         ],
+         "default": "line"
+        },
+        "interpolation": {
+         "type": "string",
+         "description": "Type of curve that should be used to draw the line portion of the chart.",
+         "enum": [
+          "curveBasis",
+          "curveBasisOpen",
+          "curveCardinal",
+          "curveCardinalOpen",
+          "curveCatmullRom",
+          "curveCatmullRomOpen",
+          "curveLinear",
+          "curveMonotoneX",
+          "curveMonotoneY",
+          "curveNatural",
+          "curveStep",
+          "curveStepAfter",
+          "curveStepBefore"
+         ],
+         "default": "curveLinear",
+         "visibleWhen": {
+          "property": "type",
+          "equals": [
+           "line",
+           "area"
+          ]
+         }
+        },
+        "breakLine": {
+         "type": "boolean",
+         "description": "If true, the line will be broken on either side of bad/missing data values. If false, bad/missing data values are removed and the adjoining points are connected.",
+         "default": true,
+         "visibleWhen": {
+          "property": "type",
+          "equals": "line"
+         }
+        },
+        "radius": {
+         "type": "number",
+         "description": "The radius of the points.",
+         "default": 3,
+         "visibleWhen": {
+          "property": "type",
+          "equals": "scatter"
+         }
+        },
+        "styles": {
+         "$ref": "urn:ignition-schema:schemas/trend-style.schema.json",
+         "description": "If provided, the default styles to apply to the column.",
+         "default": {
+          "normal": {
+           "stroke": {
+            "color": "#63BEA2",
+            "width": 1,
+            "dashArray": 0,
+            "opacity": 0.8
+           },
+           "fill": {
+            "color": "#63BEA2",
+            "opacity": 0.8
+           }
+          },
+          "highlighted": {
+           "stroke": {
+            "color": "#63BEA2",
+            "width": 1,
+            "dashArray": 0,
+            "opacity": 1
+           },
+           "fill": {
+            "color": "#63BEA2",
+            "opacity": 1
+           }
+          },
+          "selected": {
+           "stroke": {
+            "color": "#63BEA2",
+            "width": 1,
+            "dashArray": 0,
+            "opacity": 1
+           },
+           "fill": {
+            "color": "#63BEA2",
+            "opacity": 1
+           }
+          },
+          "muted": {
+           "stroke": {
+            "color": "#63BEA2",
+            "width": 1,
+            "dashArray": 0,
+            "opacity": 0.4
+           },
+           "fill": {
+            "color": "#63BEA2",
+            "opacity": 0.4
+           }
+          }
+         }
+        }
+       }
+      },
+      "data": {
+       "type": "object",
+       "description": "Configuration that defines the data structure for the pen.",
+       "additionalProperties": false,
+       "properties": {
+        "source": {
+         "type": "string",
+         "description": "Source of the data behind the pen.",
+         "default": ""
+        },
+        "aggregateMode": {
+         "type": "string",
+         "description": "Mode used to group the data.",
+         "enum": [
+          "default",
+          "Average",
+          "MinMax",
+          "LastValue",
+          "SimpleAverage",
+          "Sum",
+          "Minimum",
+          "Maximum",
+          "DurationOn",
+          "DurationOff",
+          "CountOn",
+          "CountOff",
+          "Count",
+          "Range",
+          "Variance",
+          "StdDev",
+          "PctGood",
+          "PctBad"
+         ],
+         "default": "default"
+        }
+       }
+      }
+     }
+    },
+    "default": []
+   },
+   "plots": {
+    "type": "array",
+    "description": "A plot represents a row containing one or more pens.",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "relativeWeight": {
+       "type": "number",
+       "description": "Ratio between all plots.",
+       "default": 1
+      },
+      "color": {
+       "type": "string",
+       "description": "The background color of the plot.",
+       "format": "color",
+       "default": "#FFFFFF"
+      },
+      "markers": {
+       "type": "array",
+       "description": "A collection of markers that can be added on the plot to better visualize the data being displayed.",
+       "items": {
+        "type": "object",
+        "description": "Marker that can be added on the plot to better visualize the data being displayed.",
+        "additionalProperties": false,
+        "properties": {
+         "type": {
+          "type": "string",
+          "description": "Type of marker to add to the plot.",
+          "enum": [
+           "line",
+           "band"
+          ],
+          "default": "line"
+         },
+         "axis": {
+          "type": "string",
+          "description": "Name of the axis against which the marker should be drawn. This must be specified for the marker to be drawn.",
+          "dynamicSuggestions": "../../../../../axes/*/name",
+          "default": ""
+         },
+         "value": {
+          "type": "number",
+          "description": "Value where the line marker should be drawn.",
+          "default": 0,
+          "visibleWhen": {
+           "property": "type",
+           "equals": "line"
+          }
+         },
+         "min": {
+          "type": "number",
+          "description": "Lower value where the band should start.",
+          "default": 0,
+          "visibleWhen": {
+           "property": "type",
+           "equals": "band"
+          }
+         },
+         "max": {
+          "type": "number",
+          "description": "Upper value where the band should end.",
+          "default": 0,
+          "visibleWhen": {
+           "property": "type",
+           "equals": "band"
+          }
+         },
+         "display": {
+          "type": "object",
+          "description": "Configuration for the display of the marker.",
+          "additionalProperties": false,
+          "properties": {
+           "color": {
+            "type": "string",
+            "description": "Color of the marker.",
+            "format": "color",
+            "default": "#757A7F"
+           },
+           "width": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "Width of the line.",
+            "default": 1,
+            "visibleWhen": {
+             "property": "../type",
+             "equals": "line"
+            }
+           },
+           "opacity": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "Opacity of the marker.",
+            "default": 0.5
+           },
+           "dashArray": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "Dashed appearance of the marker.",
+            "default": 0,
+            "visibleWhen": {
+             "property": "../type",
+             "equals": "line"
+            }
+           },
+           "label": {
+            "type": "object",
+            "description": "Configuration for the label of the marker.",
+            "additionalProperties": false,
+            "properties": {
+             "text": {
+              "type": "string",
+              "description": "The label drawn on the chart for the line.",
+              "default": ""
+             },
+             "position": {
+              "description": "The position of the label relative to the line.",
+              "type": "string",
+              "enum": [
+               "left",
+               "right"
+              ],
+              "default": "right"
+             },
+             "font": {
+              "type": "object",
+              "description": "Label font configuration.",
+              "additionalProperties": false,
+              "properties": {
+               "color": {
+                "type": "string",
+                "description": "The color of the label text.",
+                "format": "color",
+                "default": "#757A7F"
+               },
+               "size": {
+                "type": [
+                 "number",
+                 "string"
+                ],
+                "description": "The size of the label text.",
+                "default": 10
+               }
+              }
+             },
+             "style": {
+              "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+              "description": "Style properties to be applied to the marker label. Any style that applies to an SVG text element can be used.",
+              "default": {
+               "classes": ""
+              }
+             }
+            }
+           },
+           "style": {
+            "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+            "description": "Style properties to be applied to the marker line. Any style that applies to an SVG line element can be used.",
+            "default": {
+             "classes": ""
+            }
+           }
+          }
+         }
+        }
+       },
+       "default": []
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Style properties to be applied to the plot. Any style that applies to an SVG box element can be used.",
+       "default": {
+        "classes": ""
+       }
+      }
+     }
+    }
+   },
+   "dataColumns": {
+    "type": "object",
+    "description": "Configuration for the data columns that can be shown in tabular displays throughout the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "penControl": {
+      "type": "object",
+      "description": "Configuration for the data columns that can display for pens.",
+      "additionalProperties": false,
+      "properties": {
+       "currentValue": {
+        "type": "boolean",
+        "description": "Show the \"Current Value\" column for the pen based on the time range.",
+        "default": true
+       },
+       "minimum": {
+        "type": "boolean",
+        "description": "Show the \"Minimum\" column for the pen based on the time range.",
+        "default": true
+       },
+       "maximum": {
+        "type": "boolean",
+        "description": "Show the \"Maximum\" column for the pen based on the time range.",
+        "default": true
+       },
+       "average": {
+        "type": "boolean",
+        "description": "Show the \"Average\" column for the pen based on the time range.",
+        "default": true
+       },
+       "axis": {
+        "type": "boolean",
+        "description": "Show the \"Axis\" column for the pen.",
+        "default": true
+       },
+       "plot": {
+        "type": "boolean",
+        "description": "Show the \"Plot\" column for the pen.",
+        "default": true
+       },
+       "xTrace": {
+        "type": "boolean",
+        "description": "Show the \"X Trace\" column for the pen.",
+        "default": true
+       }
+      }
+     },
+     "rangeSelection": {
+      "type": "object",
+      "description": "Configuration for the data columns that can display for the range brush.",
+      "additionalProperties": false,
+      "properties": {
+       "first": {
+        "type": "boolean",
+        "description": "Show the \"First\" column for the pen based on the time range.",
+        "default": true
+       },
+       "last": {
+        "type": "boolean",
+        "description": "Show the \"Last\" column for the pen based on the time range.",
+        "default": true
+       },
+       "average": {
+        "type": "boolean",
+        "description": "Show the \"Average\" column for the pen based on the time range.",
+        "default": true
+       },
+       "minimum": {
+        "type": "boolean",
+        "description": "Show the \"Minimum\" column for the pen based on the time range.",
+        "default": true
+       },
+       "maximum": {
+        "type": "boolean",
+        "description": "Show the \"Maximum\" column for the pen based on the time range.",
+        "default": true
+       },
+       "median": {
+        "type": "boolean",
+        "description": "Show the \"Median\" column for the pen based on the time range.",
+        "default": true
+       },
+       "delta": {
+        "type": "boolean",
+        "description": "Show the \"Delta\" column for the pen based on the time range.",
+        "default": true
+       },
+       "sum": {
+        "type": "boolean",
+        "description": "Show the \"Sum\" column for the pen based on the time range.",
+        "default": true
+       },
+       "ucl": {
+        "type": "boolean",
+        "description": "Show the \"UCL\" column for the pen based on the time range.",
+        "default": true
+       },
+       "lcl": {
+        "type": "boolean",
+        "description": "Show the \"LCL\" column for the pen based on the time range.",
+        "default": true
+       },
+       "standardDeviation": {
+        "type": "boolean",
+        "description": "Show the \"Standard Deviation\" column for the pen based on the time range.",
+        "default": true
+       }
+      }
+     }
+    }
+   },
+   "title": {
+    "type": "object",
+    "description": "Configuration for the title of the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "The visible state of the title.",
+      "default": false
+     },
+     "text": {
+      "type": "string",
+      "description": "The text of the title.",
+      "default": ""
+     },
+     "font": {
+      "type": "object",
+      "description": "Title font configuration.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "The color of the title text.",
+        "format": "color",
+        "default": "#222222"
+       },
+       "size": {
+        "type": [
+         "number",
+         "string"
+        ],
+        "description": "The size of the title text.",
+        "default": 12
+       }
+      }
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "A style object that is used to add visual style to the title. Style that can be applied to an SVG text element can be used here.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   },
+   "timeAxis": {
+    "type": "object",
+    "description": "Configuration for the time axis (X axis) of the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "The visible state of the time axis.",
+      "default": true
+     },
+     "tickCount": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "description": "The number of ticks.",
+      "default": "auto"
+     },
+     "height": {
+      "type": "number",
+      "description": "The height of the time axis.",
+      "default": 35
+     },
+     "color": {
+      "type": "string",
+      "description": "The color of the axis.",
+      "format": "color",
+      "default": "#757A7F"
+     },
+     "tick": {
+      "type": "object",
+      "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "The color of the ticks.",
+        "format": "color",
+        "default": "#757A7F"
+       },
+       "label": {
+        "type": "object",
+        "description": "Tick label configuration.",
+        "properties": {
+         "angled": {
+          "type": "boolean",
+          "description": "A flag to toggle the angled state of the tick labels.",
+          "default": false
+         },
+         "format": {
+          "type": "string",
+          "description": "Date/time format displayed by each tick using a MomentJS date string (https://momentjs.com/).",
+          "suggestions": {
+           "Auto": "Auto",
+           "Millisecond [638]": "SSS",
+           "Second [35]": ":ss",
+           "Hour Minute [8:15]": "h:mm",
+           "Hour with Meridiem [8 AM]": "h A",
+           "Day of Week, Month, and Hour [Monday 2nd, 08 AM]": "dddd Do, hh A",
+           "Abbreviated Day of Week and Month [Mon 2nd]": "ddd Do",
+           "Abbreviated Month and Day of Month [Jan 2nd]": "MMM Do",
+           "Full Month [January]": "MMMM",
+           "Abbreviated Month and Year [Jan 20]": "MMM YY",
+           "Full Year [2020]": "YYYY",
+           "[3-2-2020 8:15:35]": "M-D-YYYY h:mm:ss",
+           "[2020-3-2 8:15:35]": "YYYY-M-D h:mm:ss",
+           "Unix Millisecond Timestamp [1563464737269]": "x",
+           "Unix Timestamp [1563464737]": "X"
+          },
+          "default": "Auto"
+         },
+         "font": {
+          "type": "object",
+          "description": "Tick label font configuration.",
+          "properties": {
+           "color": {
+            "type": "string",
+            "description": "The color of the tick label text.",
+            "format": "color",
+            "default": "#757A7F"
+           },
+           "size": {
+            "type": [
+             "number",
+             "string"
+            ],
+            "description": "The size of the tick label text.",
+            "default": 10
+           }
+          }
+         },
+         "style": {
+          "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+          "description": "Style properties to be applied to the timeAxis labels. Any style that applies to an SVG text element can be used.",
+          "default": {
+           "classes": ""
+          }
+         }
+        }
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+        "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used.",
+        "default": {
+         "classes": ""
+        }
+       }
+      }
+     },
+     "grid": {
+      "$ref": "#/definitions/grid"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the horizontal line of the axis. Any property that would apply to an SVG line element can be used here.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   },
+   "legend": {
+    "type": "object",
+    "description": "Configuration for the display of the legend for the chart.",
+    "additionalProperties": false,
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "The visible state of the legend.",
+      "default": false
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Style properties to be applied to the base chart component.",
+    "default": {
+     "classes": ""
+    }
+   }
+  },
+  "definitions": {
+   "stroke": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "#757A7F"
+     },
+     "width": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 1
+     },
+     "opacity": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 0.9
+     },
+     "dashArray": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 0
+     }
+    }
+   },
+   "fill": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "#FAFAFB"
+     },
+     "opacity": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 0.9
+     }
+    }
+   },
+   "font": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "The text color of the info box label and datetime text."
+     },
+     "size": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": 11,
+      "description": "The font size of the info box label and datetime text."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the text of the info box.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   },
+   "grid": {
+    "type": "object",
+    "description": "Configuration for gridlines to display on this axis.",
+    "properties": {
+     "visible": {
+      "type": "boolean",
+      "description": "Visible state of the gridlines. Gridlines are shown only for axes that connect directly to the chart. Any satellite axes will display their tick configurations instead of gridlines.",
+      "default": false
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "description": "Color of the gridlines.",
+      "default": ""
+     },
+     "opacity": {
+      "type": "number",
+      "description": "Opacity of the gridlines.",
+      "default": 0.9
+     },
+     "dashArray": {
+      "type": "number",
+      "description": "Dashed appearance of the gridlines.",
+      "default": 0
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style properties to be applied to the axis gridlines.",
+      "default": {
+       "classes": ""
+      }
+     }
+    }
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-react-timeseries-js",
+   "path": "/res/perspective/js/PerspectiveTimeseriesCharts.js",
+   "type": "js",
+   "dependencies": [
+    "perspective-components-js"
+   ]
+  },
+  {
+   "name": "perspective-react-timeseries-css",
+   "path": "/res/perspective/css/PerspectiveTimeseriesCharts.css",
+   "type": "css",
+   "dependencies": [
+    "perspective-components-css"
+   ]
+  }
+ ]
+}

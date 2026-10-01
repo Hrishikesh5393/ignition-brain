@@ -1,0 +1,185 @@
+{
+ "id": "ia.display.progress",
+ "name": "Progress",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Progress",
+    "tooltip": "Provides a visual indication of the progress of a task."
+   }
+  ]
+ },
+ "defaultMetaName": "Progress",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "min": {
+    "type": "number",
+    "default": 0,
+    "description": "The minimum value of the progress indicator. If the value reaches the min, the progress indicator will be completely empty. Must be less than max."
+   },
+   "max": {
+    "type": "number",
+    "default": 100,
+    "description": "The maximum value of the progress indicator. If the value reaches the max, the progress indicator will be completely filled. Must be greater than min."
+   },
+   "value": {
+    "type": "number",
+    "default": 50,
+    "description": "The current value representing the current progress. Must be greater than 0.0 and less than max."
+   },
+   "mode": {
+    "type": "string",
+    "description": "",
+    "enum": [
+     "determinate",
+     "indeterminate"
+    ],
+    "default": "determinate"
+   },
+   "bar": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "description": "A convenience property for setting the base color of the bar, can also be accomplished via style by setting backgroundColor.",
+      "format": "color",
+      "default": ""
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "determinate": {
+      "type": "object",
+      "description": "Determinate bar configuration.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "A convenience property for setting the background color of the bar when mode is determinate, can also be accomplished via style by setting backgroundColor.",
+        "format": "color",
+        "default": ""
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "indeterminate": {
+      "type": "object",
+      "description": "Indeterminate bar configuration.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "A convenience property for setting the color of the bar when mode is indeterminate, can also be accomplished via style by setting backgroundColor.",
+        "format": "color",
+        "default": ""
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     }
+    }
+   },
+   "track": {
+    "type": "object",
+    "properties": {
+     "color": {
+      "type": "string",
+      "description": "A convenience property for setting the base color of the track, can also be accomplished via style by setting backgroundColor.",
+      "format": "color",
+      "default": ""
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "determinate": {
+      "type": "object",
+      "description": "Determinate track configuration.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "A convenience property for setting the color of the track when mode is determinate, can also be accomplished via style by setting backgroundColor.",
+        "format": "color",
+        "default": ""
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "indeterminate": {
+      "type": "object",
+      "description": "Indeterminate track configuration.",
+      "properties": {
+       "color": {
+        "type": "string",
+        "description": "A convenience property for setting the color of the track when mode is indeterminate, can also be accomplished via style by setting backgroundColor.",
+        "format": "color",
+        "default": ""
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     }
+    }
+   },
+   "valueDisplay": {
+    "type": "object",
+    "description": "Configurations for the value label.",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "If true, will show the value display overlay",
+      "default": false
+     },
+     "format": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "The format to apply to the displayed value.",
+      "suggestions": {
+       "none": "none",
+       "integer [1,200]": "0,0",
+       "percent [10.12%]": "0.##%",
+       "currency [$1,000.12]": "$0,0.00",
+       "duration [24:01:00]": "00:00:00"
+      },
+      "default": "0,0.##"
+     },
+     "justify": {
+      "type": "string",
+      "description": "Horizontal alignment of displayed value",
+      "enum": [
+       "left",
+       "center",
+       "right"
+      ],
+      "default": "center"
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

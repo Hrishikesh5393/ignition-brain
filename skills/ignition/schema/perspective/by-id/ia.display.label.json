@@ -1,0 +1,60 @@
+{
+ "id": "ia.display.label",
+ "name": "Label",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "label": "Label",
+    "tooltip": "A simple component for displaying text."
+   }
+  ]
+ },
+ "defaultMetaName": "Label",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "text": {
+    "type": [
+     "string",
+     "number",
+     "boolean",
+     "null",
+     "object",
+     "array"
+    ],
+    "default": "",
+    "description": "Text to display",
+    "example": "Label"
+   },
+   "alignVertical": {
+    "type": "string",
+    "enum": [
+     "top",
+     "center",
+     "bottom"
+    ],
+    "default": "center",
+    "description": "How to vertically align the text in the dimensions of the component"
+   },
+   "textStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

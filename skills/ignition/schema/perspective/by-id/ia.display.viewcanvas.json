@@ -1,0 +1,224 @@
+{
+ "id": "ia.display.viewcanvas",
+ "name": "View Canvas",
+ "palette": {
+  "category": "embedding",
+  "variants": [
+   {
+    "label": "View Canvas",
+    "tooltip": "Display multiple Perspective views, each positioned on a coordinate based system."
+   }
+  ]
+ },
+ "defaultMetaName": "ViewCanvas",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "instances": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "position": {
+       "type": "string",
+       "enum": [
+        "relative",
+        "absolute"
+       ],
+       "description": "Determines how the instance is positioned in the canvas. Absolute: final position is offset from origin of View Canvas by declared top, left, bottom, right properties. Relative: final position is offset from bottom left of previous relative instance by declared top, left, bottom, right properties, or the origin of the View Canvas if this is the first relative instance."
+      },
+      "top": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Top position of this instance"
+      },
+      "left": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Left position of this instance"
+      },
+      "bottom": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Bottom position of this instance. If top and bottom are set, both are honored if position is absolute and height is not restricted (auto or 100%); otherwise, top takes precedence and bottom is ignored."
+      },
+      "right": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Right position of this instance. If left and right are set, both are honored if position is absolute and width is not restricted (auto or 100%); otherwise, left takes precedence and bottom is ignored."
+      },
+      "zIndex": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "pattern": "^(auto|0)$|^[-]?[1-9]+[0-9]*",
+       "description": "Z-index position of this instance"
+      },
+      "width": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Width of this instance"
+      },
+      "height": {
+       "$ref": "urn:ignition-schema:schemas/css-length.schema.json",
+       "description": "Height of this instance"
+      },
+      "viewPath": {
+       "type": "string",
+       "format": "view-path",
+       "description": "View path of this instance"
+      },
+      "viewParams": {
+       "type": "object",
+       "description": "Parameters for this instance",
+       "extension": {
+        "view-params": {
+         "path": "../viewPath"
+        }
+       }
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+      }
+     },
+     "default": {
+      "position": "absolute",
+      "top": "0px",
+      "left": "0px",
+      "bottom": "auto",
+      "right": "auto",
+      "width": "auto",
+      "height": "auto",
+      "zIndex": "auto",
+      "viewPath": "",
+      "viewParams": {},
+      "style": {
+       "classes": ""
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "transitionSettings": {
+    "type": "object",
+    "properties": {
+     "duration": {
+      "$ref": "urn:ignition-schema:schemas/css-time.schema.json",
+      "description": "Duration of the transition"
+     },
+     "timingFunction": {
+      "type": "string",
+      "description": "Mathematical function that describes how fast one-dimensional values change"
+     },
+     "delay": {
+      "$ref": "urn:ignition-schema:schemas/css-time.schema.json",
+      "description": "Delay of the transition before it begins"
+     }
+    },
+    "default": {},
+    "additionalProperties": false,
+    "example": {
+     "duration": "1s",
+     "timingFunction": "linear"
+    }
+   },
+   "enableTransitions": {
+    "type": "boolean",
+    "default": true,
+    "description": "Determines whether transitions should play when transitions are defined"
+   },
+   "useDefaultViewWidth": {
+    "type": "boolean",
+    "default": true,
+    "description": "Use of view's default width instead of adjusting based on the content's width. This will override any width settings defined on an instance."
+   },
+   "useDefaultViewHeight": {
+    "type": "boolean",
+    "default": true,
+    "description": "Use of view's default height instead of adjusting based on the content's height. This will override any height settings defined on an instance."
+   },
+   "defaultStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Default style applied to all view instances",
+    "default": {
+     "classes": ""
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": "",
+     "overflow": "auto"
+    }
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onInstanceClicked",
+   "documentationUrl": "https://links.inductiveautomation.com/83-view-canvas-component-events",
+   "schema": {
+    "description": "This event is fired when the user clicks on a view instance.",
+    "type": "object",
+    "properties": {
+     "path": {
+      "description": "The path of the view that is embedded in the instance.",
+      "type": "string"
+     },
+     "params": {
+      "description": "The current view parameters of the instance.",
+      "type": "object"
+     },
+     "index": {
+      "description": "The index of the view instance.",
+      "type": "integer"
+     },
+     "position": {
+      "description": "The position of the view instance in relation to the canvas.",
+      "type": "object",
+      "properties": {
+       "top": {
+        "type": "number",
+        "description": "Bottom position of the view instance."
+       },
+       "left": {
+        "type": "number",
+        "description": "Left position of the view instance."
+       },
+       "bottom": {
+        "type": "number",
+        "description": "Bottom position of the view instance."
+       },
+       "right": {
+        "type": "number",
+        "description": "Bottom position of the view instance."
+       }
+      }
+     },
+     "size": {
+      "description": "The size of the view instance.",
+      "type": "object",
+      "properties": {
+       "height": {
+        "type": "number",
+        "description": "Height of the view instance."
+       },
+       "width": {
+        "type": "number",
+        "description": "Width of the view instance."
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,219 @@
+{
+ "id": "ia.navigation.horizontalmenu",
+ "name": "Horizontal Menu",
+ "palette": {
+  "category": "navigation",
+  "variants": [
+   {
+    "label": "Horizontal Menu",
+    "tooltip": "Enables you to build a menu structure for navigation by setting up multiple links to different page URLs from the component."
+   }
+  ]
+ },
+ "defaultMetaName": "HorizontalMenu",
+ "schema": {
+  "type": "object",
+  "required": [
+   "items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "items": {
+    "type": "array",
+    "items": {
+     "$ref": "#/definitions/ConfigItem"
+    },
+    "description": "Config items representing the main menu items.",
+    "default": []
+   },
+   "enabled": {
+    "type": "boolean",
+    "description": "The enabled state of the component.",
+    "default": true
+   },
+   "itemStyle": {
+    "description": "Style to apply to the individual menu items.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": ""
+    }
+   },
+   "style": {
+    "description": "Style to apply to apply to the entire component.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "default": {
+     "classes": ""
+    }
+   }
+  },
+  "example": {
+   "items": [
+    {
+     "target": "",
+     "items": [
+      {
+       "target": "http://www.google.com",
+       "items": [],
+       "icon": {
+        "path": "material/link",
+        "color": ""
+       },
+       "label": "Link to Google",
+       "enabled": true,
+       "style": {
+        "classes": ""
+       }
+      }
+     ],
+     "icon": {
+      "path": ""
+     },
+     "label": "Menu Item",
+     "enabled": true,
+     "style": {
+      "classes": ""
+     }
+    },
+    {
+     "target": "http://www.google.com",
+     "items": [],
+     "icon": {
+      "path": "material/link",
+      "color": ""
+     },
+     "label": "Link to Google",
+     "enabled": true,
+     "style": {
+      "classes": ""
+     }
+    },
+    {
+     "target": "",
+     "items": [],
+     "icon": {
+      "path": ""
+     },
+     "label": "Disabled Menu Item",
+     "enabled": false,
+     "style": {
+      "classes": ""
+     }
+    },
+    {
+     "target": "",
+     "items": [],
+     "icon": {
+      "path": ""
+     },
+     "label": "Last Menu Item",
+     "enabled": true,
+     "style": {
+      "classes": ""
+     }
+    }
+   ],
+   "enabled": true,
+   "itemStyle": {
+    "classes": ""
+   },
+   "style": {
+    "classes": ""
+   }
+  },
+  "definitions": {
+   "ConfigItem": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "The enabled state of the menu item.  Allows it to perform its action or render its submenu.",
+      "default": true
+     },
+     "target": {
+      "type": "string",
+      "description": "A url (external) or a mounted path to a page. If 'items' is empty (no children for this item) this will navigate to that location.",
+      "default": ""
+     },
+     "items": {
+      "type": "array",
+      "items": {
+       "$ref": "#/definitions/ConfigItem"
+      },
+      "description": "Config items representing child menu items from this option. If defined, a submenu will branch from here with these options.",
+      "default": []
+     },
+     "icon": {
+      "$ref": "urn:ignition-schema:schemas/optional-icon-schema.json",
+      "description": "Path to an icon repository containing the icon to be used in the menu item.",
+      "default": {}
+     },
+     "label": {
+      "type": "string",
+      "description": "Text to display for this menu item."
+     },
+     "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "description": "Style to apply just to this menu item.",
+      "default": {
+       "classes": ""
+      }
+     }
+    },
+    "default": {
+     "enabled": true,
+     "target": "",
+     "items": [],
+     "icon": {
+      "path": ""
+     },
+     "label": "Menu Item",
+     "style": {
+      "classes": ""
+     }
+    }
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onItemClicked",
+   "description": "Fired whenever an item is clicked on this menu.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-horizontal-menu-events",
+   "schema": {
+    "type": "object",
+    "default": "\t# if event.enabled:\n\t\t# add your action handling code\n",
+    "properties": {
+     "label": {
+      "type": "string",
+      "description": "The label of the item that was selected."
+     },
+     "enabled": {
+      "type": "boolean",
+      "description": "Whether the item interacted with is enabled."
+     },
+     "target": {
+      "type": "string",
+      "description": "A url (external) or a mounted path to a page."
+     },
+     "path": {
+      "type": "array",
+      "description": "A list containing the item indexes leading to the item that was clicked."
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

@@ -1,0 +1,351 @@
+{
+ "_source": "perspective-common-3.3.9.jar!/perspective-amcharts.components.json (bundled component-definition resource; groupId=perspective-amcharts library=PerspectiveAmCharts hash=72f01804afa9b8079538). Component id verified present in the live Perspective ComponentRegistry on gateway 8.3.9 / Perspective 3.3.9, enumerated 2026-09-04.",
+ "id": "ia.chart.gauge",
+ "name": "Gauge",
+ "palette": {
+  "category": "chart",
+  "variants": [
+   {
+    "label": "Gauge",
+    "tooltip": "A needle gauge component that shows real time values in a range as they change."
+   },
+   {
+    "id": "gauge-half-circle",
+    "label": "Half-Circle",
+    "tooltip": "A needle gauge component that shows real time values in a range as they change."
+   },
+   {
+    "id": "gauge-34-circle",
+    "label": "3/4 Circle",
+    "tooltip": "A needle gauge component that shows real time values in a range as they change.",
+    "props": {
+     "startAngle": 90
+    }
+   },
+   {
+    "id": "gauge-full-axis",
+    "label": "Full Axis",
+    "tooltip": "A needle gauge component that shows real time values in a range as they change.",
+    "props": {
+     "startAngle": 135,
+     "endAngle": 405
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "Gauge",
+ "schema": {
+  "type": "object",
+  "title": "Gauge",
+  "description": "A Gauge component",
+  "required": [
+   "value",
+   "secondaryValue",
+   "startAngle",
+   "endAngle",
+   "outerAxis",
+   "innerAxis",
+   "backgroundColor",
+   "animate",
+   "reverseScale",
+   "style"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "value": {
+    "type": "number",
+    "default": 0,
+    "description": "Numeric value for gauge to display"
+   },
+   "secondaryValue": {
+    "type": "number",
+    "default": 0,
+    "description": "Optional secondary value for gauge to display on a second axis"
+   },
+   "startAngle": {
+    "type": "number",
+    "default": 180,
+    "description": "Radial position for start of gauge's axis"
+   },
+   "endAngle": {
+    "type": "number",
+    "default": 360,
+    "description": "Radial position for end of gauge's axis"
+   },
+   "outerAxis": {
+    "type": "object",
+    "$ref": "#/definitions/AxisConfig"
+   },
+   "innerAxis": {
+    "type": "object",
+    "$ref": "#/definitions/AxisConfig"
+   },
+   "backgroundColor": {
+    "type": "string",
+    "format": "color",
+    "description": "Color to apply as background within the gauge"
+   },
+   "animate": {
+    "type": "boolean",
+    "default": false,
+    "description": "Whether needle should be animated in a sweeping motion when value changes"
+   },
+   "reverseScale": {
+    "type": "boolean",
+    "default": false,
+    "description": "If true, gauge will reverse the direction from minValue to maxValue on its dial"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  },
+  "definitions": {
+   "AxisConfig": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "data",
+     "show",
+     "minValue",
+     "maxValue",
+     "width",
+     "color",
+     "percentRadius",
+     "ranges",
+     "needle",
+     "tickMarks"
+    ],
+    "properties": {
+     "data": {
+      "type": "string",
+      "enum": [
+       "value",
+       "secondaryValue"
+      ],
+      "description": "Which value this axis and its needle should display"
+     },
+     "show": {
+      "type": "boolean",
+      "description": "Whether this axis is displayed"
+     },
+     "minValue": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum gauge value for this axis"
+     },
+     "maxValue": {
+      "type": "number",
+      "default": 100,
+      "description": "Maximum gauge value for this axis"
+     },
+     "width": {
+      "type": "number",
+      "default": 2,
+      "description": "Width of this axis, in pixels"
+     },
+     "color": {
+      "type": "string",
+      "format": "color",
+      "default": "",
+      "description": "Color of this axis arc"
+     },
+     "percentRadius": {
+      "type": "number",
+      "description": "Radius of this axis, as a percentage of total chart radius"
+     },
+     "ranges": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "start",
+        "end",
+        "width",
+        "color"
+       ],
+       "additionalProperties": false,
+       "properties": {
+        "start": {
+         "type": "number",
+         "default": 0,
+         "description": "Value at which this range starts"
+        },
+        "end": {
+         "type": "number",
+         "default": 0,
+         "description": "Value at which this range starts"
+        },
+        "width": {
+         "type": "number",
+         "default": 0,
+         "description": "Width of this axis, in pixels"
+        },
+        "color": {
+         "type": "string",
+         "format": "color",
+         "default": "#77b6d8",
+         "description": "Color to apply to this range on the dial"
+        }
+       }
+      },
+      "example": [
+       {
+        "start": 0,
+        "end": 50,
+        "width": 10,
+        "color": "#77B6D8"
+       },
+       {
+        "start": 50,
+        "end": 80,
+        "width": 15,
+        "color": "#6E94D7"
+       },
+       {
+        "start": 80,
+        "end": 100,
+        "width": 20,
+        "color": "#7A6BD5"
+       }
+      ],
+      "description": "Zones defined in dial band with a unique color"
+     },
+     "needle": {
+      "type": "object",
+      "required": [
+       "origin",
+       "reach",
+       "color"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "origin": {
+        "type": "number",
+        "default": 0,
+        "description": "Distance from gauge's center the needle starts, as a percentage of the radius"
+       },
+       "reach": {
+        "type": "number",
+        "default": 100,
+        "description": "How far needle reaches from the center of the gauge towards the outer dial, as a percentage of the radius"
+       },
+       "color": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of gauge's needle"
+       }
+      }
+     },
+     "tickMarks": {
+      "type": "object",
+      "required": [
+       "color",
+       "thickness",
+       "length"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "color": {
+        "type": "string",
+        "format": "color",
+        "default": "",
+        "description": "Color of tick marks for this axis"
+       },
+       "thickness": {
+        "type": "number",
+        "default": 1,
+        "description": "Thickness of tick marks for this axis"
+       },
+       "length": {
+        "type": "number",
+        "default": 10,
+        "description": "Length of tick marks for this axis"
+       }
+      }
+     }
+    }
+   }
+  },
+  "example": {
+   "value": 0,
+   "secondaryValue": 0,
+   "startAngle": 180,
+   "endAngle": 360,
+   "outerAxis": {
+    "data": "value",
+    "show": true,
+    "minValue": 0,
+    "maxValue": 120,
+    "width": 1,
+    "color": "",
+    "percentRadius": 100,
+    "ranges": [
+     {
+      "start": 0,
+      "end": 80,
+      "width": 8,
+      "color": "#77B6D8"
+     },
+     {
+      "start": 80,
+      "end": 105,
+      "width": 12,
+      "color": "#6E94D7"
+     },
+     {
+      "start": 105,
+      "end": 120,
+      "width": 16,
+      "color": "#7A6BD5"
+     }
+    ],
+    "needle": {
+     "origin": 0,
+     "reach": 100,
+     "color": ""
+    },
+    "tickMarks": {
+     "color": "",
+     "thickness": 1,
+     "length": 10
+    }
+   },
+   "innerAxis": {
+    "data": "secondaryValue",
+    "show": false,
+    "minValue": 0,
+    "maxValue": 80,
+    "width": 1,
+    "color": "",
+    "percentRadius": 85,
+    "ranges": [],
+    "needle": {
+     "origin": 0,
+     "reach": 100,
+     "color": ""
+    },
+    "tickMarks": {
+     "color": "",
+     "thickness": 1,
+     "length": 10
+    }
+   },
+   "backgroundColor": "",
+   "animate": false,
+   "reverseScale": false
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-amcharts-js",
+   "path": "/res/perspective/js/PerspectiveAmCharts.js",
+   "type": "js"
+  },
+  {
+   "name": "perspective-amcharts-css",
+   "path": "/res/perspective/css/PerspectiveAmCharts.css",
+   "type": "css"
+  }
+ ]
+}

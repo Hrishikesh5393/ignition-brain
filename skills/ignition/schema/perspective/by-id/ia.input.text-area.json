@@ -1,0 +1,91 @@
+{
+ "id": "ia.input.text-area",
+ "name": "Text Area",
+ "palette": {
+  "category": "input",
+  "variants": [
+   {
+    "label": "Text Area",
+    "tooltip": "Enables display and editing of multiple lines of text."
+   }
+  ]
+ },
+ "defaultMetaName": "TextArea",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "text": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": "",
+    "description": "Text to display."
+   },
+   "placeholder": {
+    "type": [
+     "string",
+     "number"
+    ],
+    "default": "",
+    "description": "Text displayed when text is empty."
+   },
+   "enabled": {
+    "type": "boolean",
+    "default": true,
+    "description": "If user should be allowed to alter text."
+   },
+   "deferUpdates": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, updates to props.text will be deferred until focus is lost."
+   },
+   "rejectUpdatesWhileFocused": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, props.text will not accept updates from external sources while focused."
+   },
+   "resize": {
+    "type": "string",
+    "description": "Sets whether text area is resizable, and if so, in which direction(s).",
+    "enum": [
+     "none",
+     "both",
+     "horizontal",
+     "vertical"
+    ],
+    "default": "none"
+   },
+   "spellcheck": {
+    "type": "boolean",
+    "default": true,
+    "description": "When true, the component will highlight potential spelling errors while text is being edited."
+   },
+   "wrap": {
+    "type": "string",
+    "description": "Specifies how to wrap text.",
+    "enum": [
+     "hard",
+     "soft",
+     "off"
+    ],
+    "default": "soft"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

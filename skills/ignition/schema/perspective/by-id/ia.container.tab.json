@@ -1,0 +1,228 @@
+{
+ "id": "ia.container.tab",
+ "name": "Tab Container",
+ "palette": {
+  "category": "container",
+  "variants": [
+   {
+    "label": "Tab",
+    "tooltip": "Container with tabs as navigation buttons arranged together with the selected tab highlighted."
+   },
+   {
+    "id": "tab-classic",
+    "label": "Classic",
+    "tooltip": "Container with tabs as navigation buttons arranged together with the selected tab highlighted."
+   },
+   {
+    "id": "tab-modern",
+    "label": "Modern",
+    "tooltip": "Container with tabs as navigation buttons arranged together with the selected tab highlighted.",
+    "props": {
+     "menuType": "modern"
+    }
+   }
+  ]
+ },
+ "defaultMetaName": "TabContainer",
+ "schema": {
+  "type": "object",
+  "required": [
+   "tabs",
+   "currentTabIndex",
+   "menuType",
+   "tabSize",
+   "menuStyle",
+   "tabStyle",
+   "style"
+  ],
+  "additionalProperties": false,
+  "properties": {
+   "tabs": {
+    "type": "array",
+    "items": {
+     "oneOf": [
+      {
+       "type": "string",
+       "default": "",
+       "description": "Text to display for this tab"
+      },
+      {
+       "type": "object",
+       "required": [
+        "text"
+       ],
+       "additionalProperties": false,
+       "properties": {
+        "text": {
+         "type": "string"
+        },
+        "runWhileHidden": {
+         "type": "boolean",
+         "description": "When true the contents of this tab will load once their tab is first activated, and will persist in the background when the currentTabIndex changes"
+        },
+        "disabled": {
+         "type": "boolean",
+         "description": "When true the tab is disabled"
+        }
+       },
+       "default": {
+        "text": "",
+        "runWhileHidden": false,
+        "disabled": false
+       }
+      },
+      {
+       "type": "object",
+       "required": [
+        "viewPath"
+       ],
+       "additionalProperties": false,
+       "properties": {
+        "viewPath": {
+         "type": "string",
+         "default": "",
+         "format": "view-path",
+         "description": "Path to view to render in place of tab text"
+        },
+        "viewParams": {
+         "type": "object",
+         "default": {},
+         "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+         "extension": {
+          "view-params": {
+           "path": "../viewPath"
+          }
+         }
+        },
+        "runWhileHidden": {
+         "type": "boolean",
+         "description": "When true the contents of this tab will load once their tab is first activated, and will persist in the background when the currentTabIndex changes"
+        },
+        "width": {
+         "type": "number",
+         "description": "Individual width for this view tab"
+        },
+        "disabled": {
+         "type": "boolean",
+         "description": "When true the tab is disabled"
+        }
+       },
+       "default": {
+        "runWhileHidden": false,
+        "viewPath": "",
+        "viewParams": {},
+        "disabled": false
+       }
+      }
+     ]
+    },
+    "default": [
+     ""
+    ],
+    "description": "Content to display in the menu as tabs. Each tab in this array may be either a string to display as the tab text or an object with viewPath and optionally viewParams. If the latter, a view will render as the tab in place of text."
+   },
+   "currentTabIndex": {
+    "type": "number",
+    "default": 0,
+    "description": "Which index in tabs array is currently active"
+   },
+   "menuType": {
+    "type": "string",
+    "enum": [
+     "classic",
+     "modern"
+    ],
+    "default": "classic",
+    "description": "If the type is 'classic', a traditional menu with boxed tabs is shown. 'modern' has no borders around each tab and shows selection with an underline."
+   },
+   "tabSize": {
+    "type": "object",
+    "required": [
+     "height",
+     "width"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "width": {
+      "type": "number",
+      "default": 96
+     },
+     "height": {
+      "type": "number",
+      "default": 36
+     }
+    },
+    "default": {
+     "width": 96,
+     "height": 36
+    },
+    "description": "Default size allotted to a single tab. If container width does not allow, tab width will shrink from this size accordingly."
+   },
+   "menuStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Styles for the menu area. For 'modern' menuType, this is the whole menu. For 'classic', the portion not filled by tabs.",
+    "default": {
+     "backgroundColor": "transparent"
+    }
+   },
+   "contentStyle": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+    "description": "Styles for the tab container content frame."
+   },
+   "tabStyle": {
+    "type": "object",
+    "required": [
+     "active",
+     "inactive",
+     "disabled"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "active": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "inactive": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     },
+     "disabled": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    },
+    "description": "Additional styling to apply to all tabs depending on active (selected), inactive or disabled state",
+    "default": {
+     "active": {},
+     "inactive": {},
+     "disabled": {}
+    }
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "childPositionSchema": {
+  "type": "object",
+  "properties": {
+   "tabIndex": {
+    "type": "number",
+    "default": 0
+   }
+  },
+  "required": [
+   "tabIndex"
+  ],
+  "additionalProperties": false
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

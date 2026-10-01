@@ -1,0 +1,101 @@
+{
+ "id": "ia.navigation.link",
+ "name": "Link",
+ "palette": {
+  "category": "navigation",
+  "variants": [
+   {
+    "label": "Link",
+    "tooltip": "Provides a hyperlink that points to a destination such as a page, view, resource, or mount path."
+   }
+  ]
+ },
+ "defaultMetaName": "Link",
+ "schema": {
+  "type": "object",
+  "description": "A component that provides navigation ability.",
+  "example": {
+   "url": "http://inductiveautomation.com",
+   "text": "Link",
+   "target": "self",
+   "style": {
+    "classes": ""
+   }
+  },
+  "properties": {
+   "url": {
+    "type": "string",
+    "default": "",
+    "example": "http://inductiveautomation.com",
+    "description": "A a URL, URL fragment, or Page that the hyperlink points to. destination, resource, or mount path to navigate to.  If the target is another mounted view, simply specify the mount path, starting with a '/' character.  For instance, if a view is mounted at data/perspective/client/MyProjectName/status, setting the target to '/status' will properly navigate to the status mount when clicked."
+   },
+   "text": {
+    "type": "string",
+    "default": "",
+    "example": "link",
+    "description": "Text to display in the link"
+   },
+   "target": {
+    "type": "string",
+    "description": "Specifies where to display the linked URL.  Common values such as 'self' for the current tab/context, 'tab' or 'blank' for a new tab, 'parent' for the parent frame tab/context, or 'top' for the full body of the window.  Otherwise supports standard w3c values for anchor link target attributes.",
+    "suggestions": [
+     "self",
+     "tab",
+     "blank",
+     "parent",
+     "top"
+    ]
+   },
+   "download": {
+    "type": "string",
+    "description": "Specifies the target filename that will be downloaded when a user clicks on the hyperlink"
+   },
+   "referrerPolicy": {
+    "type": "string",
+    "description": "Indicates which referrer to send when fetching the resource at the given URL",
+    "suggestions": [
+     "no-referrer",
+     "no-referrer-when-downgrade",
+     "origin",
+     "origin-when-cross-origin",
+     "unsafe-url"
+    ]
+   },
+   "rel": {
+    "type": "string",
+    "description": "Specifies the relationship between the current document and the document linked by this component.",
+    "suggestions": [
+     "",
+     "alternate",
+     "author",
+     "bookmark",
+     "external",
+     "help",
+     "license",
+     "next",
+     "nofollow",
+     "noreferrer",
+     "noopener",
+     "prev",
+     "search",
+     "tag"
+    ]
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

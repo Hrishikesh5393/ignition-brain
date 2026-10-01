@@ -1,0 +1,1807 @@
+{
+ "id": "ia.display.table",
+ "name": "Table",
+ "palette": {
+  "category": "display",
+  "variants": [
+   {
+    "id": "table",
+    "label": "Table",
+    "tooltip": "Provides a flexible way to display data in tabular form."
+   }
+  ]
+ },
+ "defaultMetaName": "Table",
+ "schema": {
+  "type": "object",
+  "properties": {
+   "data": {
+    "type": [
+     "array",
+     "dataset"
+    ],
+    "description": "Can be a dataset, an array of arrays, or an array of objects.",
+    "items": {
+     "type": [
+      "object",
+      "array"
+     ]
+    },
+    "example": [
+     {
+      "city": {
+       "value": "Folsom",
+       "editable": true,
+       "style": {
+        "backgroundColor": "#F7901D",
+        "classes": "some-class"
+       },
+       "align": "center",
+       "justify": "left"
+      },
+      "country": "United States",
+      "population": 77271
+     },
+     {
+      "city": "Helsinki",
+      "country": "Finland",
+      "population": 635591
+     },
+     {
+      "city": "Jakarta",
+      "country": "Indonesia",
+      "population": 10187595
+     },
+     {
+      "city": "Madrid",
+      "country": "Spain",
+      "population": 3233527
+     },
+     {
+      "city": "Prague",
+      "country": "Czech Republic",
+      "population": 1241664
+     },
+     {
+      "city": "San Diego",
+      "country": "United States",
+      "population": 1406630
+     },
+     {
+      "city": "San Francisco",
+      "country": "United States",
+      "population": 884363
+     },
+     {
+      "city": "Shanghai",
+      "country": "China",
+      "population": 24153000
+     },
+     {
+      "city": "Tokyo",
+      "country": "Japan",
+      "population": 13617000
+     },
+     {
+      "city": "Washington, DC",
+      "country": "United States",
+      "population": 658893
+     },
+     {
+      "city": "Wellington",
+      "country": "New Zealand",
+      "population": 405000
+     },
+     {
+      "city": "Delhi",
+      "country": "India",
+      "population": 11034555
+     },
+     {
+      "city": "Dhaka",
+      "country": "Bangladesh",
+      "population": 14399000
+     },
+     {
+      "city": "Lagos",
+      "country": "Nigeria",
+      "population": 16060303
+     },
+     {
+      "city": "Karachi",
+      "country": "Pakistan",
+      "population": 14910352
+     },
+     {
+      "city": "Istanbul",
+      "country": "Turkey",
+      "population": 14025000
+     },
+     {
+      "city": "Cairo",
+      "country": "Egypt",
+      "population": 10230350
+     },
+     {
+      "city": "Mexico City",
+      "country": "Mexico",
+      "population": 8974724
+     },
+     {
+      "city": "London",
+      "country": "United Kingdom",
+      "population": 8825001
+     },
+     {
+      "city": "New York City",
+      "country": "United States",
+      "population": 8622698
+     },
+     {
+      "city": "Tehran",
+      "country": "Iran",
+      "population": 8154051
+     },
+     {
+      "city": "Bogota",
+      "country": "Colombia",
+      "population": 7878783
+     },
+     {
+      "city": "Rio de Janeiro",
+      "country": "Brazil",
+      "population": 6429923
+     },
+     {
+      "city": "Riyadh",
+      "country": "Saudi Arabia",
+      "population": 5676621
+     },
+     {
+      "city": "Singapore",
+      "country": "Singapore",
+      "population": 5535000
+     },
+     {
+      "city": "Saint Petersburg",
+      "country": "Russia",
+      "population": 5191690
+     },
+     {
+      "city": "Sydney",
+      "country": "Australia",
+      "population": 5248790
+     },
+     {
+      "city": "Abidjan",
+      "country": "Ivory Coast",
+      "population": 4765000
+     },
+     {
+      "city": "Dar es Salaam",
+      "country": "Tanzania",
+      "population": 4364541
+     },
+     {
+      "city": "Wellington",
+      "country": "New Zealand",
+      "population": 405000
+     },
+     {
+      "city": "Los Angeles",
+      "country": "United States",
+      "population": 3884307
+     },
+     {
+      "city": "Berlin",
+      "country": "Germany",
+      "population": 3517424
+     },
+     {
+      "city": "Jeddah",
+      "country": "Saudi Arabia",
+      "population": 3456259
+     },
+     {
+      "city": "Kabul",
+      "country": "Afghanistan",
+      "population": 3414100
+     },
+     {
+      "city": "Mashhad",
+      "country": "Iran",
+      "population": 3001184
+     },
+     {
+      "city": "Milan",
+      "country": "Italy",
+      "population": 1359905
+     },
+     {
+      "city": "Kiev",
+      "country": "Ukraine",
+      "population": 2908703
+     },
+     {
+      "city": "Rome",
+      "country": "Italy",
+      "population": 2877215
+     },
+     {
+      "city": "Chicago",
+      "country": "United States",
+      "population": 2695598
+     },
+     {
+      "city": "Osaka",
+      "country": "Japan",
+      "population": 2691742
+     },
+     {
+      "city": "Bandung",
+      "country": "Indonesia",
+      "population": 2575478
+     },
+     {
+      "city": "Managua",
+      "country": "Nicaragua",
+      "population": 2560789
+     },
+     {
+      "city": "Paris",
+      "country": "France",
+      "population": 2229621
+     },
+     {
+      "city": "Shiraz",
+      "country": "Iran",
+      "population": 1869001
+     },
+     {
+      "city": "Manila",
+      "country": "Philippines",
+      "population": 1780148
+     },
+     {
+      "city": "Montreal",
+      "country": "Canada",
+      "population": 1649519
+     },
+     {
+      "city": "Guadalajara",
+      "country": "Mexico",
+      "population": 1495189
+     },
+     {
+      "city": "Dallas",
+      "country": "United States",
+      "population": 1317929
+     },
+     {
+      "city": "Yerevan",
+      "country": "Armenia",
+      "population": 1060138
+     },
+     {
+      "city": "Tunis",
+      "country": "Tunisia",
+      "population": 1056247
+     }
+    ]
+   },
+   "virtualized": {
+    "type": "boolean",
+    "description": "Enables virtualization of table rows.  Meaning only the rows needed at any given time are displayed on screen.",
+    "default": true
+   },
+   "selection": {
+    "type": "object",
+    "description": "Table selection configuration and data.",
+    "additionalProperties": false,
+    "required": [
+     "mode",
+     "enableRowSelection",
+     "enableColumnSelection",
+     "selectedColumn",
+     "selectedRow"
+    ],
+    "properties": {
+     "mode": {
+      "type": "string",
+      "description": "This mode determines if only one row/cell/column can be selected at once, or single or multiple intervals.",
+      "enum": [
+       "single",
+       "single interval",
+       "multiple interval"
+      ],
+      "default": "single"
+     },
+     "enableRowSelection": {
+      "type": "boolean",
+      "description": "This flag is used in conjunction with the Column Selection Allowed flag to determine whether not whole-rows, whole-columns, or both (single-cells) are selectable.",
+      "default": true
+     },
+     "enableColumnSelection": {
+      "type": "boolean",
+      "description": "This flag is used in conjunction with the Row Selection Allowed flag to determine whether not whole-rows, whole-columns, or both (single-cells) are selectable.",
+      "default": false
+     },
+     "selectedColumn": {
+      "type": [
+       "string",
+       "null"
+      ],
+      "description": "The index of the selected column, or null if none.",
+      "default": null
+     },
+     "selectedRow": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "The index of the selected row, or null if none.",
+      "default": null
+     },
+     "data": {
+      "type": "array",
+      "description": "An array of objects representing the current selection.",
+      "items": {
+       "type": "object",
+       "properties": {}
+      },
+      "default": []
+     },
+     "style": {
+      "description": "Style to apply to the selected table values.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "filter": {
+    "type": "object",
+    "description": "Table filtering configuration and data.",
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "description": "Enable filtering.",
+      "default": false
+     },
+     "text": {
+      "type": "string",
+      "description": "The filter text.",
+      "default": ""
+     },
+     "results": {
+      "type": "object",
+      "description": "Table filtering results configuration and data.",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "description": "Enable filter results to be written back to props.  Warning, doing so may cause performance decline.",
+        "default": false
+       },
+       "data": {
+        "type": "array",
+        "description": "An array of objects representing the current filtered data. If enabled and active.",
+        "items": {
+         "type": "object",
+         "properties": {}
+        },
+        "default": []
+       }
+      }
+     },
+     "style": {
+      "description": "Style to apply to the filter.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "enableHeader": {
+    "type": "boolean",
+    "description": "Enable table header.",
+    "default": true
+   },
+   "enableFooter": {
+    "type": "boolean",
+    "description": "Enable table footer if available.",
+    "default": false
+   },
+   "enableHeaderGroups": {
+    "type": "boolean",
+    "description": "Enable table header groups if available.",
+    "default": false
+   },
+   "enableFooterGroups": {
+    "type": "boolean",
+    "description": "Enable table footer groups if available.",
+    "default": false
+   },
+   "headerGroups": {
+    "type": "array",
+    "description": "Header groups",
+    "items": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "title": {
+        "type": [
+         "number",
+         "string"
+        ],
+        "description": "The title to display in this column of the header group.",
+        "default": ""
+       },
+       "span": {
+        "type": "number",
+        "description": "The number of columns to span.",
+        "default": 1
+       },
+       "justify": {
+        "type": "string",
+        "description": "Justifies content horizontally.",
+        "enum": [
+         "left",
+         "center",
+         "right"
+        ],
+        "default": "left"
+       },
+       "align": {
+        "type": "string",
+        "description": "Aligns content vertically.",
+        "enum": [
+         "top",
+         "center",
+         "bottom"
+        ],
+        "default": "center"
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "default": []
+    },
+    "default": []
+   },
+   "footerGroups": {
+    "type": "array",
+    "description": "Footer groups",
+    "items": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+       "title": {
+        "type": [
+         "number",
+         "string"
+        ],
+        "description": "The title to display in this column of the footer group.",
+        "default": ""
+       },
+       "span": {
+        "type": "number",
+        "description": "The number of columns to span.",
+        "default": 1
+       },
+       "justify": {
+        "type": "string",
+        "description": "Justifies content horizontally.",
+        "enum": [
+         "left",
+         "center",
+         "right"
+        ],
+        "default": "left"
+       },
+       "align": {
+        "type": "string",
+        "description": "Aligns content vertically.",
+        "enum": [
+         "top",
+         "center",
+         "bottom"
+        ],
+        "default": "center"
+       },
+       "style": {
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       }
+      }
+     },
+     "default": []
+    },
+    "default": []
+   },
+   "columns": {
+    "type": "array",
+    "description": "Column configuration objects.",
+    "items": {
+     "type": "object",
+     "additionalProperties": false,
+     "properties": {
+      "field": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "The unique id that matches this column config with a data item in the first row of data. An index should be provided if the data item is a member of an array. A key should be provided if data item is key value pair and member of an object.",
+       "default": ""
+      },
+      "visible": {
+       "type": "boolean",
+       "description": "Toggles column visibility.  Data will be accessible programmatically, just not visible to the user.",
+       "default": true
+      },
+      "editable": {
+       "type": "boolean",
+       "description": "Whether all cells in this column are editable.  Can be overridden on a cell by cell bases by transforming the input data to an object that at a minimum includes the keys: value, and editable.",
+       "default": false
+      },
+      "render": {
+       "type": "string",
+       "description": "Dictates how this column should be rendered.",
+       "enum": [
+        "auto",
+        "number",
+        "date",
+        "boolean",
+        "string",
+        "view"
+       ],
+       "default": "auto"
+      },
+      "justify": {
+       "type": "string",
+       "description": "Horizontal content alignment.",
+       "enum": [
+        "left",
+        "center",
+        "right",
+        "auto"
+       ],
+       "default": "auto"
+      },
+      "align": {
+       "type": "string",
+       "description": "Vertical content alignment.",
+       "enum": [
+        "top",
+        "center",
+        "bottom"
+       ],
+       "default": "center"
+      },
+      "resizable": {
+       "type": "boolean",
+       "description": "Enable resizing of this column.",
+       "default": true
+      },
+      "sortable": {
+       "type": "boolean",
+       "description": "Enable sorting of this column.",
+       "default": true
+      },
+      "sort": {
+       "type": "string",
+       "description": "Sort order of this column.",
+       "enum": [
+        "none",
+        "ascending",
+        "descending"
+       ],
+       "default": "none"
+      },
+      "filter": {
+       "type": "object",
+       "description": "Column specific filtering configuration.",
+       "properties": {
+        "enabled": {
+         "type": "boolean",
+         "description": "When true, will apply any valid column filters configured here.",
+         "default": false
+        },
+        "visible": {
+         "type": "string",
+         "enum": [
+          "always",
+          "on-hover",
+          "never"
+         ],
+         "description": "Specifies how the filter icon in the column header is visible to the user.  Unless \"never\", will always be shown if a mobile device is detected.",
+         "default": "on-hover"
+        },
+        "string": {
+         "type": "object",
+         "description": "String type column filter.",
+         "properties": {
+          "condition": {
+           "type": "string",
+           "suggestions": {
+            "(empty)": "",
+            "contains": "contains",
+            "ends with": "ends with",
+            "equals": "equals",
+            "starts with": "starts with"
+           },
+           "default": ""
+          },
+          "value": {
+           "type": "string",
+           "default": ""
+          }
+         },
+         "default": {
+          "condition": "",
+          "value": ""
+         }
+        },
+        "number": {
+         "description": "Number type column filter.",
+         "properties": {
+          "condition": {
+           "type": "string",
+           "description": "Filter condition.  Note: if a \"between\" condition is selected, the value must be a an object containing properties \"min\" and \"max\" .",
+           "suggestions": {
+            "(empty)": "",
+            "greater than": "greater than",
+            "greater than or equal to": "greater than or equal to",
+            "less than": "less than",
+            "less than or equal to": "less than or equal to",
+            "equals": "equals",
+            "between": "between"
+           },
+           "default": ""
+          },
+          "value": {
+           "type": [
+            "number",
+            "string",
+            "object"
+           ],
+           "oneOf": [
+            {
+             "type": [
+              "number",
+              "string"
+             ],
+             "default": "",
+             "description": "Value used in conjunction with the selected condition."
+            },
+            {
+             "type": "object",
+             "description": "Bounded range of the between condition",
+             "properties": {
+              "min": {
+               "type": [
+                "number",
+                "string"
+               ],
+               "description": "Lower bounds of between condition.",
+               "default": ""
+              },
+              "max": {
+               "type": [
+                "number",
+                "string"
+               ],
+               "description": "Upper bounds of between condition.",
+               "default": ""
+              }
+             }
+            }
+           ],
+           "default": ""
+          },
+          "default": {
+           "condition": "",
+           "value": ""
+          }
+         },
+         "default": {
+          "condition": "",
+          "value": ""
+         }
+        },
+        "boolean": {
+         "description": "Boolean type column filter.",
+         "properties": {
+          "condition": {
+           "type": [
+            "boolean",
+            "string"
+           ],
+           "suggestions": {
+            "(empty)": "",
+            "true": "true",
+            "false": "false"
+           },
+           "default": ""
+          },
+          "value": {
+           "type": [
+            "boolean",
+            "string"
+           ],
+           "default": ""
+          }
+         },
+         "default": {
+          "condition": "",
+          "value": ""
+         }
+        },
+        "date": {
+         "description": "Date type column filter.",
+         "properties": {
+          "condition": {
+           "type": "string",
+           "description": "Filter condition.  Note: if a \"between\" condition is selected, the value must be a an object containing properties \"startDate\" and \"endDate\".",
+           "suggestions": {
+            "(empty)": "",
+            "date equals": "date equals",
+            "date time equals": "date time equals",
+            "earlier than date": "earlier than date",
+            "earlier than date time": "earlier than date time",
+            "later than date": "later than date",
+            "later than date time": "later than date time",
+            "between dates": "between dates",
+            "between date times": "between date times"
+           },
+           "default": ""
+          },
+          "value": {
+           "type": [
+            "date",
+            "string",
+            "number",
+            "object"
+           ],
+           "oneOf": [
+            {
+             "type": [
+              "date",
+              "number",
+              "string"
+             ],
+             "default": "",
+             "description": "Value used in conjunction with the selected condition."
+            },
+            {
+             "type": "object",
+             "description": "Bounded range of the between condition",
+             "properties": {
+              "startDate": {
+               "type": [
+                "date",
+                "number",
+                "string"
+               ],
+               "description": "Lower bounds of between condition.",
+               "default": ""
+              },
+              "endDate": {
+               "type": [
+                "date",
+                "number",
+                "string"
+               ],
+               "description": "Upper bounds of between condition.",
+               "default": ""
+              }
+             },
+             "default": {
+              "startDate": "",
+              "endDate": ""
+             }
+            }
+           ],
+           "default": {
+            "startDate": "",
+            "endDate": ""
+           }
+          }
+         },
+         "default": {
+          "condition": "",
+          "value": ""
+         }
+        }
+       }
+      },
+      "viewPath": {
+       "type": "string",
+       "description": "A view path used when in view rendering mode.",
+       "format": "view-path",
+       "default": "",
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "view"
+        ]
+       }
+      },
+      "viewParams": {
+       "type": "object",
+       "description": "Parameters to feed the configured view.  Will be added to implicit params like so: { column: string; row: number; value: any; columnIndex: number; rowIndex: number; rowData: PlainObject; ...viewParams }",
+       "default": {},
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "view"
+        ]
+       },
+       "extension": {
+        "view-params": {
+         "path": "../viewPath"
+        }
+       }
+      },
+      "boolean": {
+       "type": "string",
+       "description": "Type of component to render for boolean",
+       "enum": [
+        "value",
+        "checkbox",
+        "toggle"
+       ],
+       "default": "checkbox",
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "boolean"
+        ]
+       }
+      },
+      "number": {
+       "type": "string",
+       "description": "Type of component to render for boolean",
+       "enum": [
+        "value",
+        "progress"
+       ],
+       "default": "value",
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "number"
+        ]
+       }
+      },
+      "progressBar": {
+       "type": "object",
+       "description": "Progress bar config to apply if in progress rendering mode.",
+       "properties": {
+        "max": {
+         "type": "number",
+         "description": "Progress bar max value.",
+         "default": 100
+        },
+        "min": {
+         "type": "number",
+         "description": "Progress bar min value.",
+         "default": 0
+        },
+        "bar": {
+         "type": "object",
+         "properties": {
+          "color": {
+           "type": "string",
+           "format": "color",
+           "default": ""
+          },
+          "style": {
+           "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+          }
+         }
+        },
+        "track": {
+         "type": "object",
+         "properties": {
+          "color": {
+           "type": "string",
+           "format": "color",
+           "default": ""
+          },
+          "style": {
+           "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+          }
+         }
+        },
+        "value": {
+         "type": "object",
+         "properties": {
+          "enabled": {
+           "type": "boolean",
+           "default": true
+          },
+          "format": {
+           "type": [
+            "string",
+            "number"
+           ],
+           "description": "Determines the styling for the value display label",
+           "suggestions": {
+            "none": "none",
+            "integer [1,200]": "0,0",
+            "percent [10.12%]": "0.##%",
+            "currency [$1,000.12]": "$0,0.00",
+            "duration [24:01:00]": "00:00:00"
+           },
+           "default": "0,0.##"
+          },
+          "justify": {
+           "type": "string",
+           "description": "Horizontal alignment of displayed value",
+           "enum": [
+            "left",
+            "center",
+            "right"
+           ],
+           "default": "center"
+          },
+          "style": {
+           "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+          }
+         }
+        }
+       },
+       "visibleWhen": {
+        "property": "number",
+        "equals": "progress"
+       }
+      },
+      "toggleSwitch": {
+       "type": "object",
+       "properties": {
+        "color": {
+         "type": "object",
+         "properties": {
+          "selected": {
+           "type": "string",
+           "format": "color",
+           "default": ""
+          },
+          "unselected": {
+           "type": "string",
+           "format": "color",
+           "default": ""
+          }
+         }
+        }
+       },
+       "visibleWhen": {
+        "property": "boolean",
+        "equals": "toggle"
+       }
+      },
+      "nullFormat": {
+       "type": "object",
+       "description": "Column null format configuration.",
+       "properties": {
+        "includeNullStrings": {
+         "type": "boolean",
+         "description": "Toggles inclusion of null strings in null format logic.",
+         "default": false
+        },
+        "strict": {
+         "type": "boolean",
+         "description": "Override render mode and apply nullFormatValue.",
+         "default": false
+        },
+        "nullFormatValue": {
+         "type": [
+          "string",
+          "number",
+          "null"
+         ],
+         "description": "Value to be applied against null values of column.",
+         "suggestions": {
+          "blank": "",
+          "N/A": "N/A",
+          "null": null
+         },
+         "default": ""
+        }
+       }
+      },
+      "numberFormat": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "A number format string to be applied against numbers of column if in number rendering mode.",
+       "suggestions": {
+        "none": "none",
+        "number [1,000.12]": "0,0.##",
+        "integer [1,200]": "0,0",
+        "four decimal precision [1.1200]": "0,0.0000",
+        "percent [10.12%]": "0.##%",
+        "scientific [1.01E+03]": "0.00e+0",
+        "accounting [$ (1,000.12)]": "$ (0,0.00)",
+        "financial [(1,000.12)]": "(0,0.00)",
+        "currency [$1,000.12]": "$0,0.00",
+        "currency (rounded) [$1,012]": "$0,0",
+        "duration [24:01:00]": "00:00:00",
+        "abbreviation [1.2k]": "0.0a",
+        "ordinal [100th]": "0o"
+       },
+       "default": "0,0.##",
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "number"
+        ]
+       }
+      },
+      "dateFormat": {
+       "type": [
+        "string",
+        "number"
+       ],
+       "description": "A date format string to be applied against dates of column if in number rendering mode.",
+       "suggestions": {
+        "none": "none",
+        "date [10/15/2018]": "MM/DD/YYYY",
+        "time [3:59:00 PM]": "h:mm:ss a",
+        "date time [10/15/2018 15:59:00]": "MM/DD/YYYY HH:mm:ss"
+       },
+       "default": "MM/DD/YYYY",
+       "visibleWhen": {
+        "property": "render",
+        "equals": [
+         "auto",
+         "date"
+        ]
+       }
+      },
+      "width": {
+       "type": [
+        "number",
+        "string"
+       ],
+       "description": "The column's width which, when not strict, represents a proportion of the available space, i.e. flex grow. If strictWidth is enabled, will be fixed and static.",
+       "default": ""
+      },
+      "strictWidth": {
+       "type": "boolean",
+       "description": "If enabled, the width of the column becomes fixed.",
+       "default": false
+      },
+      "header": {
+       "type": "object",
+       "description": "Header cell configuration object.",
+       "additionalProperties": false,
+       "properties": {
+        "title": {
+         "type": "string",
+         "description": "The title of this header.",
+         "default": ""
+        },
+        "justify": {
+         "type": "string",
+         "description": "Horizontal content alignment.",
+         "enum": [
+          "left",
+          "center",
+          "right"
+         ],
+         "default": "left"
+        },
+        "align": {
+         "type": "string",
+         "description": "Vertical content alignment.",
+         "enum": [
+          "top",
+          "center",
+          "bottom"
+         ],
+         "default": "center"
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+         "description": "Optional style to attach to this header cell."
+        }
+       },
+       "default": {
+        "title": "",
+        "justify": "left",
+        "align": "center",
+        "style": {
+         "classes": ""
+        }
+       }
+      },
+      "footer": {
+       "type": "object",
+       "description": "Footer cell configuration object.",
+       "additionalProperties": false,
+       "properties": {
+        "title": {
+         "type": "string",
+         "description": "The title of this footer.",
+         "default": ""
+        },
+        "justify": {
+         "type": "string",
+         "description": "Justifies content horizontally.",
+         "enum": [
+          "left",
+          "center",
+          "right"
+         ],
+         "default": "left"
+        },
+        "align": {
+         "type": "string",
+         "description": "Aligns content vertically.",
+         "enum": [
+          "top",
+          "center",
+          "bottom"
+         ],
+         "default": "center"
+        },
+        "style": {
+         "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+         "description": "Optional style to attach to this footer cell."
+        }
+       },
+       "default": {
+        "title": "",
+        "justify": "left",
+        "align": "center",
+        "style": {
+         "classes": ""
+        }
+       }
+      },
+      "style": {
+       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+       "description": "Optional style to attach to this column."
+      }
+     },
+     "default": {
+      "field": "",
+      "visible": true,
+      "editable": false,
+      "render": "auto",
+      "justify": "auto",
+      "align": "center",
+      "resizable": true,
+      "sortable": true,
+      "sort": "none",
+      "filter": {
+       "enabled": false,
+       "visible": "on-hover",
+       "string": {
+        "condition": "",
+        "value": ""
+       },
+       "number": {
+        "condition": "",
+        "value": ""
+       },
+       "boolean": {
+        "condition": ""
+       },
+       "date": {
+        "condition": "",
+        "value": ""
+       }
+      },
+      "viewPath": "",
+      "viewParams": {},
+      "boolean": "checkbox",
+      "number": "value",
+      "progressBar": {
+       "max": 100,
+       "min": 0,
+       "bar": {
+        "color": "",
+        "style": {
+         "classes": ""
+        }
+       },
+       "track": {
+        "color": "",
+        "style": {
+         "classes": ""
+        }
+       },
+       "value": {
+        "enabled": true,
+        "format": "0,0.##",
+        "justify": "center",
+        "style": {
+         "classes": ""
+        }
+       }
+      },
+      "toggleSwitch": {
+       "color": {
+        "selected": "",
+        "unselected": ""
+       }
+      },
+      "nullFormat": {
+       "includeNullStrings": false,
+       "strict": false,
+       "nullFormatValue": ""
+      },
+      "numberFormat": "0,0.##",
+      "dateFormat": "MM/DD/YYYY",
+      "width": "",
+      "strictWidth": false,
+      "style": {
+       "classes": ""
+      },
+      "header": {
+       "title": "",
+       "justify": "left",
+       "align": "center",
+       "style": {
+        "classes": ""
+       }
+      },
+      "footer": {
+       "title": "",
+       "justify": "left",
+       "align": "center",
+       "style": {
+        "classes": ""
+       }
+      }
+     }
+    },
+    "default": []
+   },
+   "dragOrderable": {
+    "type": "boolean",
+    "description": "Users may drag column headers to reorder columns of the table.",
+    "default": true
+   },
+   "sortOrder": {
+    "type": "array",
+    "description": "The weighted order in which columns and their contents are sorted relative to other columns and their contents.",
+    "default": []
+   },
+   "rows": {
+    "type": "object",
+    "description": "Rows configuration object.",
+    "properties": {
+     "height": {
+      "type": [
+       "string",
+       "number"
+      ],
+      "description": "A minimum height value applied to all rows. A row cannot be shorter than this value, but it can be taller based on the height of the content it displays. This property can be set to \"auto\" (default) or given a numeric value that will correspond to a minimum row height in pixels.",
+      "default": "auto"
+     },
+     "subviewExpansionMode": {
+      "type": "string",
+      "description": "Specifies how many subviews can be expanded at any given time.",
+      "enum": [
+       "single",
+       "multiple"
+      ],
+      "default": "multiple"
+     },
+     "subview": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "description": "Enable each row to allow toggling of the specified view.",
+        "default": false
+       },
+       "viewPath": {
+        "type": "string",
+        "description": "A view path used to display a view as an expanded row.",
+        "format": "view-path",
+        "default": ""
+       },
+       "viewParams": {
+        "type": "object",
+        "description": "Parameters to feed the configured view. Will be added to implicit params like so: { row: number; rowIndex: number; value: PlainObject; ...viewParams }",
+        "default": {},
+        "extension": {
+         "view-params": {
+          "path": "../viewPath"
+         }
+        }
+       }
+      }
+     },
+     "striped": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "default": true
+       },
+       "color": {
+        "type": "object",
+        "properties": {
+         "even": {
+          "type": "string",
+          "format": "color",
+          "default": ""
+         },
+         "odd": {
+          "type": "string",
+          "format": "color",
+          "default": ""
+         }
+        }
+       }
+      }
+     },
+     "highlight": {
+      "type": "object",
+      "properties": {
+       "enabled": {
+        "type": "boolean",
+        "default": true
+       },
+       "color": {
+        "type": "string",
+        "format": "color",
+        "default": ""
+       }
+      }
+     },
+     "style": {
+      "description": "Style applied to all rows.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "cells": {
+    "type": "object",
+    "description": "Cells configuration object.",
+    "properties": {
+     "allowEditOn": {
+      "type": "string",
+      "enum": [
+       "single-click",
+       "double-click",
+       "long-press"
+      ],
+      "default": "double-click"
+     },
+     "style": {
+      "description": "Style applied to all cells.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "editingCell": {
+    "type": "object",
+    "description": "The current editing cell.",
+    "properties": {
+     "column": {
+      "type": [
+       "string"
+      ],
+      "default": ""
+     },
+     "row": {
+      "type": [
+       "number",
+       "string"
+      ],
+      "default": ""
+     }
+    }
+   },
+   "nullFormat": {
+    "type": "object",
+    "description": "Table null format configuration. Can be overwritten by individual column nullFormat configuration.",
+    "properties": {
+     "includeNullStrings": {
+      "type": "boolean",
+      "description": "Toggles inclusion of null strings in null format logic.",
+      "default": false
+     },
+     "strict": {
+      "type": "boolean",
+      "description": "Override render mode and apply nullFormatValue.",
+      "default": false
+     },
+     "nullFormatValue": {
+      "type": [
+       "string",
+       "number",
+       "null"
+      ],
+      "description": "Value to be applied against null values of table.",
+      "suggestions": {
+       "blank": "",
+       "N/A": "N/A",
+       "null": null
+      },
+      "default": ""
+     }
+    }
+   },
+   "pager": {
+    "type": "object",
+    "description": "Enables table pagination. Pagination improves performance and appearance on large tables, over 1000 rows.",
+    "properties": {
+     "options": {
+      "type": "array",
+      "description": "Rows to show per pager option.",
+      "items": {
+       "type": "number"
+      },
+      "default": [
+       5,
+       10,
+       25,
+       50,
+       100
+      ]
+     },
+     "initialOption": {
+      "type": "number",
+      "description": "The initial option to use when the table first loads. It must exist as an available option. DEPRECATED: use 'activeOption' instead."
+     },
+     "activeOption": {
+      "type": "number",
+      "description": "The option actively in use. It must exist as an available option.",
+      "default": 25
+     },
+     "top": {
+      "type": "boolean",
+      "description": "Enable top pager.",
+      "default": false
+     },
+     "bottom": {
+      "type": "boolean",
+      "description": "Enable bottom pager.",
+      "default": true
+     },
+     "activePage": {
+      "type": "number",
+      "description": "Represents the current active page and corresponds to the value of the page jump input field.",
+      "default": 1
+     },
+     "style": {
+      "description": "Style to apply to the table pager container.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "resizeMode": {
+    "type": "string",
+    "description": "Declares the column resize mode.",
+    "enum": [
+     "fill",
+     "fixed"
+    ],
+    "default": "fill"
+   },
+   "emptyMessage": {
+    "type": "object",
+    "description": "Empty message configuration.",
+    "properties": {
+     "noData": {
+      "type": "object",
+      "description": "Empty message configuration for when there is either no data source or the data source is empty.",
+      "properties": {
+       "text": {
+        "type": "string",
+        "description": "Text to display when there is no data source or the data source is empty.",
+        "default": ""
+       },
+       "textStyle": {
+        "description": "Style to apply to text when there is no data source or the data source is empty.",
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       },
+       "icon": {
+        "description": "Icon configuration for when there is no data source or the data source is empty.",
+        "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+       }
+      }
+     },
+     "noFilterResults": {
+      "type": "object",
+      "description": "Empty message configuration for when a filter returns no results.",
+      "properties": {
+       "text": {
+        "type": "string",
+        "description": "Text to display when a filter returns no results.",
+        "default": ""
+       },
+       "textStyle": {
+        "description": "Style to apply to text when a filter returns no results.",
+        "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+       },
+       "icon": {
+        "description": "Icon configuration for when a filter returns no results.",
+        "$ref": "urn:ignition-schema:schemas/icon-schema.json"
+       }
+      }
+     },
+     "style": {
+      "description": "Style to apply to the overall empty message display.",
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+     }
+    }
+   },
+   "headerStyle": {
+    "description": "Style to apply to the table header container.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "headerGroupStyle": {
+    "description": "Style to apply to the table header group container.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "bodyStyle": {
+    "description": "Style to apply to the table body.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "footerStyle": {
+    "description": "Style to apply to the table header container.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "footerGroupStyle": {
+    "description": "Style to apply to the table header group container.",
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   },
+   "style": {
+    "$ref": "urn:ignition-schema:schemas/style-properties.schema.json"
+   }
+  }
+ },
+ "events": [
+  {
+   "name": "onEditCellCommit",
+   "description": "Fired when a user has effectively committed an edit on a cell via return or enter key press.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "column": {
+      "type": [
+       "string",
+       "integer"
+      ],
+      "description": "The column of the edited cell."
+     },
+     "originalValue": {
+      "type": "string",
+      "description": "The original value before editing began."
+     },
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": [
+       "boolean",
+       "number",
+       "string"
+      ],
+      "description": "The committed value."
+     }
+    }
+   }
+  },
+  {
+   "name": "onEditCellStart",
+   "description": "Fired when the user has begun or started a cell edit by going into editing mode.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "column": {
+      "type": [
+       "string",
+       "integer"
+      ],
+      "description": "The column of the editing cell."
+     },
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": [
+       "boolean",
+       "number",
+       "string"
+      ],
+      "description": "The pre committed value."
+     }
+    }
+   }
+  },
+  {
+   "name": "onEditCellCancel",
+   "description": "Fired when the user has canceled a cell edit and has exited editing mode by effectively pressing the escape key.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "canceledValue": {
+      "type": "string",
+      "description": "The value that was being edited when the edit was canceled."
+     },
+     "column": {
+      "type": [
+       "string",
+       "integer"
+      ],
+      "description": "The column of the editing cell."
+     },
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": [
+       "boolean",
+       "number",
+       "string"
+      ],
+      "description": "The pre committed value."
+     }
+    }
+   }
+  },
+  {
+   "name": "onSelectionChange",
+   "description": "Fired when the table selection has changed.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "selectedColumn": {
+      "type": [
+       "string",
+       "integer",
+       "null"
+      ],
+      "description": "The current selected column."
+     },
+     "selectedRow": {
+      "type": [
+       "integer",
+       "null"
+      ],
+      "description": "The current selected row. Can be an integer, or null. The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "data": {
+      "type": "array",
+      "description": "The current selection data."
+     }
+    }
+   }
+  },
+  {
+   "name": "onRowClick",
+   "description": "Fired when a row in the table is clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": "object",
+      "description": "The row's value as a JSON object."
+     }
+    }
+   }
+  },
+  {
+   "name": "onRowDoubleClick",
+   "description": "Fired when a row in the table is double clicked.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": "object",
+      "description": "The row's value as a JSON object."
+     }
+    }
+   }
+  },
+  {
+   "name": "onSubviewExpand",
+   "description": "Fired when a rows subview is expanded.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": "object",
+      "description": "The row's value as a JSON object."
+     }
+    }
+   }
+  },
+  {
+   "name": "onSubviewCollapse",
+   "description": "Fired when a rows subview is collapsed.",
+   "documentationUrl": "https://links.inductiveautomation.com/83-perspective-table-component-events",
+   "schema": {
+    "type": "object",
+    "properties": {
+     "row": {
+      "type": "integer",
+      "description": "The unique row index as it is represented in the source data. Also known as the row ID."
+     },
+     "rowIndex": {
+      "type": "integer",
+      "description": "The row index as it is represented in the current visible data."
+     },
+     "value": {
+      "type": "object",
+      "description": "The row's value as a JSON object."
+     }
+    }
+   }
+  }
+ ],
+ "resources": [
+  {
+   "name": "perspective-components-css",
+   "path": "/res/perspective/css/PerspectiveComponents.css",
+   "type": "css"
+  },
+  {
+   "name": "perspective-components-js",
+   "path": "/res/perspective/js/PerspectiveComponents.js",
+   "type": "js"
+  }
+ ]
+}

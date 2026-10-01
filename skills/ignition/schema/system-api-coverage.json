@@ -1,0 +1,528 @@
+{
+  "by_subpackage": {
+    "alarm": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 1,
+      "doc": 10,
+      "full_params": 8,
+      "no_args": 2,
+      "total": 13,
+      "types_only": 2,
+      "types_only_functions": [
+        "processPathCondition",
+        "processStringEnumCondition"
+      ]
+    },
+    "alert": {
+      "artifact": 8,
+      "bundle_params": 1,
+      "constant": 0,
+      "doc": 2,
+      "full_params": 2,
+      "no_args": 0,
+      "total": 4,
+      "types_only": 1,
+      "types_only_functions": [
+        "toDataset"
+      ]
+    },
+    "bacnet": {
+      "artifact": 12,
+      "bundle_params": 0,
+      "constant": 7,
+      "doc": 7,
+      "full_params": 7,
+      "no_args": 0,
+      "total": 14,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "clear": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "config": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 3,
+      "doc": 14,
+      "full_params": 8,
+      "no_args": 3,
+      "total": 14,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "dataset": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 20,
+      "full_params": 21,
+      "no_args": 0,
+      "total": 32,
+      "types_only": 11,
+      "types_only_functions": [
+        "dataSetToCSV",
+        "dataSetToExcelBytes",
+        "dataSetToExcelStreaming",
+        "dataSetToHTMLStreaming",
+        "fromCSVJava",
+        "insertColumn",
+        "insertRow",
+        "removeRow",
+        "toCSVJava",
+        "toCSVJavaStreaming",
+        "toJSONObject"
+      ]
+    },
+    "date": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 19,
+      "doc": 43,
+      "full_params": 40,
+      "no_args": 3,
+      "total": 62,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "db": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 41,
+      "doc": 72,
+      "full_params": 30,
+      "no_args": 1,
+      "total": 80,
+      "types_only": 8,
+      "types_only_functions": [
+        "dataSetToCSV",
+        "dateFormat",
+        "getConnection",
+        "runPrepStmt",
+        "runPrepStmtGetKey",
+        "runUpdateQueryGetKey",
+        "toDataSet",
+        "toPyDataSet"
+      ]
+    },
+    "device": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 8,
+      "full_params": 7,
+      "no_args": 1,
+      "total": 10,
+      "types_only": 2,
+      "types_only_functions": [
+        "addDeviceInternal",
+        "getInstance"
+      ]
+    },
+    "dict": {
+      "artifact": 18,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "dnp": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 12,
+      "full_params": 12,
+      "no_args": 0,
+      "total": 12,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "dnp3": {
+      "artifact": 8,
+      "bundle_params": 8,
+      "constant": 7,
+      "doc": 15,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 15,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "eventstream": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 3,
+      "full_params": 3,
+      "no_args": 0,
+      "total": 3,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "file": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 6,
+      "doc": 11,
+      "full_params": 5,
+      "no_args": 0,
+      "total": 11,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "getDict": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "getName": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "groups": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 2,
+      "full_params": 2,
+      "no_args": 0,
+      "total": 2,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "historian": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 1,
+      "doc": 10,
+      "full_params": 19,
+      "no_args": 2,
+      "total": 25,
+      "types_only": 3,
+      "types_only_functions": [
+        "queryAnnotationsInternal",
+        "queryMetadataInternal",
+        "remapHistoricalSource"
+      ]
+    },
+    "iec61850": {
+      "artifact": 8,
+      "bundle_params": 7,
+      "constant": 0,
+      "doc": 7,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 7,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "math": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 19,
+      "full_params": 19,
+      "no_args": 0,
+      "total": 19,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "name": {
+      "artifact": 41,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "net": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 1,
+      "doc": 9,
+      "full_params": 6,
+      "no_args": 2,
+      "total": 10,
+      "types_only": 1,
+      "types_only_functions": [
+        "sendAuthEmail"
+      ]
+    },
+    "opc": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 11,
+      "full_params": 11,
+      "no_args": 0,
+      "total": 11,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "opchda": {
+      "artifact": 8,
+      "bundle_params": 10,
+      "constant": 0,
+      "doc": 11,
+      "full_params": 0,
+      "no_args": 1,
+      "total": 11,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "opcua": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 3,
+      "full_params": 3,
+      "no_args": 1,
+      "total": 4,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "perspective": {
+      "artifact": 9,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 23,
+      "full_params": 25,
+      "no_args": 1,
+      "total": 26,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "print": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 2,
+      "full_params": 0,
+      "no_args": 2,
+      "total": 2,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "project": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 3,
+      "full_params": 1,
+      "no_args": 2,
+      "total": 3,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "report": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 1,
+      "doc": 4,
+      "full_params": 4,
+      "no_args": 0,
+      "total": 5,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "roster": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 5,
+      "full_params": 6,
+      "no_args": 2,
+      "total": 8,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "secrets": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 5,
+      "doc": 13,
+      "full_params": 7,
+      "no_args": 1,
+      "total": 13,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "security": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 2,
+      "full_params": 2,
+      "no_args": 0,
+      "total": 2,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "serial": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 52,
+      "doc": 11,
+      "full_params": 11,
+      "no_args": 0,
+      "total": 63,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "setDict": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "setName": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "sfc": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 9,
+      "full_params": 9,
+      "no_args": 0,
+      "total": 9,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "system": {
+      "artifact": 34,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "tag": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 33,
+      "full_params": 43,
+      "no_args": 0,
+      "total": 52,
+      "types_only": 9,
+      "types_only_functions": [
+        "configureManagedTag",
+        "getAttribute",
+        "getTagValue",
+        "getTagValues",
+        "removeManagedTag",
+        "updateManagedTagValue",
+        "writeToTag",
+        "writeToTagSynchronous",
+        "writeToTags"
+      ]
+    },
+    "toString": {
+      "artifact": 3,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 0,
+      "full_params": 0,
+      "no_args": 0,
+      "total": 0,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "user": {
+      "artifact": 8,
+      "bundle_params": 0,
+      "constant": 0,
+      "doc": 27,
+      "full_params": 22,
+      "no_args": 5,
+      "total": 27,
+      "types_only": 0,
+      "types_only_functions": []
+    },
+    "util": {
+      "artifact": 9,
+      "bundle_params": 1,
+      "constant": 1,
+      "doc": 24,
+      "full_params": 17,
+      "no_args": 6,
+      "total": 27,
+      "types_only": 2,
+      "types_only_functions": [
+        "parseTranslateArguments",
+        "sendMessageInternal"
+      ]
+    }
+  },
+  "generated_from": {
+    "decompiled": "/home/hrishi805_linux/ignition-skill-build/phase2-jars/decompiled",
+    "decompiled_scripting_classes": 61,
+    "doc_bundles_loaded": 69,
+    "ignition_roots": [
+      "/mnt/c/Program Files/Inductive Automation/Ignition/lib/core/common",
+      "/mnt/c/Program Files/Inductive Automation/Ignition/lib/core/gateway",
+      "/mnt/c/Program Files/Inductive Automation/Ignition/lib/core/client",
+      "/home/hrishi805_linux/ignition-skill-build/phase2-jars/modls-extracted"
+    ]
+  },
+  "note": "Denominator reconciliation: the raw reflection walk emitted 969 entries across 41 top-level keys. 373 are Java/PyObject members leaked by the walk (clear, getClass, toString, <sub>.name, the bacnet/historian sub-namespace handles, and the whole 'dict'/'getName'/'system' pseudo-subpackages) and are excluded. That leaves 596 real system.* names -- 145 module constants + 451 callable functions. The brief's '923' predates this de-duplicated count; it is not a separate target.",
+  "totals": {
+    "callable_functions": 451,
+    "callable_with_param_names": 377,
+    "full_params_annotation_backed": 350,
+    "module_constants": 145,
+    "no_arg_functions": 35,
+    "params_from_doc_bundle_only": 27,
+    "real_functions": 596,
+    "reflection_artifacts_excluded": 373,
+    "schema_entries": 969,
+    "types_only_no_param_names": 39,
+    "with_doc_string": 445
+  }
+}
